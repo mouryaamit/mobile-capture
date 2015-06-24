@@ -70,7 +70,7 @@ controllers
 					 */
 					
 					ionic.Platform.ready(function() {
-						if(ionic.Platform.isAndroid()){
+						if(ionic.Platform.isAndroid() || ionic.Platform.isIOS()){
 							options = {
 								quality : 50,
 								destinationType : Camera.DestinationType.DATA_URL,
