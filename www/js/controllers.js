@@ -68,18 +68,21 @@ controllers
 					 * var NotyMsg = require('../lib/noty_msg');
 					 * NotyMsg.errorMsg("ad");
 					 */
+					
 					ionic.Platform.ready(function() {
-						options = {
-							quality : 50,
-							destinationType : Camera.DestinationType.DATA_URL,
-							sourceType : Camera.PictureSourceType.CAMERA,
-							allowEdit : true,
-							encodingType : Camera.EncodingType.JPEG,
-							targetWidth : 800,
-							targetHeight : 600,
-							popoverOptions : CameraPopoverOptions,
-							saveToPhotoAlbum : false
-						};
+						if(ionic.Platform.isAndroid()){
+							options = {
+								quality : 50,
+								destinationType : Camera.DestinationType.DATA_URL,
+								sourceType : Camera.PictureSourceType.CAMERA,
+								allowEdit : true,
+								encodingType : Camera.EncodingType.JPEG,
+								targetWidth : 800,
+								targetHeight : 600,
+								popoverOptions : CameraPopoverOptions,
+								saveToPhotoAlbum : false
+							};
+						}
 					});
 					$scope.validCheckColl = null || []
 					$scope.locationsResult = null || []
@@ -288,18 +291,6 @@ controllers
 						}
 						var totalStr = carouselAddedStr + remainingStr;
 						$('#checkListCarousel').html(totalStr);
-					}
-					$scope.processCheck = function() {
-						$scope.validCheckColl.push({
-							'SessionId' : gConfig.IVSSessionId,
-							'Amount' : parseFloat($scope.amt).toFixed(2),
-							'FrontImage' : $scope.Cheque.frontImage,
-							'RearImage' : $scope.Cheque.backImage,
-							'ReturnImage' : true,
-							'status' : 2
-						})
-						$scope.checkCounter = $scope.validCheckColl.length
-						$scope.drawCrousal();
 						var activePos;
 						if (limitCount == 1) {
 							activePos = checkCount - 1;
@@ -312,6 +303,19 @@ controllers
 							$(".checkLi:eq(" + activePos + ")").attr(
 									"data-status", "1");
 						}
+					}
+					$scope.processCheck = function() {
+						$scope.validCheckColl.push({
+							'SessionId' : gConfig.IVSSessionId,
+							'Amount' : parseFloat($scope.amt).toFixed(2),
+							'FrontImage' : $scope.Cheque.frontImage,
+							'RearImage' : $scope.Cheque.backImage,
+							'ReturnImage' : true,
+							'status' : 2
+						})
+						$scope.checkCounter = $scope.validCheckColl.length
+						$scope.drawCrousal();
+						
 						$scope.showUpdatedCarouselCheck();
 
 						$scope.scrollActiveElem();
