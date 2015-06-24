@@ -273,7 +273,7 @@ controllers
 									+ "</span></span></li>";
 						}
 						var remainingStr = "";
-						var limitCount = 0// parseInt(this.depThresholdCount);
+						var limitCount = $scope.depositLimitCount;
 						var remainingLength = limitCount + parseInt(checkCount)
 								- 1;
 						for (var j = checkCount; j < remainingLength; j++) {
