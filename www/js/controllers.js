@@ -317,6 +317,10 @@ controllers
 						$scope.processCheck();
 						$scope.Cheque = null || {};
 						$scope.amt = null;
+						$("#backImageDiv").show();
+						$("#backValidImageDiv").hide()
+						$("#frontImageDiv").show();
+						$("#frontValidImageDiv").hide()
 					}
 
 					$scope.depositChecks = function() {
