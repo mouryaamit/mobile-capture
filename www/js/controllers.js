@@ -69,7 +69,7 @@ controllers
 					 * NotyMsg.errorMsg("ad");
 					 */
 					ionic.Platform.ready(function() {
-						options = {
+						/*options = {
 							quality : 50,
 							destinationType : Camera.DestinationType.DATA_URL,
 							sourceType : Camera.PictureSourceType.CAMERA,
@@ -79,7 +79,7 @@ controllers
 							targetHeight : 600,
 							popoverOptions : CameraPopoverOptions,
 							saveToPhotoAlbum : false
-						};
+						};*/
 					});
 					$scope.validCheckColl = null || []
 					$scope.locationsResult = null || []
@@ -88,52 +88,9 @@ controllers
 					/*
 					 * getDailyLimit(); getDepositLimit();
 					 */
-					$scope.init = function() {
-						$scope.checkCounter = 0;
-						/*
-						 * appFactory.getLocations({}).$promise.then(function(getLocationsResult) {
-						 * console.log(getLocationsResult)
-						 * $scope.locationsResult = getLocationsResult;
-						 * 
-						 * if ($scope.locationsResult.length == 1) {
-						 * $($(".icon-select-drop-down")[0]).hide();
-						 * $('#multipleLocDiv').addClass("disabled"); } else {
-						 * $($(".icon-select-drop-down")[0]).show();
-						 * $('#multipleLocDiv').removeClass("disabled"); }
-						 * $('.selectpicker').selectpicker('render');
-						 * $('.selectpicker').selectpicker('refresh'); },
-						 * function(getLocationsError) { })
-						 * appFactory.getAccounts({}).$promise.then(function(getAccountsResult) {
-						 * $scope.accountResult = getAccountsResult;
-						 * 
-						 * if ($scope.accountResult.length == 1) {
-						 * $($(".icon-select-drop-down")[1]).hide();
-						 * $('#multipleAccDiv').addClass("disabled"); } else {
-						 * $($(".icon-select-drop-down")[1]).show();
-						 * $('#multipleAccDiv').removeClass("disabled"); }
-						 * 
-						 * $('.selectpicker').selectpicker('render');
-						 * $('.selectpicker').selectpicker('refresh'); },
-						 * function(getLocationsError) { })
-						 * 
-						 * appFactory.getDailyLimit({ 'BusDate' :
-						 * gConfig.BusDate, 'InstitutionId' :
-						 * ServerConfig.institutionId, 'MerchantId' :
-						 * gConfig.MerchantID
-						 * }).$promise.then(function(getDailyLimitResult) { //
-						 * TODO appFactory.getDepositLimit({ 'InstitutionId' :
-						 * ServerConfig.institutionId, 'MerchantId' :
-						 * gConfig.MerchantID, 'BusDate' : gConfig.BusDate
-						 * }).$promise.then(function(getDepositLimitResult) { //
-						 * TODO }, function(getDepositLimitError) { }) },
-						 * function(getDailyLimitError) { })
-						 * 
-						 * $('.selectpicker').selectpicker()
-						 */
+					
 
-					}
-
-					$scope.init();
+					
 
 					$scope.scrollRight = function() {
 
@@ -307,16 +264,7 @@ controllers
 													.children().length);
 						}
 					}
-					$scope.processCheck = function() {
-						$scope.validCheckColl.push({
-							'SessionId' : gConfig.IVSSessionId,
-							'Amount' : parseFloat($scope.amt).toFixed(2),
-							'FrontImage' : $scope.Cheque.frontImage,
-							'RearImage' : $scope.Cheque.backImage,
-							'ReturnImage' : true,
-							'status' : 2
-						})
-						$scope.checkCounter = $scope.validCheckColl.length
+					$scope.drawCrousal = function() {
 						var checkCount = $scope.validCheckColl.length;
 						var carouselAddedStr = "";
 						for (var i = 0; i < checkCount; i++) {
@@ -329,7 +277,7 @@ controllers
 						}
 						var remainingStr = "";
 						var limitCount = $scope.depositLimitCount;
-						var remainingLength = limitCount - parseInt(checkCount) ;
+						var remainingLength = limitCount - parseInt(checkCount) - 1;
 						
 						for (var j = checkCount; j < remainingLength; j++) {
 							remainingStr = remainingStr
@@ -339,7 +287,18 @@ controllers
 						}
 						var totalStr = carouselAddedStr + remainingStr;
 						$('#checkListCarousel').html(totalStr);
-
+					}
+					$scope.processCheck = function() {
+						$scope.validCheckColl.push({
+							'SessionId' : gConfig.IVSSessionId,
+							'Amount' : parseFloat($scope.amt).toFixed(2),
+							'FrontImage' : $scope.Cheque.frontImage,
+							'RearImage' : $scope.Cheque.backImage,
+							'ReturnImage' : true,
+							'status' : 2
+						})
+						$scope.checkCounter = $scope.validCheckColl.length
+						$scope.drawCrousal();
 						var activePos;
 						if (limitCount == 1) {
 							activePos = checkCount - 1;
@@ -518,4 +477,50 @@ controllers
 
 					}
 
+					$scope.init = function() {
+						$scope.checkCounter = 0;
+						$scope.drawCrousal();
+						/*
+						 * appFactory.getLocations({}).$promise.then(function(getLocationsResult) {
+						 * console.log(getLocationsResult)
+						 * $scope.locationsResult = getLocationsResult;
+						 * 
+						 * if ($scope.locationsResult.length == 1) {
+						 * $($(".icon-select-drop-down")[0]).hide();
+						 * $('#multipleLocDiv').addClass("disabled"); } else {
+						 * $($(".icon-select-drop-down")[0]).show();
+						 * $('#multipleLocDiv').removeClass("disabled"); }
+						 * $('.selectpicker').selectpicker('render');
+						 * $('.selectpicker').selectpicker('refresh'); },
+						 * function(getLocationsError) { })
+						 * appFactory.getAccounts({}).$promise.then(function(getAccountsResult) {
+						 * $scope.accountResult = getAccountsResult;
+						 * 
+						 * if ($scope.accountResult.length == 1) {
+						 * $($(".icon-select-drop-down")[1]).hide();
+						 * $('#multipleAccDiv').addClass("disabled"); } else {
+						 * $($(".icon-select-drop-down")[1]).show();
+						 * $('#multipleAccDiv').removeClass("disabled"); }
+						 * 
+						 * $('.selectpicker').selectpicker('render');
+						 * $('.selectpicker').selectpicker('refresh'); },
+						 * function(getLocationsError) { })
+						 * 
+						 * appFactory.getDailyLimit({ 'BusDate' :
+						 * gConfig.BusDate, 'InstitutionId' :
+						 * ServerConfig.institutionId, 'MerchantId' :
+						 * gConfig.MerchantID
+						 * }).$promise.then(function(getDailyLimitResult) { //
+						 * TODO appFactory.getDepositLimit({ 'InstitutionId' :
+						 * ServerConfig.institutionId, 'MerchantId' :
+						 * gConfig.MerchantID, 'BusDate' : gConfig.BusDate
+						 * }).$promise.then(function(getDepositLimitResult) { //
+						 * TODO }, function(getDepositLimitError) { }) },
+						 * function(getDailyLimitError) { })
+						 * 
+						 * $('.selectpicker').selectpicker()
+						 */
+
+					}
+					$scope.init();
 				})
