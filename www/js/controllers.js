@@ -1,79 +1,165 @@
-angular.module('starter.controllers', [])
+var controllers = angular.module('starter.controllers', [])
 
-    .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+controllers.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
-        // With the new view caching in Ionic, Controllers are only called
-        // when they are recreated or on app start, instead of every page change.
-        // To listen for when this page is active (for example, to refresh data),
-        // listen for the $ionicView.enter event:
-        //$scope.$on('$ionicView.enter', function(e) {
-        //});
+	// With the new view caching in Ionic, Controllers are only called
+	// when they are recreated or on app start, instead of every page change.
+	// To listen for when this page is active (for example, to refresh data),
+	// listen for the $ionicView.enter event:
+	// $scope.$on('$ionicView.enter', function(e) {
+	// });
 
+	// Create the login modal that we will use later
+	$ionicModal.fromTemplateUrl('templates/login.html', {
+		scope : $scope
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
 
-        // Create the login modal that we will use later
-        $ionicModal.fromTemplateUrl('templates/login.html', {
-            scope: $scope
-        }).then(function (modal) {
-            $scope.modal = modal;
-        });
+})
 
-    })
+controllers.controller('PlaylistCtrl', function($scope, Camera) {
+	$scope.image = null;
 
-    .controller('CaptureCtrl', function ($scope,Camera) {
-        $scope.image = null;
+	$scope.getPic = function() {
+		Camera.getPicture({
+			quality : 75,
+			targetWidth : 320,
+			targetHeight : 320,
+			saveToPhotoAlbum : false
+		}).then(function(imageURI) {
+			console.log(imageURI);
+			$scope.image = imageURI;
+		}, function(err) {
+			console.err(err);
+		});
+	}
+	/*
+	 * var options = { quality: 50, destinationType:
+	 * Camera.DestinationType.DATA_URL, sourceType:
+	 * Camera.PictureSourceType.CAMERA, allowEdit: true, encodingType:
+	 * Camera.EncodingType.JPEG, targetWidth: 100, targetHeight: 100,
+	 * popoverOptions: CameraPopoverOptions, saveToPhotoAlbum: false };
+	 * $scope.image = null;
+	 * 
+	 * $scope.getPic = function() {
+	 * $cordovaCamera.getPicture(options).then(function (imageData) { //var
+	 * image = document.getElementById('myImage'); $scope.image =
+	 * "data:image/jpeg;base64," + imageData; }, function (err) { // error }); }
+	 */
+})
 
-        $scope.getPic = function() {
-            Camera.getPicture({
-                quality: 75,
-                targetWidth: 320,
-                targetHeight: 320,
-                saveToPhotoAlbum: false
-            }).then(function(imageURI) {
-                console.log(imageURI);
-                $scope.image = imageURI;
-            }, function(err) {
-                console.err(err);
-            });
-        }
-        /*var options = {
-            quality: 50,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.CAMERA,
-            allowEdit: true,
-            encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 100,
-            targetHeight: 100,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: false
-        };
-        $scope.image = null;
+controllers.controller('HistoryCtrl', function($scope) {
 
-        $scope.getPic = function() {
-            $cordovaCamera.getPicture(options).then(function (imageData) {
-                //var image = document.getElementById('myImage');
-                $scope.image = "data:image/jpeg;base64," + imageData;
-            }, function (err) {
-                // error
-            });
-        }*/
-    })
-    .factory('Camera', ['$q', function($q) {
+})
 
-        return {
-            getPicture: function(options) {
-                var q = $q.defer();
+controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
+		ServerConfig) {// 31191
+	$scope.locationsResult = null || []
+	$scope.accountResult = null || []
+	$scope.init = function() {
+		appFactory.getLocations({}).$promise.then(function(getLocationsResult) {
+			$scope.locationsResult = getLocationsResult;
 
-                navigator.camera.getPicture(function(result) {
-                    // Do any magic you need
-                    q.resolve(result);
-                }, function(err) {
-                    q.reject(err);
-                }, options);
+			if ($scope.locationsResult.length == 1) {
+				$($(".icon-select-drop-down")[0]).hide();
+				$('#multipleLocDiv').addClass("disabled");
+			} else {
+				$($(".icon-select-drop-down")[0]).show();
+				$('#multipleLocDiv').removeClass("disabled");
+			}
+			$('.selectpicker').selectpicker('render');
+			$('.selectpicker').selectpicker('refresh');
+		}, function(getLocationsError) {
 
-                return q.promise;
+		})
+		appFactory.getAccounts({}).$promise.then(function(getAccountsResult) {
+			$scope.accountResult = getAccountsResult;
+
+			if($scope.accountResult.length == 1){
+                $($(".icon-select-drop-down")[1]).hide();
+                $('#multipleAccDiv').addClass("disabled");
+            }else{
+                $($(".icon-select-drop-down")[1]).show();
+                $('#multipleAccDiv').removeClass("disabled");
             }
-        }
-    }])
-    .controller('HistoryCtrl', function ($scope) {
-    })
 
+            $('.selectpicker').selectpicker('render');
+            $('.selectpicker').selectpicker('refresh');
+		}, function(getLocationsError) {
+
+		})
+
+		appFactory.getDailyLimit({
+			'BusDate' : gConfig.BusDate,
+			'InstitutionId' : ServerConfig.institutionId,
+			'MerchantId' : gConfig.MerchantID
+		}).$promise.then(function(getDailyLimitResult) {
+			// TODO
+			appFactory.getDepositLimit({
+				'InstitutionId' : ServerConfig.institutionId,
+				'MerchantId' : gConfig.MerchantID,
+				'BusDate' : gConfig.BusDate
+			}).$promise.then(function(getDepositLimitResult) {
+				// TODO
+			}, function(getDepositLimitError) {
+
+			})
+		}, function(getDailyLimitError) {
+
+		})
+
+		$('.selectpicker').selectpicker()
+	}
+
+	$scope.init();
+
+	$scope.scrollRight = function() {
+
+	}
+
+	$scope.scrollLeft = function() {
+
+	}
+
+	$scope.showCarouselCheck = function() {
+
+	}
+
+	$scope.previewFrontImg = function() {
+
+	}
+
+	$scope.captureFront = function() {
+
+	}
+
+	$scope.previewBackImg = function() {
+
+	}
+
+	$scope.captureBack = function() {
+
+	}
+
+	$scope.deleteCheck = function() {
+
+	}
+
+	$scope.depositChecks = function() {
+
+	}
+
+	$scope.discardChecks = function() {
+
+	}
+
+	$scope.updateAmt = function() {
+
+	}
+
+	$scope.locationsSelected = function() {
+
+	}
+
+})
