@@ -58,11 +58,11 @@ controllers
 				'CaptureCtrl',
 				function($scope, appFactory, gConfig, ServerConfig,
 						$cordovaCamera) {// 31191
-				// console.log(ServerConfig.url)
+					// console.log(ServerConfig.url)
 					var options = null || {}
 					$scope.depositLimitCount = 5
 					$scope.getNumber = function(num) {
-					    return new Array(num);   
+						return new Array(num);
 					}
 					/*
 					 * var NotyMsg = require('../lib/noty_msg');
@@ -99,8 +99,7 @@ controllers
 						 * $('#multipleLocDiv').removeClass("disabled"); }
 						 * $('.selectpicker').selectpicker('render');
 						 * $('.selectpicker').selectpicker('refresh'); },
-						 * function(getLocationsError) {
-						 *  })
+						 * function(getLocationsError) { })
 						 * appFactory.getAccounts({}).$promise.then(function(getAccountsResult) {
 						 * $scope.accountResult = getAccountsResult;
 						 * 
@@ -112,8 +111,7 @@ controllers
 						 * 
 						 * $('.selectpicker').selectpicker('render');
 						 * $('.selectpicker').selectpicker('refresh'); },
-						 * function(getLocationsError) {
-						 *  })
+						 * function(getLocationsError) { })
 						 * 
 						 * appFactory.getDailyLimit({ 'BusDate' :
 						 * gConfig.BusDate, 'InstitutionId' :
@@ -124,9 +122,8 @@ controllers
 						 * ServerConfig.institutionId, 'MerchantId' :
 						 * gConfig.MerchantID, 'BusDate' : gConfig.BusDate
 						 * }).$promise.then(function(getDepositLimitResult) { //
-						 * TODO }, function(getDepositLimitError) {
-						 *  }) }, function(getDailyLimitError) {
-						 *  })
+						 * TODO }, function(getDepositLimitError) { }) },
+						 * function(getDailyLimitError) { })
 						 * 
 						 * $('.selectpicker').selectpicker()
 						 */
@@ -237,16 +234,18 @@ controllers
 					}
 					$scope.checkLimit = function() {
 						if (parseFloat($scope.amt) > parseFloat($scope.dailyLimitAmt)) {// TODO
-						// NotyMsg.errorMsg("Please add a cheque of lesser or
-						// equal amount of daily limit.");
+							// NotyMsg.errorMsg("Please add a cheque of lesser
+							// or
+							// equal amount of daily limit.");
 							return false;
 						} else if (parseInt($scope.depositLimitCount) < 1) {// TODO
-						// NotyMsg.errorMsg("Number of checks you can deposit is
-						// exceeding the limit.");
+							// NotyMsg.errorMsg("Number of checks you can
+							// deposit is
+							// exceeding the limit.");
 							return false;
 						} else if (parseFloat($scope.amt) > parseFloat($scope.depositLimitAmt)) {// TODO
-						// NotyMsg.errorMsg("Check amount is exceeding your
-						// deposit limits.");
+							// NotyMsg.errorMsg("Check amount is exceeding your
+							// deposit limits.");
 							return false;
 						} else {
 							return true;
@@ -260,10 +259,10 @@ controllers
 							'FrontImage' : $scope.Cheque.frontImage,
 							'RearImage' : $scope.Cheque.backImage,
 							'ReturnImage' : true,
-							'status':2
+							'status' : 2
 						})
 						$scope.checkCounter = $scope.validCheckColl.length
-						/*var checkCount = $scope.validCheckColl.length;
+						var checkCount = $scope.validCheckColl.length;
 						var carouselAddedStr = "";
 						for (var i = 0; i < checkCount; i++) {
 							carouselAddedStr = carouselAddedStr
@@ -284,7 +283,7 @@ controllers
 									+ "</span><br><span class='carouselAmt'></span></span></li>";
 						}
 						var totalStr = carouselAddedStr + remainingStr;
-						this.ui.checkListCarousel.html(totalStr);
+						$('#checkListCarousel').html(totalStr);
 
 						var activePos;
 						if (limitCount == 1) {
@@ -298,8 +297,54 @@ controllers
 							$(".checkLi:eq(" + activePos + ")").attr(
 									"data-status", "1");
 						}
-						this.showUpdatedCarouselCheck();
-						this.scrollActiveElem();*/
+						// this.showUpdatedCarouselCheck();
+						$checkLi = $(".carouselLi.active").parent().parent();
+						console.log($checkLi.index());
+						var pos = $checkLi.index();
+						var status = $checkLi.attr("data-status");
+						switch (status) {
+						case "0":
+							break;
+						case "1":
+							$('.amtPreviewDiv').hide();
+							$('.amtInputDiv').show();
+
+							$('#submitCheck').show();
+
+							$('.validCheckImgDiv').hide();
+							$('.checkImgDiv').show();
+							break;
+						case "2":
+							 $('.amtInputDiv').hide();
+							 $('.amtPreviewDiv').show();
+							 
+							 $('#amtPreviewSpan').html($scope.validCheckColl[pos].Amount);
+							 $('#submitCheck').hide();
+							 
+							 $('.checkImgDiv').hide();
+							 $('.validCheckImgDiv').show();
+							  
+							 $('#frontImagePreview').prop("src",$scope.validCheckColl[pos].FrontImage);
+							 $('#backImagePreview').prop("src",$scope.validCheckColl[pos].RearImage);
+							 
+							break;
+						default:
+							break;
+						}
+
+						// this.scrollActiveElem();
+						if ($scope.checkCounter < 2) {
+							$(".horizontalScroll").css("overflow-x", "hidden");
+						} else {
+							$(".horizontalScroll").css("overflow-x", "scroll");
+							var checkLi = $(".carouselLi.active").parent()
+									.parent();
+							$(".horizontalScroll").scrollLeft(
+									checkLi.position().left
+											- $(".horizontalScroll").width()
+											/ $("#checkListCarousel")
+													.children().length);
+						}
 					}
 
 					$scope.submitCheck = function() {
@@ -364,7 +409,7 @@ controllers
 					}
 
 					$scope.discardChecks = function() {
-						if (this.validCheckColl.length < 1) {
+						if ($scope.validCheckColl.length < 1) {
 							$scope.deleteCheck();
 						} else {
 							// NotyMsg.confirmMsg("This will delete all the
