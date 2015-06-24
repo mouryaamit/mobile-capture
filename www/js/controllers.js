@@ -85,6 +85,9 @@ controllers
 					$scope.locationsResult = null || []
 					$scope.accountResult = null || []
 					$scope.Cheque = null || {}
+					/*
+					 * getDailyLimit(); getDepositLimit();
+					 */
 					$scope.init = function() {
 						$scope.checkCounter = 0;
 						/*
@@ -251,7 +254,59 @@ controllers
 							return true;
 						}
 					}
+					$scope.showUpdatedCarouselCheck = function() {
+						$checkLi = $(".carouselLi.active").parent().parent();
+						console.log($checkLi.index());
+						var pos = $checkLi.index();
+						var status = $checkLi.attr("data-status");
+						switch (status) {
+						case "0":
+							break;
+						case "1":
+							$('.amtPreviewDiv').hide();
+							$('.amtInputDiv').show();
 
+							$('#submitCheck').show();
+
+							$('.validCheckImgDiv').hide();
+							$('.checkImgDiv').show();
+							break;
+						case "2":
+							$('.amtInputDiv').hide();
+							$('.amtPreviewDiv').show();
+
+							$('#amtPreviewSpan').html(
+									$scope.validCheckColl[pos].Amount);
+							$('#submitCheck').hide();
+
+							$('.checkImgDiv').hide();
+							$('.validCheckImgDiv').show();
+
+							$('#frontImagePreview').prop("src",
+									$scope.validCheckColl[pos].FrontImage);
+							$('#backImagePreview').prop("src",
+									$scope.validCheckColl[pos].RearImage);
+
+							break;
+						default:
+							break;
+						}
+					}
+
+					$scope.scrollActiveElem = function() {
+						if ($scope.checkCounter < 2) {
+							$(".horizontalScroll").css("overflow-x", "hidden");
+						} else {
+							$(".horizontalScroll").css("overflow-x", "scroll");
+							var checkLi = $(".carouselLi.active").parent()
+									.parent();
+							$(".horizontalScroll").scrollLeft(
+									checkLi.position().left
+											- $(".horizontalScroll").width()
+											/ $("#checkListCarousel")
+													.children().length);
+						}
+					}
 					$scope.processCheck = function() {
 						$scope.validCheckColl.push({
 							'SessionId' : gConfig.IVSSessionId,
@@ -276,6 +331,7 @@ controllers
 						var limitCount = $scope.depositLimitCount;
 						var remainingLength = limitCount + parseInt(checkCount)
 								- 1;
+
 						for (var j = checkCount; j < remainingLength; j++) {
 							remainingStr = remainingStr
 									+ "<li class='checkLi' data-status='0'><span><span class='carouselLi'>"
@@ -297,54 +353,10 @@ controllers
 							$(".checkLi:eq(" + activePos + ")").attr(
 									"data-status", "1");
 						}
-						// this.showUpdatedCarouselCheck();
-						$checkLi = $(".carouselLi.active").parent().parent();
-						console.log($checkLi.index());
-						var pos = $checkLi.index();
-						var status = $checkLi.attr("data-status");
-						switch (status) {
-						case "0":
-							break;
-						case "1":
-							$('.amtPreviewDiv').hide();
-							$('.amtInputDiv').show();
+						$scope.showUpdatedCarouselCheck();
 
-							$('#submitCheck').show();
+						$scope.scrollActiveElem();
 
-							$('.validCheckImgDiv').hide();
-							$('.checkImgDiv').show();
-							break;
-						case "2":
-							 $('.amtInputDiv').hide();
-							 $('.amtPreviewDiv').show();
-							 
-							 $('#amtPreviewSpan').html($scope.validCheckColl[pos].Amount);
-							 $('#submitCheck').hide();
-							 
-							 $('.checkImgDiv').hide();
-							 $('.validCheckImgDiv').show();
-							  
-							 $('#frontImagePreview').prop("src",$scope.validCheckColl[pos].FrontImage);
-							 $('#backImagePreview').prop("src",$scope.validCheckColl[pos].RearImage);
-							 
-							break;
-						default:
-							break;
-						}
-
-						// this.scrollActiveElem();
-						if ($scope.checkCounter < 2) {
-							$(".horizontalScroll").css("overflow-x", "hidden");
-						} else {
-							$(".horizontalScroll").css("overflow-x", "scroll");
-							var checkLi = $(".carouselLi.active").parent()
-									.parent();
-							$(".horizontalScroll").scrollLeft(
-									checkLi.position().left
-											- $(".horizontalScroll").width()
-											/ $("#checkListCarousel")
-													.children().length);
-						}
 					}
 
 					$scope.submitCheck = function() {
@@ -395,16 +407,13 @@ controllers
 						var status = $("span.active").parent().parent().attr(
 								"data-status");
 						if (status == "1" && $scope.isCheckCaptureStarted()) {
-							NotyMsg
-									.confirmMsg(
-											"Are you sure you want to remove this check?",
-											this.clearCheck);
+							// NotyMsg.confirmMsg("Are you sure you want to
+							// remove this check?",$scope.clearCheck());
 						}
 						if (status == "2") {
-							NotyMsg
-									.confirmMsg(
-											"Are you sure you want to remove this check from the deposit list?",
-											this.deleteCheckConfirmed);
+							// NotyMsg.confirmMsg("Are you sure you want to
+							// remove this check from the deposit
+							// list?",$scope.deleteCheckConfirmed());
 						}
 					}
 
@@ -415,10 +424,93 @@ controllers
 							// NotyMsg.confirmMsg("This will delete all the
 							// checks in deposit list and cancel this
 							// transaction.<br>Are you sure you want to discard
-							// this deposit?", this.discardConfirmed);
+							// this deposit?", $scope.discardConfirmed);
 						}
 					}
+					$scope.discardConfirmed = function() {
+						$scope.enableAccLoc();
+						$scope.discardAll();
+					}
+					$scope.discardAll = function() {
+						if ($scope.validCheckColl.length > 0) {
+							/*
+							 * var discardModel = Models.getDiscardModel();
+							 * discardModel.set({ 'UserId' : gConfig.UserID,
+							 * 'InstId' : ServerConfig.institutionId,
+							 * 'ApplicationId' : gConfig.ApplicationType,
+							 * 'TransactionId' : gConfig.IVSSessionId });
+							 * discardModel.processRequest();
+							 */
+						} else {
+							$scope.clearDepositChecks();
+						}
+					}
+					$scope.clearDepositChecks = function() {
+						$scope.clearCheck();
+						$scope.showCurrentCheck();
+						$scope.initCollection();
+						$scope.updateDepositCounter();
+						$scope.resetLimits();
 
+					}
+					$scope.resetLimits = function() {
+						$scope.getDailyLimit();
+						$scope.getDepositLimit();
+					}
+					$scope.updateDepositCounter = function() {
+						var totalChecks = $scope.validCheckColl.length;
+						var totalAmt = 0.00;
+						for (var i = 0; i < totalChecks; i++) {
+							totalAmt = parseFloat(totalAmt)
+									+ parseFloat($scope.validCheckColl[i].Amount);
+						}
+						totalAmt = parseFloat(totalAmt).toFixed(2);
+						/*
+						 * this.ui.totalChecksDepCounter.html(totalChecks);
+						 * this.ui.totalValidAmtDepCounter.html(totalAmt);
+						 * this.updateCheckProgress();
+						 */
+					}
+					$scope.initCollection = function() {
+						$scope.checkCounter = 0;
+						/*
+						 * this.validCheckColl = Models.getCheckColl();
+						 * this.updateCheckProgress();
+						 */
+					}
+					$scope.showCurrentCheck = function() {
+						$('.amtPreviewDiv').hide();
+						$('.amtInputDiv').show();
+
+						$('#submitCheck').show();
+
+						$('.validCheckImgDiv').hide();
+						$('.checkImgDiv').show();
+					}
+					$scope.clearCheck = function() {
+
+						$("#frontImage").hide().prop("src",
+								"data:image/jpeg;base64,");
+						$(".frontCameraIcon").show();
+						$("#backImage").hide().prop("src",
+								"data:image/jpeg;base64,");
+						$(".backCameraIcon").show();
+						$scope.amt = "";
+					}
+					$scope.disableAccLoc = function() {
+						$(".locAccSelectInpGrp").addClass("disabled");
+					}
+					$scope.enableAccLoc = function() {
+						$(".locAccSelectInpGrp").removeClass("disabled");
+					}
+					// Update Check Capture Status
+					$scope.updateCheckProgress = function() {
+						gConfig.checkInProgress = (this.validCheckColl.length > 0);
+					}
+
+					$scope.onBeforeDestroy = function() {
+						gConfig.checkInProgress = false;
+					}
 					$scope.updateAmt = function() {
 
 					}
