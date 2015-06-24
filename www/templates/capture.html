@@ -1,189 +1,231 @@
 <div id="HomeView" class="container">
 
-    <div id="HomeViewRegion">
-        <div id="locAccAmtDiv">
-            <div id="locAccDiv" class="row responsiveChunk">
-                <div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1 text-left">
-                    <div class="form-group locAccFormGrp">
-                        <div id="multipleLocDiv" class="input-group locAccSelectInpGrp">
-                            <span class="input-group-addon"><span class="icon-storelocation"></span></span>
-                            <select id="locations" ng-model="locations" ng-change="locationsSelected()" class="selectpicker show-tick locAccSelect">
-                            	<option ng-repeat="loc in locationsResult" value="{{loc.locationId}}">{{loc.locationName}}</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2 text-right">
-                    <div class="form-group locAccFormGrp">
-                        <div id="multipleAccDiv" class="input-group locAccSelectInpGrp">
-                            <span class="input-group-addon acc-addon-grp"><span class="icon-account"></span></span>
-                            <select id="accounts" class="selectpicker show-tick locAccSelect">
-                            	<option ng-repeat="acc in accountResult" value="{{acc.accountNumber}}" ng-class="acc.accountType">{{acc.accountDesc}} - {{acc.accountNumber}}</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="availableLimitDivDiv" class="row responsiveChunk">
-                <div id="availLimitTitle" class="col-xs-5 text-center">
-                    <span>Available Limits</span>
-                </div>
-                <div id="availDayDepLimitText" class="col-xs-7 text-left">
-                    <span>Daily : <span id="dailyLimitAmt"> </span></span>
-                    <br>
-                    <span><span class="hidden-xs">For This</span> Deposit : <span id="depositLimitCount"> </span> / <span id="depositLimitAmt"> </span></span>
-                </div>
-            </div>
-            <div id="amtDiv" class="row responsiveChunk">
-                <div id="amtLabelDiv" class="col-xs-4 col-xs-offset-1 col-sm-4 col-sm-offset-1 text-right amtLabelPad">
-                    <span>Amount</span>
-                </div>
-                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 text-left">
-                    <div class="amtInputDiv">
-                        <!--<span class="input-group-addon"></span>-->
-                        <input id="amt" ng-model="amt" ng-blur="updateAmt()" class="form-control addOnInput text-right" type="number" min="1">
-                        <button id="dummyButton" type="button"></button>
-                    </div>
-                    <div class="amtPreviewDiv amtLabelPad hiddenElem">
-                        <span id="amtPreviewSpan"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
+	<div id="HomeViewRegion">
+		<div id="locAccAmtDiv">
+			<div id="locAccDiv" class="row responsiveChunk">
+				<div
+					class="col-xs-12 col-sm-6 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1 text-left">
+					<div class="form-group locAccFormGrp">
+						<div id="multipleLocDiv" class="input-group locAccSelectInpGrp">
+							<span class="input-group-addon"><span
+								class="icon-storelocation"></span></span> <select id="locations"
+								ng-model="locations" ng-change="locationsSelected()"
+								class="selectpicker show-tick locAccSelect">
+								<option ng-repeat="loc in locationsResult"
+									value="{{loc.locationId}}">{{loc.locationName}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div
+					class="col-xs-12 col-sm-6 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2 text-right">
+					<div class="form-group locAccFormGrp">
+						<div id="multipleAccDiv" class="input-group locAccSelectInpGrp">
+							<span class="input-group-addon acc-addon-grp"><span
+								class="icon-account"></span></span> <select id="accounts"
+								class="selectpicker show-tick locAccSelect">
+								<option ng-repeat="acc in accountResult"
+									value="{{acc.accountNumber}}" ng-class="acc.accountType">{{acc.accountDesc}}
+									- {{acc.accountNumber}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="availableLimitDivDiv" class="row responsiveChunk">
+				<div id="availLimitTitle" class="col-xs-5 text-center">
+					<span>Available Limits</span>
+				</div>
+				<div id="availDayDepLimitText" class="col-xs-7 text-left">
+					<span>Daily : <span id="dailyLimitAmt"> </span></span> <br> <span><span
+						class="hidden-xs">For This</span> Deposit : <span
+						id="depositLimitCount"> {{depositLimitCount}} </span> / <span id="depositLimitAmt">
+					</span></span>
+				</div>
+			</div>
+			<div id="amtDiv" class="row responsiveChunk">
+				<div id="amtLabelDiv"
+					class="col-xs-4 col-xs-offset-1 col-sm-4 col-sm-offset-1 text-right amtLabelPad">
+					<span>Amount</span>
+				</div>
+				<div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 text-left">
+					<div class="amtInputDiv">
+						<!--<span class="input-group-addon"></span>-->
+						<input id="amt" ng-model="amt" ng-blur="updateAmt()"
+							class="form-control addOnInput text-right" type="number" min="1">
+						<button id="dummyButton" type="button"></button>
+					</div>
+					<div class="amtPreviewDiv amtLabelPad hiddenElem">
+						<span id="amtPreviewSpan"></span>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div id="checkCaptureDiv" class="responsiveChunk">
-            <div>
-                <div class="row">
-                    <div class="col-xs-6 text-center borderRight">
-                        <div class="checkImgDiv" id="frontImageDiv">
-                            <div class="imgDiv">
-                                <img id="frontImage" src="{{Cheque.frontImage}}" class="frontCheckImg checkImgs hiddenElem" ng-click="previewFrontImg()">
-                                <span class="frontCameraIcon captureFrontBut icon-capture" ng-click="captureFront()"></span>
-                            </div>
-                            <span class="captureFrontBut" ng-click="captureFront()"><strong>Front View</strong></span>
-                        </div>
-                        <div class="validCheckImgDiv" id="frontValidImageDiv" style="display: none;">
-                            <div class="imgDiv">
-                                <img id="frontImagePreview" src="{{Cheque.frontImage}}" class="frontCheckImg checkImgs" ng-click="previewFrontImg()">
-                            </div>
-                            <span class="captureFrontBut" ng-click="captureFront()"><strong>Front View</strong></span>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 text-center">
-                        <div class="checkImgDiv" id="backImageDiv">
-                            <div class="imgDiv">
-                                <img id="backImage" src="{{Cheque.backImage}}" class="backCheckImg checkImgs hiddenElem" ng-click="previewBackImg()">
-                                <span class="backCameraIcon captureBackBut icon-capture" ng-click="captureBack()"></span>
+		<div id="checkCaptureDiv" class="responsiveChunk">
+			<div>
+				<div class="row">
+					<div class="col-xs-6 text-center borderRight">
+						<div class="checkImgDiv" id="frontImageDiv">
+							<div class="imgDiv">
+								<img id="frontImage" src="{{Cheque.frontImage}}"
+									class="frontCheckImg checkImgs hiddenElem"
+									ng-click="previewFrontImg()"> <span
+									class="frontCameraIcon captureFrontBut icon-capture"
+									ng-click="captureFront()"></span>
+							</div>
+							<span class="captureFrontBut" ng-click="captureFront()"><strong>Front
+									View</strong></span>
+						</div>
+						<div class="validCheckImgDiv" id="frontValidImageDiv"
+							style="display: none;">
+							<div class="imgDiv">
+								<img id="frontImagePreview" src="{{Cheque.frontImage}}"
+									class="frontCheckImg checkImgs" ng-click="previewFrontImg()">
+							</div>
+							<span class="captureFrontBut" ng-click="captureFront()"><strong>Front
+									View</strong></span>
+						</div>
+					</div>
+					<div class="col-xs-6 text-center">
+						<div class="checkImgDiv" id="backImageDiv">
+							<div class="imgDiv">
+								<img id="backImage" src="{{Cheque.backImage}}"
+									class="backCheckImg checkImgs hiddenElem"
+									ng-click="previewBackImg()"> <span
+									class="backCameraIcon captureBackBut icon-capture"
+									ng-click="captureBack()"></span>
 
-                            </div>
-                            <span class="captureBackBut" ng-click="captureBack()"><strong>Back View</strong></span>
-                        </div>
-                        <div class="validCheckImgDiv" id="backValidImageDiv" style="display: none;">
-                            <div class="imgDiv">
-                                <img id="backImagePreview" src="{{Cheque.backImage}}" class="backCheckImg checkImgs" ng-click="previewBackImg()">
-                            </div>
-                            <span class="captureBackBut" ng-click="captureBack()"><strong>Back View</strong></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+							</div>
+							<span class="captureBackBut" ng-click="captureBack()"><strong>Back
+									View</strong></span>
+						</div>
+						<div class="validCheckImgDiv" id="backValidImageDiv"
+							style="display: none;">
+							<div class="imgDiv">
+								<img id="backImagePreview" src="{{Cheque.backImage}}"
+									class="backCheckImg checkImgs" ng-click="previewBackImg()">
+							</div>
+							<span class="captureBackBut" ng-click="captureBack()"><strong>Back
+									View</strong></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div id="submitSingleCheckDiv" class="responsiveChunk">
-            <div class="row">
-                <div class="col-xs-6 col-xs-offset-3 text-center">
-                    <button id="submitCheck" ng-click="submitCheck()" class="btn btn-info btn-rounded" >
-                        <span class="glyphicon glyphicon-plus-sign glyphicon-white"></span>
-                        Add
-                    </button>
-                </div>
-                <div class="col-xs-3 text-right">
-                    <button id="deleteCheck" ng-click="deleteCheck()" class="btn btn-transparent btn-primary btn-rounded borderLess" >
-                        <span class="glyphicon glyphicon-minus-sign glyphicon-white glyphicon-blue-border"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
+		<div id="submitSingleCheckDiv" class="responsiveChunk">
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-3 text-center">
+					<button id="submitCheck" ng-click="submitCheck()"
+						class="btn btn-info btn-rounded">
+						<span class="glyphicon glyphicon-plus-sign glyphicon-white"></span>
+						Add
+					</button>
+				</div>
+				<div class="col-xs-3 text-right">
+					<button id="deleteCheck" ng-click="deleteCheck()"
+						class="btn btn-transparent btn-primary btn-rounded borderLess">
+						<span
+							class="glyphicon glyphicon-minus-sign glyphicon-white glyphicon-blue-border"></span>
+					</button>
+				</div>
+			</div>
+		</div>
 
-        <div id="checkCarousel" class="row checkCarousel text-center responsiveChunk">
-            <div class="col-xs-12">
-                <div class="row">
-                    <div id="arrowLeftDiv" class="col-xs-1" ng-click="scrollLeft()">
-                        <span class="hiddenElem icon-arrow_left"></span>
-                    </div>
-                    <div class="col-xs-10">
-                        <div class="horizontalScroll">
-                            <nav id="checkListCarouselNav">     <!--   0 : Not Active, 1 : Active, 2 : Captured     -->
-                                <ul id="checkListCarousel" class="pagination pagination-lg">
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="1"><span><span class="carouselLi active">1</span><br><span class="carouselAmt"></span></span></li>
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="0"><span><span class="carouselLi">2</span><br><span class="carouselAmt"></span></span></li>
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="0"><span><span class="carouselLi">3</span><br><span class="carouselAmt"></span></span></li>
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="0"><span><span class="carouselLi">4</span><br><span class="carouselAmt"></span></span></li>
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="0"><span><span class="carouselLi">5</span><br><span class="carouselAmt"></span></span></li>
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="0"><span><span class="carouselLi">6</span><br><span class="carouselAmt"></span></span></li>
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="0"><span><span class="carouselLi">7</span><br><span class="carouselAmt"></span></span></li>
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="0"><span><span class="carouselLi">8</span><br><span class="carouselAmt"></span></span></li>
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="0"><span><span class="carouselLi">9</span><br><span class="carouselAmt"></span></span></li>
-                                    <li class="checkLi" ng-click="showCarouselCheck()" data-status="0"><span><span class="carouselLi">10</span><br><span class="carouselAmt"></span></span></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    <div id="arrowRightDiv" class="col-xs-1" ng-click="scrollRight()">
-                        <span class="hiddenElem icon-arrow_right"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<div id="checkCarousel"
+			class="row checkCarousel text-center responsiveChunk">
+			<div class="col-xs-12">
+				<div class="row">
+					<div id="arrowLeftDiv" class="col-xs-1" ng-click="scrollLeft()">
+						<span class="hiddenElem icon-arrow_left"></span>
+					</div>
+					<div class="col-xs-10">
+						<div class="horizontalScroll">
+							<nav id="checkListCarouselNav">
+								<!--   0 : Not Active, 1 : Active, 2 : Captured     -->
+								<ul id="checkListCarousel" class="pagination pagination-lg">
+									<li class="checkLi" ng-click="showCarouselCheck(d.$index)"
+										ng-repeat="d in getNumber(depositLimitCount)  track by $index" data-status="{{validCheckColl[d].status || 0}}" ng-class="{active : validCheckColl[d].active}"><span><span
+											class="carouselLi">{{$index+1}}</span><br>
+										<span class="carouselAmt"></span></span></li>
+									
+								</ul>
+							</nav>
+						</div>
+					</div>
+					<div id="arrowRightDiv" class="col-xs-1" ng-click="scrollRight()">
+						<span class="hiddenElem icon-arrow_right"></span>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div id="depositDiv" class="responsiveChunk">
-            <div class="row">
-                <div id="depositChecks" ng-click="depositChecks()" class="col-xs-10 col-sm-8 col-sm-offset-1 col-md-6 col-md-offset-2 text-center depositButtonDiv">
-                    <h3>Deposit <small><span id="totalChecksDepCounter">0</span> / <span id="totalValidAmtDepCounter">0</span></small></h3>
-                </div>
-                <div id="discardChecks" ng-click="discardChecks()" class="col-xs-2 col-sm-2 col-md-2  text-center discardIconDiv">
-                    <h3><span class="icon-discard"></span></h3>
-                </div>
-            </div>
-        </div>
+		<div id="depositDiv" class="responsiveChunk">
+			<div class="row">
+				<div id="depositChecks" ng-click="depositChecks()"
+					class="col-xs-10 col-sm-8 col-sm-offset-1 col-md-6 col-md-offset-2 text-center depositButtonDiv">
+					<h3>
+						Deposit <small><span id="totalChecksDepCounter">0</span> /
+							<span id="totalValidAmtDepCounter">0</span></small>
+					</h3>
+				</div>
+				<div id="discardChecks" ng-click="discardChecks()"
+					class="col-xs-2 col-sm-2 col-md-2  text-center discardIconDiv">
+					<h3>
+						<span class="icon-discard"></span>
+					</h3>
+				</div>
+			</div>
+		</div>
 
-        <!-- modal -->
-        <div id="depositSuccessModal" class="modal fade">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div id="depositModalBody" class="modal-body brandingBgColor">
-                        <h3>Deposit Confirmation</h3>
-                        <br>
-                        <p class="lead leadMargin5">Confirmation #<span id="confirmationNo"></span></p>
-                        <div class="row">
-                            <div class="col-xs-10">
-                                <p class="lead leadMargin5">Total Deposit Amount : <span id="depAmt"></span></p>
-                            </div>
-                            <div class="col-xs-2 text-center">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-10">
-                                <p class="lead leadMargin5">Total Deposit Count : <span id="depCount"></span></p>
-                            </div>
-                            <div class="col-xs-2 text-center">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </div>
-                        </div>
-                        <br>
-                        <h3>Funds Availability</h3>
-                        <p class="lead leadMargin5"> Weekdays : 8:00 AM to 3:00 PM </p>
-                        <p class="lead leadMargin5"> Weekends : 8:00 AM to 12:00 Noon </p>
-                        <br>
-                        <button type="button" class="btn btn-primary btn-block primaryBorderBut" data-dismiss="modal">Ok</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div>
+		<!-- modal -->
+		<div id="depositSuccessModal" class="modal fade">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div id="depositModalBody" class="modal-body brandingBgColor">
+						<h3>Deposit Confirmation</h3>
+						<br>
+						<p class="lead leadMargin5">
+							Confirmation #<span id="confirmationNo"></span>
+						</p>
+						<div class="row">
+							<div class="col-xs-10">
+								<p class="lead leadMargin5">
+									Total Deposit Amount : <span id="depAmt"></span>
+								</p>
+							</div>
+							<div class="col-xs-2 text-center">
+								<span class="glyphicon glyphicon-ok"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-10">
+								<p class="lead leadMargin5">
+									Total Deposit Count : <span id="depCount"></span>
+								</p>
+							</div>
+							<div class="col-xs-2 text-center">
+								<span class="glyphicon glyphicon-ok"></span>
+							</div>
+						</div>
+						<br>
+						<h3>Funds Availability</h3>
+						<p class="lead leadMargin5">Weekdays : 8:00 AM to 3:00 PM</p>
+						<p class="lead leadMargin5">Weekends : 8:00 AM to 12:00 Noon</p>
+						<br>
+						<button type="button"
+							class="btn btn-primary btn-block primaryBorderBut"
+							data-dismiss="modal">Ok</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
 
-    </div>
+	</div>
 
-    <div id="CheckPreviewRegion"></div>
+	<div id="CheckPreviewRegion"></div>
 
 </div>

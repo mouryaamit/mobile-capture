@@ -20,7 +20,7 @@ controllers.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
 controllers.controller('PlaylistCtrl', function($scope, Camera) {
 	$scope.image = null;
-	
+
 	$scope.getPic = function() {
 		Camera.getPicture({
 			quality : 75,
@@ -53,278 +53,329 @@ controllers.controller('HistoryCtrl', function($scope) {
 
 })
 
-controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
-		ServerConfig, $cordovaCamera) {// 31191
-// console.log(ServerConfig.url)
-	var options = null || {}
-/*	var NotyMsg = require('../lib/noty_msg');
-	NotyMsg.errorMsg("ad");
-*/	ionic.Platform.ready(function() {
-		options = {
-			quality : 50,
-			destinationType : Camera.DestinationType.DATA_URL,
-			sourceType : Camera.PictureSourceType.CAMERA,
-			allowEdit : true,
-			encodingType : Camera.EncodingType.JPEG,
-			targetWidth : 800,
-			targetHeight : 600,
-			popoverOptions : CameraPopoverOptions,
-			saveToPhotoAlbum : false
-		};
-	});
-	$scope.validCheckColl = null || []
-	$scope.locationsResult = null || []
-	$scope.accountResult = null || []
-	$scope.Cheque = null || {}
-	$scope.init = function() {
-		 $scope.checkCounter =0 ; 
-			 /*
-		appFactory.getLocations({}).$promise.then(function(getLocationsResult) {
-			console.log(getLocationsResult)
-			$scope.locationsResult = getLocationsResult;
+controllers
+		.controller(
+				'CaptureCtrl',
+				function($scope, appFactory, gConfig, ServerConfig,
+						$cordovaCamera) {// 31191
+				// console.log(ServerConfig.url)
+					var options = null || {}
+					$scope.depositLimitCount = 5
+					$scope.getNumber = function(num) {
+					    return new Array(num);   
+					}
+					/*
+					 * var NotyMsg = require('../lib/noty_msg');
+					 * NotyMsg.errorMsg("ad");
+					 */
+					ionic.Platform.ready(function() {
+						/*options = {
+							quality : 50,
+							destinationType : Camera.DestinationType.DATA_URL,
+							sourceType : Camera.PictureSourceType.CAMERA,
+							allowEdit : true,
+							encodingType : Camera.EncodingType.JPEG,
+							targetWidth : 800,
+							targetHeight : 600,
+							popoverOptions : CameraPopoverOptions,
+							saveToPhotoAlbum : false
+						};*/
+					});
+					$scope.validCheckColl = null || []
+					$scope.locationsResult = null || []
+					$scope.accountResult = null || []
+					$scope.Cheque = null || {}
+					$scope.init = function() {
+						$scope.checkCounter = 0;
+						/*
+						 * appFactory.getLocations({}).$promise.then(function(getLocationsResult) {
+						 * console.log(getLocationsResult)
+						 * $scope.locationsResult = getLocationsResult;
+						 * 
+						 * if ($scope.locationsResult.length == 1) {
+						 * $($(".icon-select-drop-down")[0]).hide();
+						 * $('#multipleLocDiv').addClass("disabled"); } else {
+						 * $($(".icon-select-drop-down")[0]).show();
+						 * $('#multipleLocDiv').removeClass("disabled"); }
+						 * $('.selectpicker').selectpicker('render');
+						 * $('.selectpicker').selectpicker('refresh'); },
+						 * function(getLocationsError) {
+						 *  })
+						 * appFactory.getAccounts({}).$promise.then(function(getAccountsResult) {
+						 * $scope.accountResult = getAccountsResult;
+						 * 
+						 * if ($scope.accountResult.length == 1) {
+						 * $($(".icon-select-drop-down")[1]).hide();
+						 * $('#multipleAccDiv').addClass("disabled"); } else {
+						 * $($(".icon-select-drop-down")[1]).show();
+						 * $('#multipleAccDiv').removeClass("disabled"); }
+						 * 
+						 * $('.selectpicker').selectpicker('render');
+						 * $('.selectpicker').selectpicker('refresh'); },
+						 * function(getLocationsError) {
+						 *  })
+						 * 
+						 * appFactory.getDailyLimit({ 'BusDate' :
+						 * gConfig.BusDate, 'InstitutionId' :
+						 * ServerConfig.institutionId, 'MerchantId' :
+						 * gConfig.MerchantID
+						 * }).$promise.then(function(getDailyLimitResult) { //
+						 * TODO appFactory.getDepositLimit({ 'InstitutionId' :
+						 * ServerConfig.institutionId, 'MerchantId' :
+						 * gConfig.MerchantID, 'BusDate' : gConfig.BusDate
+						 * }).$promise.then(function(getDepositLimitResult) { //
+						 * TODO }, function(getDepositLimitError) {
+						 *  }) }, function(getDailyLimitError) {
+						 *  })
+						 * 
+						 * $('.selectpicker').selectpicker()
+						 */
 
-			if ($scope.locationsResult.length == 1) {
-				$($(".icon-select-drop-down")[0]).hide();
-				$('#multipleLocDiv').addClass("disabled");
-			} else {
-				$($(".icon-select-drop-down")[0]).show();
-				$('#multipleLocDiv').removeClass("disabled");
-			}
-			$('.selectpicker').selectpicker('render');
-			$('.selectpicker').selectpicker('refresh');
-		}, function(getLocationsError) {
+					}
 
-		})
-		appFactory.getAccounts({}).$promise.then(function(getAccountsResult) {
-			$scope.accountResult = getAccountsResult;
+					$scope.init();
 
-			if ($scope.accountResult.length == 1) {
-				$($(".icon-select-drop-down")[1]).hide();
-				$('#multipleAccDiv').addClass("disabled");
-			} else {
-				$($(".icon-select-drop-down")[1]).show();
-				$('#multipleAccDiv').removeClass("disabled");
-			}
+					$scope.scrollRight = function() {
 
-			$('.selectpicker').selectpicker('render');
-			$('.selectpicker').selectpicker('refresh');
-		}, function(getLocationsError) {
+					}
 
-		})
+					$scope.scrollLeft = function() {
 
-		appFactory.getDailyLimit({
-			'BusDate' : gConfig.BusDate,
-			'InstitutionId' : ServerConfig.institutionId,
-			'MerchantId' : gConfig.MerchantID
-		}).$promise.then(function(getDailyLimitResult) {
-			// TODO
-			appFactory.getDepositLimit({
-				'InstitutionId' : ServerConfig.institutionId,
-				'MerchantId' : gConfig.MerchantID,
-				'BusDate' : gConfig.BusDate
-			}).$promise.then(function(getDepositLimitResult) {
-				// TODO
-			}, function(getDepositLimitError) {
+					}
 
-			})
-		}, function(getDailyLimitError) {
+					$scope.showCarouselCheck = function() {
 
-		})
+					}
 
-		$('.selectpicker').selectpicker()
-	*/
-		
-	
-		
-	
-	
-	
-	}
+					$scope.previewFrontImg = function() {
 
-	$scope.init();
+					}
 
-	$scope.scrollRight = function() {
+					$scope.previewBackImg = function() {
 
-	}
+					}
 
-	$scope.scrollLeft = function() {
+					$scope.captureFront = function(retake) {
+						/*
+						 * if (retake != "retake") { if
+						 * (screen.orientation.indexOf("portrait") != -1) {
+						 * gConfig.origOrientation = "portrait"; } else {
+						 * gConfig.origOrientation = "landscape"; } }
+						 */
+						$cordovaCamera
+								.getPicture(options)
+								.then(
+										function(imageData) {
+											$scope.Cheque.frontImage = "data:image/jpeg;base64,"
+													+ imageData;
+											$("#frontImageDiv").hide();
+											$("#frontValidImageDiv").show()
+										}, function(err) {
+											// error
+										});
 
-	}
+					}
 
-	$scope.showCarouselCheck = function() {
+					$scope.captureBack = function() {
+						$cordovaCamera
+								.getPicture(options)
+								.then(
+										function(imageData) {
+											$scope.Cheque.backImage = "data:image/jpeg;base64,"
+													+ imageData;
+											$("#backImageDiv").hide();
+											$("#backValidImageDiv").show()
+										}, function(err) {
+											// error
+										});
+					}
 
-	}
+					$scope.isCheckCaptured = function() {
 
-	$scope.previewFrontImg = function() {
+						var amtMsg = "", frontImgMsg = "", backImgMsg = "";
+						var amtValid = false, frontValid = false, backValid = false;
+						// ***$GeoLocation$***:adding if condition for checking
+						// the boolean response of server
 
-	}
+						/*
+						 * if(gConfig.geoAllow=="false"){
+						 * NotyMsg.errorMsg("Sorry you are not allowed to
+						 * deposit the check from the current location"); return
+						 * false; } else{
+						 */
 
-	$scope.previewBackImg = function() {
+						if (parseFloat($scope.amt) > 0) {
+							amtMsg = "";
+							amtValid = true;
+						} else {
+							amtMsg = "<br> -> Check Amount";
+							amtValid = false;
+						}
+						if ($("#frontImage").prop("src").length > 30) {
+							frontImgMsg = "";
+							frontValid = true;
+						} else {
+							frontImgMsg = "<br> -> Front Check";
+							frontValid = false;
+						}
+						if ($("#backImage").prop("src").length > 30) {
+							backImgMsg = "";
+							backValid = true;
+						} else {
+							backImgMsg = "<br> -> Back Check";
+							backValid = false;
+						}
+						if (amtValid && frontValid && backValid) {
+							return true;
+						} else {
+							// //NotyMsg.errorMsg("Please enter missing
+							// fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"");//TODO
+							return false;
+						}
 
-	}
+						/* } */
+					}
+					$scope.checkLimit = function() {
+						if (parseFloat($scope.amt) > parseFloat($scope.dailyLimitAmt)) {// TODO
+						// NotyMsg.errorMsg("Please add a cheque of lesser or
+						// equal amount of daily limit.");
+							return false;
+						} else if (parseInt($scope.depositLimitCount) < 1) {// TODO
+						// NotyMsg.errorMsg("Number of checks you can deposit is
+						// exceeding the limit.");
+							return false;
+						} else if (parseFloat($scope.amt) > parseFloat($scope.depositLimitAmt)) {// TODO
+						// NotyMsg.errorMsg("Check amount is exceeding your
+						// deposit limits.");
+							return false;
+						} else {
+							return true;
+						}
+					}
 
-	$scope.captureFront = function(retake) {
-		/*if (retake != "retake") {
-			if (screen.orientation.indexOf("portrait") != -1) {
-				gConfig.origOrientation = "portrait";
-			} else {
-				gConfig.origOrientation = "landscape";
-			}
-		}*/
-		$cordovaCamera.getPicture(options).then(function(imageData) {
-			$scope.Cheque.frontImage = "data:image/jpeg;base64," + imageData;
-			$("#frontImageDiv").hide();
-			$("#frontValidImageDiv").show()
-		}, function(err) {
-			// error
-		});
+					$scope.processCheck = function() {
+						$scope.validCheckColl.push({
+							'SessionId' : gConfig.IVSSessionId,
+							'Amount' : parseFloat($scope.amt).toFixed(2),
+							'FrontImage' : $scope.Cheque.frontImage,
+							'RearImage' : $scope.Cheque.backImage,
+							'ReturnImage' : true,
+							'status':2
+						})
+						$scope.checkCounter = $scope.validCheckColl.length
+						/*var checkCount = $scope.validCheckColl.length;
+						var carouselAddedStr = "";
+						for (var i = 0; i < checkCount; i++) {
+							carouselAddedStr = carouselAddedStr
+									+ "<li class='checkLi' data-status='2'><span><span class='carouselLi'>"
+									+ (i + 1)
+									+ "</span><br><span class='carouselAmt'>"
+									+ $scope.validCheckColl[i].Amount
+									+ "</span></span></li>";
+						}
+						var remainingStr = "";
+						var limitCount = 0// parseInt(this.depThresholdCount);
+						var remainingLength = limitCount + parseInt(checkCount)
+								- 1;
+						for (var j = checkCount; j < remainingLength; j++) {
+							remainingStr = remainingStr
+									+ "<li class='checkLi' data-status='0'><span><span class='carouselLi'>"
+									+ (j + 1)
+									+ "</span><br><span class='carouselAmt'></span></span></li>";
+						}
+						var totalStr = carouselAddedStr + remainingStr;
+						this.ui.checkListCarousel.html(totalStr);
 
-	}
+						var activePos;
+						if (limitCount == 1) {
+							activePos = checkCount - 1;
+							$(".carouselLi:eq(" + activePos + ")").addClass(
+									"active");
+						} else {
+							activePos = checkCount;
+							$(".carouselLi:eq(" + activePos + ")").addClass(
+									"active");
+							$(".checkLi:eq(" + activePos + ")").attr(
+									"data-status", "1");
+						}
+						this.showUpdatedCarouselCheck();
+						this.scrollActiveElem();*/
+					}
 
-	$scope.captureBack = function() {
-		$cordovaCamera.getPicture(options).then(function(imageData) {
-			$scope.Cheque.backImage = "data:image/jpeg;base64," + imageData;
-			$("#backImageDiv").hide();
-			$("#backValidImageDiv").show()
-		}, function(err) {
-			// error
-		});
-	}
-	
-	$scope.isCheckCaptured = function() {
+					$scope.submitCheck = function() {
+						if (!$scope.isCheckCaptured()) {
+							return false;
+						}
+						if (!$scope.checkLimit()) {
+							return false;
+						}
+						/*
+						 * if($scope.checkCounter < 1){ this.startTrans();
+						 * gConfig.checkInProgress = true; return; }
+						 */
 
-        var amtMsg = "",
-            frontImgMsg = "",
-            backImgMsg = "";
-        var amtValid = false, frontValid = false, backValid = false;
-       //***$GeoLocation$***:adding if condition for checking the boolean response of server
+						$scope.processCheck();
+						$scope.Cheque = null || {};
+						$scope.amt = null;
+					}
 
-        /*if(gConfig.geoAllow=="false"){
-            NotyMsg.errorMsg("Sorry you are not allowed to deposit the check from the current location");
-            return false;
-        }
-        else{*/
+					$scope.depositChecks = function() {
 
-        if(parseFloat($scope.amt) > 0){
-            amtMsg = "";
-            amtValid = true;
-        }else{
-            amtMsg = "<br> -> Check Amount";
-            amtValid = false;
-        }
-        if($("#frontImage").prop("src").length > 30){
-            frontImgMsg = "";
-            frontValid = true;
-        }else{
-            frontImgMsg = "<br> -> Front Check";
-            frontValid = false;
-        }
-        if($("#backImage").prop("src").length > 30){
-            backImgMsg = "";
-            backValid = true;
-        }else{
-            backImgMsg = "<br> -> Back Check";
-            backValid = false;
-        }
-        if(amtValid && frontValid && backValid){
-            return true;
-        }else {
-//            //NotyMsg.errorMsg("Please enter missing fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"");//TODO
-            return false;
-        }
+						if ($scope.validCheckColl.length < 1) {
+							// NotyMsg.errorMsg("Please add at least one check
+							// to the deposit list before depositing.");
+							return false;
+						}
+						/*
+						 * proccess { 'SessionId' : gConfig.IVSSessionId,
+						 * 'ReturnValue' : true, //***$GeoLocation$***: adding
+						 * one parameter "strSessionId" : gConfig.SessionID }
+						 */
 
-   /*}*/
-	}
-	$scope.checkLimit = function(){
-        if(parseFloat($scope.amt) > parseFloat($scope.dailyLimitAmt)){//TODO
-//            NotyMsg.errorMsg("Please add a cheque of lesser or equal amount of daily limit.");
-            return false;
-        }else if(parseInt($scope.depositLimitCount) < 1 ){//TODO
-//            NotyMsg.errorMsg("Number of checks you can deposit is exceeding the limit.");
-            return false;
-        }else if(parseFloat($scope.amt) > parseFloat($scope.depositLimitAmt)){//TODO
-//            NotyMsg.errorMsg("Check amount is exceeding your deposit limits.");
-            return false;
-        }else{
-            return true;
-        }
-    }
-	
-	$scope.processCheck = function() {
-		$scope.validCheckColl.push({
-                    'SessionId'     : gConfig.IVSSessionId,
-                    'Amount'        : parseFloat($scope.amt).toFixed(2),
-                    'FrontImage'    : $scope.Cheque.frontImage,
-                    'RearImage'     : $scope.Cheque.backImage,
-                    'ReturnImage'   : true
-                })
-                $scope.checkCounter = $scope.validCheckColl.length
-	}
-	
-	$scope.submitCheck = function() {
-		if(!$scope.isCheckCaptured()){
-            return false;
-        }
-        if(!$scope.checkLimit()){
-            return false;
-        }
-        /*if($scope.checkCounter < 1){
-            this.startTrans();
-            gConfig.checkInProgress = true;
-            return;
-        }*/
+						// this.depositSuccess(54321);
+					}
+					$scope.isCheckCaptureStarted = function() {
+						var amtValid = ($scope.amt.length > 0 || parseFloat($scope.amt) > 0);
+						var frontValid = ($("#frontImage").prop("src").length > 30);
+						var backValid = ($("#backImage").prop("src").length > 30);
 
-        $scope.processCheck();
-	}
-	
-	$scope.depositChecks = function() {
+						return (amtValid || frontValid || backValid)
+					}
 
-        if($scope.validCheckColl.length < 1){
-//            NotyMsg.errorMsg("Please add at least one check to the deposit list before depositing.");
-            return false;
-        }
-        /*proccess {
-            'SessionId'     : gConfig.IVSSessionId,
-            'ReturnValue'   : true,
-            //***$GeoLocation$***: adding one parameter
-             "strSessionId" : gConfig.SessionID
-        }*/
-        
-        //this.depositSuccess(54321);
-    
-	}
-	$scope.isCheckCaptureStarted = function() {
-		 var amtValid = ($scope.amt.length > 0 || parseFloat($scope.amt) > 0);
-         var frontValid = ($("#frontImage").prop("src").length > 30);
-         var backValid = ($("#backImage").prop("src").length > 30);
+					$scope.deleteCheck = function() {
+						var status = $("span.active").parent().parent().attr(
+								"data-status");
+						if (status == "1" && $scope.isCheckCaptureStarted()) {
+							NotyMsg
+									.confirmMsg(
+											"Are you sure you want to remove this check?",
+											this.clearCheck);
+						}
+						if (status == "2") {
+							NotyMsg
+									.confirmMsg(
+											"Are you sure you want to remove this check from the deposit list?",
+											this.deleteCheckConfirmed);
+						}
+					}
 
-         return(amtValid || frontValid || backValid)
-	}
-	
-	$scope.deleteCheck = function() {
-		 var status = $("span.active").parent().parent().attr("data-status");
-         if(status == "1" && $scope.isCheckCaptureStarted()){
-             NotyMsg.confirmMsg("Are you sure you want to remove this check?", this.clearCheck);
-         }
-         if(status == "2"){
-             NotyMsg.confirmMsg("Are you sure you want to remove this check from the deposit list?", this.deleteCheckConfirmed);
-         }
-	}
-	
-	$scope.discardChecks = function() {
-		if(this.validCheckColl.length < 1){
-            $scope.deleteCheck();
-        }else{
-            //NotyMsg.confirmMsg("This will delete all the checks in deposit list and cancel this transaction.<br>Are you sure you want to discard this deposit?", this.discardConfirmed);
-        }
-	}
+					$scope.discardChecks = function() {
+						if (this.validCheckColl.length < 1) {
+							$scope.deleteCheck();
+						} else {
+							// NotyMsg.confirmMsg("This will delete all the
+							// checks in deposit list and cancel this
+							// transaction.<br>Are you sure you want to discard
+							// this deposit?", this.discardConfirmed);
+						}
+					}
 
-	$scope.updateAmt = function() {
+					$scope.updateAmt = function() {
 
-	}
+					}
 
-	$scope.locationsSelected = function() {
+					$scope.locationsSelected = function() {
 
-	}
+					}
 
-})
+				})
