@@ -205,7 +205,7 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
         }
         else{*/
 
-        if($scope.amt.length > 0 || parseFloat($scope.amt.val()) > 0){
+        if(parseFloat($scope.amt) > 0){
             amtMsg = "";
             amtValid = true;
         }else{
