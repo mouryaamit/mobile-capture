@@ -7,6 +7,7 @@
 angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'starter.services', 'starter.factories', 'ngCordova'])
 
     .run(function ($ionicPlatform) {
+
         $ionicPlatform.ready(function () {
         	/*$.ajax({
                 url : 'http://test15.deposit2day.com//ValidationService/VSoftRemoteSvc.asmx',

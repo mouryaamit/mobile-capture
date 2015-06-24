@@ -329,9 +329,8 @@ controllers
 						}
 						var remainingStr = "";
 						var limitCount = $scope.depositLimitCount;
-						var remainingLength = limitCount + parseInt(checkCount)
-								- 1;
-
+						var remainingLength = limitCount - parseInt(checkCount) ;
+						
 						for (var j = checkCount; j < remainingLength; j++) {
 							remainingStr = remainingStr
 									+ "<li class='checkLi' data-status='0'><span><span class='carouselLi'>"
