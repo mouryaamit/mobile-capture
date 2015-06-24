@@ -54,9 +54,10 @@ controllers.controller('HistoryCtrl', function($scope) {
 })
 
 controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
-		ServerConfig, $cordovaCamera) {// 31191
+		ServerConfig, $cordovaCamera) {/*// 31191
 // console.log(ServerConfig.url)
 	var options = null || {}
+	
 	ionic.Platform.ready(function() {
 		options = {
 			quality : 50,
@@ -70,11 +71,11 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 			saveToPhotoAlbum : false
 		};
 	});
-
+	$scope.checkList = null || []
 	$scope.locationsResult = null || []
 	$scope.accountResult = null || []
 	$scope.Cheque = null || {}
-	$scope.init = function() {/*
+	$scope.init = function() {
 		appFactory.getLocations({}).$promise.then(function(getLocationsResult) {
 			console.log(getLocationsResult)
 			$scope.locationsResult = getLocationsResult;
@@ -128,7 +129,14 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 		})
 
 		$('.selectpicker').selectpicker()
-	*/}
+	
+		
+	
+		
+	
+	
+	
+	}
 
 	$scope.init();
 
@@ -149,13 +157,13 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 	}
 
 	$scope.captureFront = function(retake) {
-		/*if (retake != "retake") {
+		if (retake != "retake") {
 			if (screen.orientation.indexOf("portrait") != -1) {
 				gConfig.origOrientation = "portrait";
 			} else {
 				gConfig.origOrientation = "landscape";
 			}
-		}*/
+		}
 		$cordovaCamera.getPicture(options).then(function(imageData) {
 			$scope.Cheque.frontImage = "data:image/jpeg;base64," + imageData;
 			$("#frontImageDiv").hide();
@@ -171,9 +179,100 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 	}
 
 	$scope.captureBack = function() {
-
+		$cordovaCamera.getPicture(options).then(function(imageData) {
+			$scope.Cheque.backImage = "data:image/jpeg;base64," + imageData;
+			$("#backImageDiv").hide();
+			$("#backValidImageDiv").show()
+		}, function(err) {
+			// error
+		});
 	}
+	
+	$scope.isCheckCaptured = function() {
 
+        var amtMsg = "",
+            frontImgMsg = "",
+            backImgMsg = "";
+        var amtValid = false, frontValid = false, backValid = false;
+       //***$GeoLocation$***:adding if condition for checking the boolean response of server
+
+        if(gConfig.geoAllow=="false"){
+            NotyMsg.errorMsg("Sorry you are not allowed to deposit the check from the current location");
+            return false;
+        }
+        else{
+
+        if($scope.amt.length > 0 || parseFloat($scope.amt.val()) > 0){
+            amtMsg = "";
+            amtValid = true;
+        }else{
+            amtMsg = "<br> -> Check Amount";
+            amtValid = false;
+        }
+        if($("#frontImage").prop("src").length > 30){
+            frontImgMsg = "";
+            frontValid = true;
+        }else{
+            frontImgMsg = "<br> -> Front Check";
+            frontValid = false;
+        }
+        if($("#backImage").prop("src").length > 30){
+            backImgMsg = "";
+            backValid = true;
+        }else{
+            backImgMsg = "<br> -> Back Check";
+            backValid = false;
+        }
+        if(amtValid && frontValid && backValid){
+            return true;
+        }else {
+//            NotyMsg.errorMsg("Please enter missing fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"");//TODO
+            return false;
+        }
+
+   }
+	}
+	checkLimit: function(){
+        if(parseFloat($scope.amt) > parseFloat($scope.dailyLimitAmt)){//TODO
+//            NotyMsg.errorMsg("Please add a cheque of lesser or equal amount of daily limit.");
+            return false;
+        }else if(parseInt($scope.depositLimitCount) < 1 ){//TODO
+//            NotyMsg.errorMsg("Number of checks you can deposit is exceeding the limit.");
+            return false;
+        }else if(parseFloat($scope.amt) > parseFloat($scope.depositLimitAmt)){//TODO
+//            NotyMsg.errorMsg("Check amount is exceeding your deposit limits.");
+            return false;
+        }else{
+            return true;
+        }
+    }
+	
+	$scope.processCheck = function() {
+		$scope.checkList.push({
+                    'SessionId'     : gConfig.IVSSessionId,
+                    'Amount'        : parseFloat($scope.amt).toFixed(2),
+                    'FrontImage'    : $scope.Cheque.frontImage,
+                    'RearImage'     : $scope.Cheque.backImage,
+                    'ReturnImage'   : true
+                })
+	}
+	
+	$scope.submitCheck = function() {
+		if(!$scope.isCheckCaptured()){
+            return false;
+        }
+        if(!$scope.checkLimit()){
+            return false;
+        }
+        if($scope.checkCounter < 1){
+            this.startTrans();
+            gConfig.checkInProgress = true;
+            return;
+        }
+
+        $scope.processCheck();
+	}
+	
 	$scope.deleteCheck = function() {
 
 	}
@@ -194,4 +293,4 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 
 	}
 
-})
+*/})

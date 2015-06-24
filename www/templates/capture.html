@@ -41,7 +41,7 @@
                     <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 text-left">
                     <div class="amtInputDiv">
                         <!--<span class="input-group-addon"></span>-->
-                        <input id="amt" ng-blur="updateAmt()" class="form-control addOnInput text-right" type="number" min="1">
+                        <input id="amt" ng-model="amt" ng-blur="updateAmt()" class="form-control addOnInput text-right" type="number" min="1">
                         <button id="dummyButton" type="button"></button>
                     </div>
                     <div class="amtPreviewDiv amtLabelPad hiddenElem">
@@ -57,7 +57,7 @@
                     <div class="col-xs-6 text-center borderRight">
                         <div class="checkImgDiv" id="frontImageDiv">
                             <div class="imgDiv">
-                                <img id="frontImage" class="frontCheckImg checkImgs hiddenElem" ng-click="previewFrontImg()">
+                                <img id="frontImage" src="{{Cheque.frontImage}}" class="frontCheckImg checkImgs hiddenElem" ng-click="previewFrontImg()">
                                 <span class="frontCameraIcon captureFrontBut icon-capture" ng-click="captureFront()"></span>
                             </div>
                             <span class="captureFrontBut" ng-click="captureFront()"><strong>Front View</strong></span>
@@ -70,17 +70,17 @@
                         </div>
                     </div>
                     <div class="col-xs-6 text-center">
-                        <div class="checkImgDiv">
+                        <div class="checkImgDiv" id="backImageDiv">
                             <div class="imgDiv">
-                                <img id="backImage" class="backCheckImg checkImgs hiddenElem" ng-click="previewBackImg()">
+                                <img id="backImage" src="{{Cheque.backImage}}" class="backCheckImg checkImgs hiddenElem" ng-click="previewBackImg()">
                                 <span class="backCameraIcon captureBackBut icon-capture" ng-click="captureBack()"></span>
 
                             </div>
                             <span class="captureBackBut" ng-click="captureBack()"><strong>Back View</strong></span>
                         </div>
-                        <div class="validCheckImgDiv hiddenElem">
+                        <div class="validCheckImgDiv" id="backValidImageDiv" style="display: none;">
                             <div class="imgDiv">
-                                <img id="backImagePreview" class="backCheckImg checkImgs" ng-click="previewBackImg()">
+                                <img id="backImagePreview" src="{{Cheque.backImage}}" class="backCheckImg checkImgs" ng-click="previewBackImg()">
                             </div>
                             <span class="captureBackBut" ng-click="captureBack()"><strong>Back View</strong></span>
                         </div>
@@ -92,7 +92,7 @@
         <div id="submitSingleCheckDiv" class="responsiveChunk">
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-3 text-center">
-                    <button id="submitCheck" class="btn btn-info btn-rounded" >
+                    <button id="submitCheck" ng-click="submitCheck()" class="btn btn-info btn-rounded" >
                         <span class="glyphicon glyphicon-plus-sign glyphicon-white"></span>
                         Add
                     </button>

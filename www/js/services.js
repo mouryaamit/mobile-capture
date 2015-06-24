@@ -40,7 +40,7 @@ services.service('gConfig', function() {
             'LocationID'    : '',
             'BusDate'       : '12/12/2015',// Hardcoded
             'IVSProfileID'  : '',
-            'IVSSessionId'  : '',
+            'IVSSessionId'  : Date.now(),//Hardcoded
 
             'UserID'        : '',
             'EmailID'       : '',
