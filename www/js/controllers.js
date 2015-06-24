@@ -260,11 +260,13 @@ controllers
 							$(".horizontalScroll").css("overflow-x", "scroll");
 							var checkLi = $(".carouselLi.active").parent()
 									.parent();
+							if($scope.depositLimitCount < $scope.validCheckColl.length){
 							$(".horizontalScroll").scrollLeft(
 									checkLi.position().left
 											- $(".horizontalScroll").width()
 											/ $("#checkListCarousel")
 													.children().length);
+							}
 						}
 					}
 					$scope.drawCrousal = function() {
@@ -319,6 +321,7 @@ controllers
 						$scope.showUpdatedCarouselCheck();
 
 						$scope.scrollActiveElem();
+						$scope.updateDepositCounter();
 
 					}
 
