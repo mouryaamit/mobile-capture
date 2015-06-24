@@ -20,7 +20,7 @@ controllers.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
 controllers.controller('PlaylistCtrl', function($scope, Camera) {
 	$scope.image = null;
-
+	
 	$scope.getPic = function() {
 		Camera.getPicture({
 			quality : 75,
@@ -54,11 +54,12 @@ controllers.controller('HistoryCtrl', function($scope) {
 })
 
 controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
-		ServerConfig, $cordovaCamera) {/*// 31191
+		ServerConfig, $cordovaCamera) {// 31191
 // console.log(ServerConfig.url)
 	var options = null || {}
-	
-	ionic.Platform.ready(function() {
+/*	var NotyMsg = require('../lib/noty_msg');
+	NotyMsg.errorMsg("ad");
+*/	ionic.Platform.ready(function() {
 		options = {
 			quality : 50,
 			destinationType : Camera.DestinationType.DATA_URL,
@@ -71,11 +72,13 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 			saveToPhotoAlbum : false
 		};
 	});
-	$scope.checkList = null || []
+	$scope.validCheckColl = null || []
 	$scope.locationsResult = null || []
 	$scope.accountResult = null || []
 	$scope.Cheque = null || {}
 	$scope.init = function() {
+		 $scope.checkCounter =0 ; 
+			 /*
 		appFactory.getLocations({}).$promise.then(function(getLocationsResult) {
 			console.log(getLocationsResult)
 			$scope.locationsResult = getLocationsResult;
@@ -129,7 +132,7 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 		})
 
 		$('.selectpicker').selectpicker()
-	
+	*/
 		
 	
 		
@@ -156,14 +159,18 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 
 	}
 
+	$scope.previewBackImg = function() {
+
+	}
+
 	$scope.captureFront = function(retake) {
-		if (retake != "retake") {
+		/*if (retake != "retake") {
 			if (screen.orientation.indexOf("portrait") != -1) {
 				gConfig.origOrientation = "portrait";
 			} else {
 				gConfig.origOrientation = "landscape";
 			}
-		}
+		}*/
 		$cordovaCamera.getPicture(options).then(function(imageData) {
 			$scope.Cheque.frontImage = "data:image/jpeg;base64," + imageData;
 			$("#frontImageDiv").hide();
@@ -171,10 +178,6 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 		}, function(err) {
 			// error
 		});
-
-	}
-
-	$scope.previewBackImg = function() {
 
 	}
 
@@ -196,11 +199,11 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
         var amtValid = false, frontValid = false, backValid = false;
        //***$GeoLocation$***:adding if condition for checking the boolean response of server
 
-        if(gConfig.geoAllow=="false"){
+        /*if(gConfig.geoAllow=="false"){
             NotyMsg.errorMsg("Sorry you are not allowed to deposit the check from the current location");
             return false;
         }
-        else{
+        else{*/
 
         if($scope.amt.length > 0 || parseFloat($scope.amt.val()) > 0){
             amtMsg = "";
@@ -226,13 +229,13 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
         if(amtValid && frontValid && backValid){
             return true;
         }else {
-//            NotyMsg.errorMsg("Please enter missing fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"");//TODO
+//            //NotyMsg.errorMsg("Please enter missing fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"");//TODO
             return false;
         }
 
-   }
+   /*}*/
 	}
-	checkLimit: function(){
+	$scope.checkLimit = function(){
         if(parseFloat($scope.amt) > parseFloat($scope.dailyLimitAmt)){//TODO
 //            NotyMsg.errorMsg("Please add a cheque of lesser or equal amount of daily limit.");
             return false;
@@ -248,13 +251,14 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
     }
 	
 	$scope.processCheck = function() {
-		$scope.checkList.push({
+		$scope.validCheckColl.push({
                     'SessionId'     : gConfig.IVSSessionId,
                     'Amount'        : parseFloat($scope.amt).toFixed(2),
                     'FrontImage'    : $scope.Cheque.frontImage,
                     'RearImage'     : $scope.Cheque.backImage,
                     'ReturnImage'   : true
                 })
+                $scope.checkCounter = $scope.validCheckColl.length
 	}
 	
 	$scope.submitCheck = function() {
@@ -264,25 +268,55 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
         if(!$scope.checkLimit()){
             return false;
         }
-        if($scope.checkCounter < 1){
+        /*if($scope.checkCounter < 1){
             this.startTrans();
             gConfig.checkInProgress = true;
             return;
-        }
+        }*/
 
         $scope.processCheck();
 	}
 	
-	$scope.deleteCheck = function() {
-
-	}
-
 	$scope.depositChecks = function() {
 
+        if($scope.validCheckColl.length < 1){
+//            NotyMsg.errorMsg("Please add at least one check to the deposit list before depositing.");
+            return false;
+        }
+        /*proccess {
+            'SessionId'     : gConfig.IVSSessionId,
+            'ReturnValue'   : true,
+            //***$GeoLocation$***: adding one parameter
+             "strSessionId" : gConfig.SessionID
+        }*/
+        
+        //this.depositSuccess(54321);
+    
 	}
+	$scope.isCheckCaptureStarted = function() {
+		 var amtValid = ($scope.amt.length > 0 || parseFloat($scope.amt) > 0);
+         var frontValid = ($("#frontImage").prop("src").length > 30);
+         var backValid = ($("#backImage").prop("src").length > 30);
 
+         return(amtValid || frontValid || backValid)
+	}
+	
+	$scope.deleteCheck = function() {
+		 var status = $("span.active").parent().parent().attr("data-status");
+         if(status == "1" && $scope.isCheckCaptureStarted()){
+             NotyMsg.confirmMsg("Are you sure you want to remove this check?", this.clearCheck);
+         }
+         if(status == "2"){
+             NotyMsg.confirmMsg("Are you sure you want to remove this check from the deposit list?", this.deleteCheckConfirmed);
+         }
+	}
+	
 	$scope.discardChecks = function() {
-
+		if(this.validCheckColl.length < 1){
+            $scope.deleteCheck();
+        }else{
+            //NotyMsg.confirmMsg("This will delete all the checks in deposit list and cancel this transaction.<br>Are you sure you want to discard this deposit?", this.discardConfirmed);
+        }
 	}
 
 	$scope.updateAmt = function() {
@@ -293,4 +327,4 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 
 	}
 
-*/})
+})

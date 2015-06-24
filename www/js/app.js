@@ -8,7 +8,7 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
-        	$.ajax({
+        	/*$.ajax({
                 url : 'http://test15.deposit2day.com//ValidationService/VSoftRemoteSvc.asmx',
                 type : 'POST',
                 data : '<GetMerchantLocationsAndAccounts xmlns="http://consumer.vsoftcorp.com/">'+
@@ -19,6 +19,7 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
                 '</GetMerchantLocationsAndAccounts>',
                 contentType: 'text/xml',
                 success:function (response) {
+                	alert('s')
     console.log(response)
                     // call model response function
 //                    model.processResponse(response);
@@ -26,11 +27,12 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
 
                 },// show error message
                 error: function(jqXHR, textStatus, errorThrown ){
+                	alert('e')
                     console.log(jqXHR.statusCode());
-                    NotyMsg.errorMsg("Unable to Connect to the Internet. Please try again later.");
+//                    NotyMsg.errorMsg("Unable to Connect to the Internet. Please try again later.");
 
                 }
-            });
+            });*/
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins.Keyboard) {
