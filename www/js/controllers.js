@@ -54,20 +54,23 @@ controllers.controller('HistoryCtrl', function($scope) {
 })
 
 controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
-		ServerConfig,$cordovaCamera) {// 31191
-//	console.log(ServerConfig.url)
-	var options = {
-		      quality: 50,
-		      destinationType: Camera.DestinationType.DATA_URL,
-		      sourceType: Camera.PictureSourceType.CAMERA,
-		      allowEdit: true,
-		      encodingType: Camera.EncodingType.JPEG,
-		      targetWidth: 800,
-		      targetHeight: 600,
-		      popoverOptions: CameraPopoverOptions,
-		      saveToPhotoAlbum: false
-		    };
-	
+		ServerConfig, $cordovaCamera) {// 31191
+// console.log(ServerConfig.url)
+	var options = null || {}
+	ionic.Platform.ready(function() {
+		options = {
+			quality : 50,
+			destinationType : Camera.DestinationType.DATA_URL,
+			sourceType : Camera.PictureSourceType.CAMERA,
+			allowEdit : true,
+			encodingType : Camera.EncodingType.JPEG,
+			targetWidth : 800,
+			targetHeight : 600,
+			popoverOptions : CameraPopoverOptions,
+			saveToPhotoAlbum : false
+		};
+	});
+
 	$scope.locationsResult = null || []
 	$scope.accountResult = null || []
 	$scope.Cheque = null || {}
@@ -91,16 +94,16 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 		appFactory.getAccounts({}).$promise.then(function(getAccountsResult) {
 			$scope.accountResult = getAccountsResult;
 
-			if($scope.accountResult.length == 1){
-                $($(".icon-select-drop-down")[1]).hide();
-                $('#multipleAccDiv').addClass("disabled");
-            }else{
-                $($(".icon-select-drop-down")[1]).show();
-                $('#multipleAccDiv').removeClass("disabled");
-            }
+			if ($scope.accountResult.length == 1) {
+				$($(".icon-select-drop-down")[1]).hide();
+				$('#multipleAccDiv').addClass("disabled");
+			} else {
+				$($(".icon-select-drop-down")[1]).show();
+				$('#multipleAccDiv').removeClass("disabled");
+			}
 
-            $('.selectpicker').selectpicker('render');
-            $('.selectpicker').selectpicker('refresh');
+			$('.selectpicker').selectpicker('render');
+			$('.selectpicker').selectpicker('refresh');
 		}, function(getLocationsError) {
 
 		})
@@ -146,19 +149,19 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 	}
 
 	$scope.captureFront = function(retake) {
-		if(retake != "retake"){
-            if(screen.orientation.indexOf("portrait") != -1){
-                gConfig.origOrientation = "portrait";
-            }else{
-                gConfig.origOrientation = "landscape";
-            }
-        }
+		if (retake != "retake") {
+			if (screen.orientation.indexOf("portrait") != -1) {
+				gConfig.origOrientation = "portrait";
+			} else {
+				gConfig.origOrientation = "landscape";
+			}
+		}
 		$cordovaCamera.getPicture(options).then(function(imageData) {
-		      $scope.Cheque.frontImage = "data:image/jpeg;base64," + imageData;
-		      $(".frontCameraIcon").hide();
-		    }, function(err) {
-		      // error
-		    });
+			$scope.Cheque.frontImage = "data:image/jpeg;base64," + imageData;
+			$(".frontCameraIcon").hide();
+		}, function(err) {
+			// error
+		});
 
 	}
 
