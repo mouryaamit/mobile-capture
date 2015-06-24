@@ -18,9 +18,11 @@ factories.factory('Camera', [ '$q', function($q) {
 	}
 } ])
 
-factories.factory('appFactory', [ '$q', function($q) {
+factories.factory('appFactory', [ '$soap','ServerConfig', function($soap,ServerConfig) {
 
 	return {
-		//TODO
+		getLocations : function(){
+            return $soap.post(ServerConfig.url,"GetMerchantLocationsAndAccounts");
+        }
 	}
 } ])

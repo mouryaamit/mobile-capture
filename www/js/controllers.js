@@ -54,11 +54,26 @@ controllers.controller('HistoryCtrl', function($scope) {
 })
 
 controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
-		ServerConfig) {// 31191
+		ServerConfig,$cordovaCamera) {// 31191
+//	console.log(ServerConfig.url)
+	var options = {
+		      quality: 50,
+		      destinationType: Camera.DestinationType.DATA_URL,
+		      sourceType: Camera.PictureSourceType.CAMERA,
+		      allowEdit: true,
+		      encodingType: Camera.EncodingType.JPEG,
+		      targetWidth: 800,
+		      targetHeight: 600,
+		      popoverOptions: CameraPopoverOptions,
+		      saveToPhotoAlbum: false
+		    };
+	
 	$scope.locationsResult = null || []
 	$scope.accountResult = null || []
+	$scope.Cheque = null || {}
 	$scope.init = function() {
 		appFactory.getLocations({}).$promise.then(function(getLocationsResult) {
+			console.log(getLocationsResult)
 			$scope.locationsResult = getLocationsResult;
 
 			if ($scope.locationsResult.length == 1) {
@@ -130,7 +145,20 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 
 	}
 
-	$scope.captureFront = function() {
+	$scope.captureFront = function(retake) {
+		if(retake != "retake"){
+            if(screen.orientation.indexOf("portrait") != -1){
+                gConfig.origOrientation = "portrait";
+            }else{
+                gConfig.origOrientation = "landscape";
+            }
+        }
+		$cordovaCamera.getPicture(options).then(function(imageData) {
+		      $scope.Cheque.frontImage = "data:image/jpeg;base64," + imageData;
+		      $(".frontCameraIcon").hide();
+		    }, function(err) {
+		      // error
+		    });
 
 	}
 
