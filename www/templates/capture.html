@@ -7,7 +7,7 @@
                     <div class="form-group locAccFormGrp">
                         <div id="multipleLocDiv" class="input-group locAccSelectInpGrp">
                             <span class="input-group-addon"><span class="icon-storelocation"></span></span>
-                            <select id="locations" ng-change="locationsSelected()" class="selectpicker show-tick locAccSelect">
+                            <select id="locations" ng-model="locations" ng-change="locationsSelected()" class="selectpicker show-tick locAccSelect">
                             	<option ng-repeat="loc in locationsResult" value="{{loc.locationId}}">{{loc.locationName}}</option>
                             </select>
                         </div>

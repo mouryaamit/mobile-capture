@@ -74,7 +74,7 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 	$scope.locationsResult = null || []
 	$scope.accountResult = null || []
 	$scope.Cheque = null || {}
-	$scope.init = function() {
+	$scope.init = function() {/*
 		appFactory.getLocations({}).$promise.then(function(getLocationsResult) {
 			console.log(getLocationsResult)
 			$scope.locationsResult = getLocationsResult;
@@ -128,7 +128,7 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 		})
 
 		$('.selectpicker').selectpicker()
-	}
+	*/}
 
 	$scope.init();
 
@@ -149,13 +149,13 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 	}
 
 	$scope.captureFront = function(retake) {
-		if (retake != "retake") {
+		/*if (retake != "retake") {
 			if (screen.orientation.indexOf("portrait") != -1) {
 				gConfig.origOrientation = "portrait";
 			} else {
 				gConfig.origOrientation = "landscape";
 			}
-		}
+		}*/
 		$cordovaCamera.getPicture(options).then(function(imageData) {
 			$scope.Cheque.frontImage = "data:image/jpeg;base64," + imageData;
 			$(".frontCameraIcon").hide();
