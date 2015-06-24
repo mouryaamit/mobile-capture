@@ -69,7 +69,7 @@ controllers
 					 * NotyMsg.errorMsg("ad");
 					 */
 					ionic.Platform.ready(function() {
-						/*options = {
+						options = {
 							quality : 50,
 							destinationType : Camera.DestinationType.DATA_URL,
 							sourceType : Camera.PictureSourceType.CAMERA,
@@ -79,7 +79,7 @@ controllers
 							targetHeight : 600,
 							popoverOptions : CameraPopoverOptions,
 							saveToPhotoAlbum : false
-						};*/
+						};
 					});
 					$scope.validCheckColl = null || []
 					$scope.locationsResult = null || []
