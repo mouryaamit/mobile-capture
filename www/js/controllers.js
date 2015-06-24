@@ -467,8 +467,8 @@ controllers
 						
 						 $('#totalChecksDepCounter').html(totalChecks);
 						 $('#totalValidAmtDepCounter').html(totalAmt);
-//						 * this.updateCheckProgress();
-						 */
+//						  this.updateCheckProgress();
+						 
 					}
 					$scope.initCollection = function() {
 						$scope.checkCounter = 0;
