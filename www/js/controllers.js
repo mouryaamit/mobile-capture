@@ -464,10 +464,10 @@ controllers
 									+ parseFloat($scope.validCheckColl[i].Amount);
 						}
 						totalAmt = parseFloat(totalAmt).toFixed(2);
-						/*
-						 * this.ui.totalChecksDepCounter.html(totalChecks);
-						 * this.ui.totalValidAmtDepCounter.html(totalAmt);
-						 * this.updateCheckProgress();
+						
+						 $('#totalChecksDepCounter').html(totalChecks);
+						 $('#totalValidAmtDepCounter').html(totalAmt);
+//						 * this.updateCheckProgress();
 						 */
 					}
 					$scope.initCollection = function() {
