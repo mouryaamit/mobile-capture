@@ -158,8 +158,8 @@ controllers.controller('CaptureCtrl', function($scope, appFactory, gConfig,
 		}*/
 		$cordovaCamera.getPicture(options).then(function(imageData) {
 			$scope.Cheque.frontImage = "data:image/jpeg;base64," + imageData;
-			$(".frontCameraIcon").hide();
-			$("#frontImage").show()
+			$("#frontImageDiv").hide();
+			$("#frontValidImageDiv").show()
 		}, function(err) {
 			// error
 		});

@@ -55,14 +55,14 @@
             <div>
                 <div class="row">
                     <div class="col-xs-6 text-center borderRight">
-                        <div class="checkImgDiv">
+                        <div class="checkImgDiv" id="frontImageDiv">
                             <div class="imgDiv">
                                 <img id="frontImage" class="frontCheckImg checkImgs hiddenElem" ng-click="previewFrontImg()">
                                 <span class="frontCameraIcon captureFrontBut icon-capture" ng-click="captureFront()"></span>
                             </div>
                             <span class="captureFrontBut" ng-click="captureFront()"><strong>Front View</strong></span>
                         </div>
-                        <div class="validCheckImgDiv hiddenElem">
+                        <div class="validCheckImgDiv" id="frontValidImageDiv" style="display: none;">
                             <div class="imgDiv">
                                 <img id="frontImagePreview" src="{{Cheque.frontImage}}" class="frontCheckImg checkImgs" ng-click="previewFrontImg()">
                             </div>
