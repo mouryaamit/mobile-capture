@@ -93,7 +93,7 @@ controllers
 					 * getDailyLimit(); getDepositLimit();
 					 */
 					
-					$scope.validCheckColl.push({
+					/*$scope.validCheckColl.push({
 						'SessionId' : gConfig.IVSSessionId,
 						'Amount' : parseFloat("2").toFixed(2),
 						'FrontImage' : null,
@@ -116,7 +116,7 @@ controllers
 						'RearImage' : null,
 						'ReturnImage' : true,
 						'status' : 2
-					})
+					})*/
 					
 					
 
