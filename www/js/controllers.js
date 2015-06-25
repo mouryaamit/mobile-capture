@@ -93,7 +93,7 @@ controllers
 					 * getDailyLimit(); getDepositLimit();
 					 */
 					
-					$scope.validCheckColl.push({
+				/*	$scope.validCheckColl.push({
 						'SessionId' : gConfig.IVSSessionId,
 						'Amount' : parseFloat("2").toFixed(2),
 						'FrontImage' : "data:image/jpeg;base64,",
@@ -116,7 +116,7 @@ controllers
 						'RearImage' : "data:image/jpeg;base64,",
 						'ReturnImage' : true,
 						'status' : 2
-					})
+					})*/
 					
 					
 
@@ -162,11 +162,35 @@ controllers
 					}
 
 					$scope.previewFrontImg = function() {
-
+						if(!$("#frontImage").is(":hidden")){
+		                    frontImgSrc = $("#frontImage").prop("src");
+		                    backImgSrc = $("#backImage").prop("src");
+		                }else{
+		                    frontImgSrc = $("#frontImagePreview").prop("src");
+		                    backImgSrc = $("#backImagePreview").prop("src");
+		                }
+		                var data = {
+		                    "frontImgSrc" : frontImgSrc,
+		                    "backImgSrc" : backImgSrc
+		                };
+		                $('#HomeViewRegion').hide()
+//		                $('#FrontPreviewView').show()
 					}
 
 					$scope.previewBackImg = function() {
-
+						var frontImgSrc = "", backImgSrc = "";
+		                if(!$("#frontImage").is(":hidden")){
+		                    frontImgSrc = $("#frontImage").prop("src");
+		                    backImgSrc = $("#backImage").prop("src");
+		                }else{
+		                    frontImgSrc = $("#frontImagePreview").prop("src");
+		                    backImgSrc = $("#backImagePreview").prop("src");
+		                }
+		                var data = {
+		                    "frontImgSrc" : frontImgSrc,
+		                    "backImgSrc" : backImgSrc
+		                };
+		                $('#HomeViewRegion').hide()
 					}
 
 					$scope.captureFront = function(retake) {
@@ -328,7 +352,7 @@ controllers
 						var carouselAddedStr = "";
 						for (var i = 0; i < checkCount; i++) {
 							carouselAddedStr = carouselAddedStr
-									+ "<li ng-click=\"showCarouselCheck()\" class='checkLi' data-status='2'><span><span class='carouselLi'>"
+									+ "<li ng-click='showCarouselCheck()' class='checkLi' data-status='2'><span><span class='carouselLi'>"
 									+ (i + 1)
 									+ "</span><br><span class='carouselAmt'>"
 									+ $scope.validCheckColl[i].Amount
@@ -341,7 +365,7 @@ controllers
 						
 						for (var j = checkCount; j < limitCount; j++) {
 							remainingStr = remainingStr
-									+ "<li ng-click=\"showCarouselCheck()\" class='checkLi' data-status='0'><span><span class='carouselLi'>"
+									+ "<li ng-click='showCarouselCheck()' class='checkLi' data-status='0'><span><span class='carouselLi'>"
 									+ (j + 1)
 									+ "</span><br><span class='carouselAmt'></span></span></li>";
 						}

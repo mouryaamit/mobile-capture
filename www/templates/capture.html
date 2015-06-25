@@ -146,17 +146,17 @@
 								<!--   0 : Not Active, 1 : Active, 2 : Captured     -->
 								<ul id="checkListCarousel" class="pagination pagination-lg">
 									 <li ng-click="showCarouselCheck()" class="checkLi" data-status="1"><span><span class="carouselLi active">1</span><br><span class="carouselAmt"></span></span></li>
-                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="0"><span><span class="carouselLi">2</span><br><span class="carouselAmt"></span></span></li>
-                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="0"><span><span class="carouselLi">3</span><br><span class="carouselAmt"></span></span></li>
-                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="0"><span><span class="carouselLi">4</span><br><span class="carouselAmt"></span></span></li>
-                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="0"><span><span class="carouselLi">5</span><br><span class="carouselAmt"></span></span></li>
-                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="0"><span><span class="carouselLi">6</span><br><span class="carouselAmt"></span></span></li>
-                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="0"><span><span class="carouselLi">7</span><br><span class="carouselAmt"></span></span></li>
-                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="0"><span><span class="carouselLi">8</span><br><span class="carouselAmt"></span></span></li>
-                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="0"><span><span class="carouselLi">9</span><br><span class="carouselAmt"></span></span></li>
-                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="0"><span><span class="carouselLi">10</span><br><span class="carouselAmt"></span></span></li>
+                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">2</span><br><span class="carouselAmt"></span></span></li>
+                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">3</span><br><span class="carouselAmt"></span></span></li>
+                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">4</span><br><span class="carouselAmt"></span></span></li>
+                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">5</span><br><span class="carouselAmt"></span></span></li>
+                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">6</span><br><span class="carouselAmt"></span></span></li>
+                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">7</span><br><span class="carouselAmt"></span></span></li>
+                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">8</span><br><span class="carouselAmt"></span></span></li>
+                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">9</span><br><span class="carouselAmt"></span></span></li>
+                                    <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">10</span><br><span class="carouselAmt"></span></span></li>
                                 
-									
+									<li ng-click="showCarouselCheck()" class='checkLi' data-status='2'><span><span class='carouselLi'>"1</span><br><span class='carouselAmt'></span></span></li>	
 								</ul>
 							</nav>
 						</div>
@@ -234,5 +234,54 @@
 	</div>
 
 	<div id="CheckPreviewRegion"></div>
+	<div id="FrontPreviewView" class="hiddenElem">
+
+    <div class="viewCheckArea">
+
+        <div class="row text-center checkImgPreviewHeaderDiv">
+            <div class="col-xs-12">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active">
+                        <a href="#frontImgPre" data-toggle="tab" class="imgPreviewTabAnchors">
+                            <span class="checkImgViewHeader">Front View</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#backImgPre" data-toggle="tab" class="imgPreviewTabAnchors">
+                            <span class="checkImgViewHeader">Back View</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row checkImgPreviewDiv">
+            <div class="col-xs-12">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="frontImgPre">
+                        <img class="previewImgs img-responsive" id="frontPreviewCheck" src="<%= frontImgSrc %>">
+                    </div>
+                    <div class="tab-pane fade in" id="backImgPre">
+                        <img class="previewImgs img-responsive" id="backPreviewCheck" src="<%= backImgSrc %>">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="checkImgPreviewControls" class="sticky-footer">
+        <div class="row checkImgPreviewControlsDiv">
+            <div class="col-xs-12 text-left">
+                <button id="backToDep" class="btn btn-primary btn-rounded">
+                    <span class="icon-Back glyphicon-white"></span>
+                    Back to Deposit
+                </button>
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+</div>
+	
 
 </div>
