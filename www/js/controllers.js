@@ -60,6 +60,7 @@ controllers
 						$cordovaCamera) {// 31191
 					// console.log(ServerConfig.url)
 					var options = null || {}
+					$scope.amt = ""
 					$scope.depositLimitCount = 5
 					$scope.getNumber = function(num) {
 						return new Array(num);

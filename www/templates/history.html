@@ -1,0 +1,41 @@
+<div id="DepositHistoryView" class="container">
+
+    <div id="DepositHistoryRegion">
+        <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" class="active">
+                <a href="#todayTabContent" data-toggle="tab">
+                    Today
+                    <br>
+                    <span id="todayTabDate"></span>
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#yesterdayTabContent" data-toggle="tab">
+                    Yesterday
+                    <br>
+                    <span id="yestTabDate"></span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="todayTabContent">
+                <div class="panel-group" role="tablist" aria-multiselectable="true">
+
+                    <div id="todayHistoryDiv"></div>
+
+                </div>
+            </div>
+            <div class="tab-pane fade in" id="yesterdayTabContent">
+                <div class="panel-group" role="tablist" aria-multiselectable="true">
+
+                    <div id="yesterdayHistoryDiv"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="CheckPreviewRegion"></div>
+
+</div>
