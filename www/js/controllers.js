@@ -95,24 +95,30 @@ controllers
 					 * getDailyLimit(); getDepositLimit();
 					 */
 
-					/*
-					 * $scope.validCheckColl.push({ 'SessionId' :
-					 * gConfig.IVSSessionId, 'Amount' :
-					 * parseFloat("2").toFixed(2), 'FrontImage' :
-					 * "data:image/jpeg;base64,", 'RearImage' :
-					 * "data:image/jpeg;base64,", 'ReturnImage' : true, 'status' :
-					 * 2 }) $scope.validCheckColl.push({ 'SessionId' :
-					 * gConfig.IVSSessionId, 'Amount' :
-					 * parseFloat("3").toFixed(2), 'FrontImage' :
-					 * "data:image/jpeg;base64,", 'RearImage' :
-					 * "data:image/jpeg;base64,", 'ReturnImage' : true, 'status' :
-					 * 2 }) $scope.validCheckColl.push({ 'SessionId' :
-					 * gConfig.IVSSessionId, 'Amount' :
-					 * parseFloat("4").toFixed(2), 'FrontImage' :
-					 * "data:image/jpeg;base64,", 'RearImage' :
-					 * "data:image/jpeg;base64,", 'ReturnImage' : true, 'status' :
-					 * 2 })
-					 */
+					/*$scope.validCheckColl.push({
+						'SessionId' : gConfig.IVSSessionId,
+						'Amount' : parseFloat("2").toFixed(2),
+						'FrontImage' : "data:image/jpeg;base64,",
+						'RearImage' : "data:image/jpeg;base64,",
+						'ReturnImage' : true,
+						'status' : 2
+					})
+					$scope.validCheckColl.push({
+						'SessionId' : gConfig.IVSSessionId,
+						'Amount' : parseFloat("3").toFixed(2),
+						'FrontImage' : "data:image/jpeg;base64,",
+						'RearImage' : "data:image/jpeg;base64,",
+						'ReturnImage' : true,
+						'status' : 2
+					})
+					$scope.validCheckColl.push({
+						'SessionId' : gConfig.IVSSessionId,
+						'Amount' : parseFloat("4").toFixed(2),
+						'FrontImage' : "data:image/jpeg;base64,",
+						'RearImage' : "data:image/jpeg;base64,",
+						'ReturnImage' : true,
+						'status' : 2
+					})*/
 
 					$scope.scrollRight = function() {
 
@@ -140,9 +146,8 @@ controllers
 								this.validCheckColl[pos].RearImage);
 					}
 					$scope.showCarouselCheck = function() {
-						console.log('1')
-						var pos = $(event.currentTarget).index();
-						console.log(pos)
+						
+						var pos = ((parseInt($(event.currentTarget).index())+1)/2)-1;
 						var status = $(event.currentTarget).attr("data-status");
 						switch (status) {
 						case "0":
@@ -356,11 +361,12 @@ controllers
 						var carouselAddedStr = "";
 						for (var i = 0; i < checkCount; i++) {
 							carouselAddedStr = carouselAddedStr
-									+ "<li ng-click='showCarouselCheck()' class='checkLi' data-status='2'><span><span class='carouselLi'>"
-									+ (i + 1)
-									+ "</span><br><span class='carouselAmt'>"
-									+ $scope.validCheckColl[i].Amount
-									+ "</span></span></li>";
+							+ "<li></li>"
+							+ "<li ng-click='showCarouselCheck()' class='checkLi' data-status='2'><span><span class='carouselLi'>"
+							+ (i + 1)
+							+ "</span><br><span class='carouselAmt'>"
+							+ $scope.validCheckColl[i].Amount
+							+ "</span></span></li>";
 						}
 						var remainingStr = "";
 						var limitCount = $scope.depositLimitCount;
@@ -593,7 +599,9 @@ controllers
 
 					$scope.init = function() {
 						$scope.checkCounter = 0;
+						if($scope.depositLimitCount > 0){
 						$scope.drawCrousal();
+						}
 						/*
 						 * $soap.post('http://test15.deposit2day.com/ConsumerService/ConsumerService.asmx','GetMerchantLocationsAndAccounts').then(function(response){
 						 * //Do Stuff console.log(response) });
