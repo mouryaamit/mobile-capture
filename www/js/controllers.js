@@ -103,7 +103,7 @@ controllers
 					})
 					$scope.validCheckColl.push({
 						'SessionId' : gConfig.IVSSessionId,
-						'Amount' : parseFloat("2").toFixed(2),
+						'Amount' : parseFloat("3").toFixed(2),
 						'FrontImage' : null,
 						'RearImage' : null,
 						'ReturnImage' : true,
@@ -111,7 +111,7 @@ controllers
 					})
 					$scope.validCheckColl.push({
 						'SessionId' : gConfig.IVSSessionId,
-						'Amount' : parseFloat("2").toFixed(2),
+						'Amount' : parseFloat("4").toFixed(2),
 						'FrontImage' : null,
 						'RearImage' : null,
 						'ReturnImage' : true,
@@ -368,11 +368,12 @@ controllers
 							'ReturnImage' : true,
 							'status' : 2
 						})
+						console.log('1')
 						$scope.checkCounter = $scope.validCheckColl.length
 						$scope.drawCrousal();
-						
+						console.log('2')
 						$scope.showUpdatedCarouselCheck();
-
+						console.log($scope.checkCounter)
 						$scope.scrollActiveElem();
 						$scope.updateDepositCounter();
 
@@ -380,9 +381,11 @@ controllers
 
 					$scope.submitCheck = function() {
 						if (!$scope.isCheckCaptured()) {
+							alert('isCheckCaptured')
 							return false;
 						}
 						if (!$scope.checkLimit()) {
+							alert('checkLimit')
 							return false;
 						}
 						/*
