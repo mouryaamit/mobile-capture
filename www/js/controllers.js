@@ -363,7 +363,7 @@ controllers
 						// this.depositSuccess(54321);
 					}
 					$scope.isCheckCaptureStarted = function() {
-						var amtValid = ($scope.amt.length > 0 || parseFloat($scope.amt) > 0);
+						var amtValid = (parseFloat($scope.amt) > 0);
 						var frontValid = ($("#frontImage").prop("src").length > 30);
 						var backValid = ($("#backImage").prop("src").length > 30);
 
@@ -388,6 +388,7 @@ controllers
 						if ($scope.validCheckColl.length < 1) {
 							$scope.deleteCheck();
 						} else {
+							$scope.discardConfirmed() //TODO
 							// NotyMsg.confirmMsg("This will delete all the
 							// checks in deposit list and cancel this
 							// transaction.<br>Are you sure you want to discard
