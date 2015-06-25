@@ -21,8 +21,8 @@ factories.factory('Camera', [ '$q', function($q) {
 factories.factory('appFactory', [ '$soap','ServerConfig', function($soap,ServerConfig) {
 
 	return {
-		getLocations : function(){
-            return $soap.post(ServerConfig.url,"GetMerchantLocationsAndAccounts");
+		getLocations : function(institutionId,merchantId,userId,applicationType){
+            return $soap.post(ServerConfig.url,"GetMerchantLocationsAndAccounts",{institutionId:institutionId,merchantId:merchantId,userId:userId,applicationType:applicationType});
         }
 	}
 } ])
