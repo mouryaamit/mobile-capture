@@ -93,30 +93,30 @@ controllers
 					 * getDailyLimit(); getDepositLimit();
 					 */
 					
-					/*$scope.validCheckColl.push({
+					$scope.validCheckColl.push({
 						'SessionId' : gConfig.IVSSessionId,
 						'Amount' : parseFloat("2").toFixed(2),
-						'FrontImage' : null,
-						'RearImage' : null,
+						'FrontImage' : "data:image/jpeg;base64,",
+						'RearImage' : "data:image/jpeg;base64,",
 						'ReturnImage' : true,
 						'status' : 2
 					})
 					$scope.validCheckColl.push({
 						'SessionId' : gConfig.IVSSessionId,
 						'Amount' : parseFloat("3").toFixed(2),
-						'FrontImage' : null,
-						'RearImage' : null,
+						'FrontImage' : "data:image/jpeg;base64,",
+						'RearImage' : "data:image/jpeg;base64,",
 						'ReturnImage' : true,
 						'status' : 2
 					})
 					$scope.validCheckColl.push({
 						'SessionId' : gConfig.IVSSessionId,
 						'Amount' : parseFloat("4").toFixed(2),
-						'FrontImage' : null,
-						'RearImage' : null,
+						'FrontImage' : "data:image/jpeg;base64,",
+						'RearImage' : "data:image/jpeg;base64,",
 						'ReturnImage' : true,
 						'status' : 2
-					})*/
+					})
 					
 					
 
@@ -143,7 +143,9 @@ controllers
 		                $('#backImagePreview').prop("src",this.validCheckColl[pos].RearImage);
 		            }
 					$scope.showCarouselCheck = function() {
+						console.log('1')
 						var pos = $(event.currentTarget).index();
+						console.log(pos)
 		                var status = $(event.currentTarget).attr("data-status");
 		                switch (status){
 		                    case "0" : break;
@@ -326,7 +328,7 @@ controllers
 						var carouselAddedStr = "";
 						for (var i = 0; i < checkCount; i++) {
 							carouselAddedStr = carouselAddedStr
-									+ "<li class='checkLi' data-status='2'><span><span class='carouselLi'>"
+									+ "<li ng-click=\"showCarouselCheck()\" class='checkLi' data-status='2'><span><span class='carouselLi'>"
 									+ (i + 1)
 									+ "</span><br><span class='carouselAmt'>"
 									+ $scope.validCheckColl[i].Amount
@@ -339,7 +341,7 @@ controllers
 						
 						for (var j = checkCount; j < limitCount; j++) {
 							remainingStr = remainingStr
-									+ "<li class='checkLi' data-status='0'><span><span class='carouselLi'>"
+									+ "<li ng-click=\"showCarouselCheck()\" class='checkLi' data-status='0'><span><span class='carouselLi'>"
 									+ (j + 1)
 									+ "</span><br><span class='carouselAmt'></span></span></li>";
 						}
