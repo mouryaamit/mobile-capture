@@ -93,7 +93,31 @@ controllers
 					 * getDailyLimit(); getDepositLimit();
 					 */
 					
-
+					$scope.validCheckColl.push({
+						'SessionId' : gConfig.IVSSessionId,
+						'Amount' : parseFloat("2").toFixed(2),
+						'FrontImage' : null,
+						'RearImage' : null,
+						'ReturnImage' : true,
+						'status' : 2
+					})
+					$scope.validCheckColl.push({
+						'SessionId' : gConfig.IVSSessionId,
+						'Amount' : parseFloat("2").toFixed(2),
+						'FrontImage' : null,
+						'RearImage' : null,
+						'ReturnImage' : true,
+						'status' : 2
+					})
+					$scope.validCheckColl.push({
+						'SessionId' : gConfig.IVSSessionId,
+						'Amount' : parseFloat("2").toFixed(2),
+						'FrontImage' : null,
+						'RearImage' : null,
+						'ReturnImage' : true,
+						'status' : 2
+					})
+					
 					
 
 					$scope.scrollRight = function() {
@@ -104,8 +128,35 @@ controllers
 
 					}
 
-					$scope.showCarouselCheck = function() {
+					$scope.showCapturedCheck = function(pos){
+		                $('.amtInputDiv').hide();
+		                $('.amtPreviewDiv').show();
 
+		                $('#amtPreviewSpan').html(this.validCheckColl[pos].Amount);
+
+		                $('#submitCheck').hide();
+
+		                $('.checkImgDiv').hide();
+		                $('.validCheckImgDiv').show();
+
+		                $('#frontImagePreview').prop("src",this.validCheckColl[pos].FrontImage);
+		                $('#backImagePreview').prop("src",this.validCheckColl[pos].RearImage);
+		            }
+					$scope.showCarouselCheck = function() {
+						var pos = $(event.currentTarget).index();
+		                var status = $(event.currentTarget).attr("data-status");
+		                switch (status){
+		                    case "0" : break;
+		                    case "1" : $scope.showCurrentCheck();
+		                        $(".carouselLi").removeClass("active");
+		                        $(event.currentTarget).children().children("span.carouselLi").addClass("active");
+		                        break;
+		                    case "2" : $scope.showCapturedCheck(pos);
+		                        $(".carouselLi").removeClass("active");
+		                        $(event.currentTarget).children().children("span.carouselLi").addClass("active");
+		                        break;
+		                    default : break;
+		                }
 					}
 
 					$scope.previewFrontImg = function() {
@@ -307,6 +358,7 @@ controllers
 									"data-status", "1");
 						}
 					}
+					
 					$scope.processCheck = function() {
 						$scope.validCheckColl.push({
 							'SessionId' : gConfig.IVSSessionId,
@@ -374,16 +426,30 @@ controllers
 						var status = $("span.active").parent().parent().attr(
 								"data-status");
 						if (status == "1" && $scope.isCheckCaptureStarted()) {
+							$scope.clearCheck()
 							// NotyMsg.confirmMsg("Are you sure you want to
 							// remove this check?",$scope.clearCheck());
 						}
 						if (status == "2") {
+							$scope.deleteCheckConfirmed()
 							// NotyMsg.confirmMsg("Are you sure you want to
 							// remove this check from the deposit
 							// list?",$scope.deleteCheckConfirmed());
 						}
 					}
-
+					$scope.deleteCheckConfirmed = function(){
+		                var deletePos = $("span.active").parent().parent().index();
+		                /*var deleteModel = Models.getDeleteCheckModel();
+		                deleteModel.set({
+		                    'SessionId'     : gConfig.IVSSessionId,
+		                    'Amount'        : this.validCheckColl[this.deletePos].Amount,
+		                    'RawMICR'       : this.validCheckColl[this.deletePos].RawMICR
+		                });
+		                deleteModel.processRequest();*/
+		                $scope.validCheckColl.splice(deletePos, 1);
+		                $scope.checkCounter = $scope.validCheckColl.length;
+		                $scope.drawCrousal();
+		            }
 					$scope.discardChecks = function() {
 						if ($scope.validCheckColl.length < 1) {
 							$scope.deleteCheck();
@@ -401,6 +467,8 @@ controllers
 					}
 					$scope.discardAll = function() {
 						if ($scope.validCheckColl.length > 0) {
+							$scope.validCheckColl.splice(0,$scope.validCheckColl.length)
+							$scope.drawCrousal()
 							/*
 							 * var discardModel = Models.getDiscardModel();
 							 * discardModel.set({ 'UserId' : gConfig.UserID,
@@ -410,7 +478,7 @@ controllers
 							 * discardModel.processRequest();
 							 */
 						} else {
-							$scope.clearDepositChecks();
+							$scope.clearCheck();
 						}
 					}
 					$scope.clearDepositChecks = function() {
@@ -473,7 +541,7 @@ controllers
 					}
 					// Update Check Capture Status
 					$scope.updateCheckProgress = function() {
-						gConfig.checkInProgress = (this.validCheckColl.length > 0);
+						gConfig.checkInProgress = ($scope.validCheckColl.length > 0);
 					}
 
 					$scope.onBeforeDestroy = function() {
