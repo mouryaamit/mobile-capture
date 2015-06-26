@@ -23,6 +23,14 @@ factories.factory('appFactory', [ '$soap','ServerConfig', function($soap,ServerC
 	return {
 		getLocations : function(institutionId,merchantId,userId,applicationType){
             return $soap.post(ServerConfig.url,"GetMerchantLocationsAndAccounts",{institutionId:institutionId,merchantId:merchantId,userId:userId,applicationType:applicationType});
+        },
+        getDepositHistory: function(institutionId, UserID, depositDateMMDDYYYY, applicationType) {
+            return $soap.post(ServerConfig.url, "VSHOGetDepositHistory", {
+                instId: institutionId,
+                userId: UserID,
+                depositDateMMDDYYYY: depositDateMMDDYYYY,
+                applicationType: applicationType
+            });
         }
 	}
 } ])

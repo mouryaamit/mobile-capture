@@ -50,6 +50,7 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
         $stateProvider
 
             .state('app', {
+                cache: false,
                 url: "/app",
                 abstract: true,
                 templateUrl: "templates/menu.html",
@@ -57,6 +58,7 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
             })
 
             .state('app.capture', {
+                cache: false,
                 url: "/capture",
                 views: {
                     'menuContent': {
@@ -67,6 +69,7 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
             })
 
             .state('app.history', {
+                cache: false,
                 url: "/history",
                 views: {
                     'menuContent': {

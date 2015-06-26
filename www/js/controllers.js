@@ -49,7 +49,94 @@ controllers.controller('PlaylistCtrl', function($scope, Camera) {
 	 */
 })
 
-controllers.controller('HistoryCtrl', function($scope) {
+controllers.controller('HistoryCtrl', function($scope, ServerConfig, gConfig, appFactory, $location) {
+    $scope.todayDate = null;
+
+    console.log('HistoryCtrl', ServerConfig.institutionId, $location.$$path)
+    console.log('historyCtrl')
+    var instId = ServerConfig.institutionId;
+    appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, '01022014', gConfig.ApplicationType).then(function(res) {
+        console.log('success', res);
+    }, function(err) {
+        console.log('error', err);
+    });
+    $scope.showDates = function(){
+        $('#todayTabDate').html(moment().format("MM/DD/YYYY"));
+        $('#yestTabDate').html(moment().subtract(1, 'days').format("MM/DD/YYYY"));
+    };
+
+    $scope.showDates();
+    $scope.getTodayDepositHistory = function(){
+        console.log('today')
+        $(event.currentTarget).children().children("span.carouselLi").addClass("active");
+        /*var depHisModel = Models.getDepositHistoryModel(),
+         today = Moment().format("MM/DD/YYYY");
+
+         depHisModel.set({
+         'instId'        : ServerConfig.institutionId,
+         'userId'        : gConfig.UserID,
+         'depositDateMMDDYYYY' : today,
+
+         'renderTarget'  : '#todayHistoryDiv'
+         });
+         depHisModel.processRequest();*/
+    };
+    $scope.getYesterdayDepositHistory = function(){
+        console.log('getYesterdayDepos')
+        /*var depHisModel = Models.getDepositHistoryModel(),
+         yesterday = Moment().subtract(1, 'days').format("MM/DD/YYYY");
+
+         depHisModel.set({
+         'instId'        : ServerConfig.institutionId,
+         'userId'        : gConfig.UserID,
+         'depositDateMMDDYYYY' : yesterday,
+
+         'renderTarget'  : '#yesterdayHistoryDiv'
+         });
+         depHisModel.processRequest();*/
+    };
+
+    $scope.renderDepositHistory = function(coll, target){
+        /*var AppViewInitializer = require('../../js/app/app_view_initializer');
+         console.log(coll);
+         console.log(target);
+
+         for(var i = 0; i < coll.length; i++){
+         var depLogModel = Models.getDepositLogModel().set(coll[i]);
+         var depLogView = AppViewInitializer.depositLogView(depLogModel);
+         var appendRegion = "<div id='"+depLogModel.cid+"'></div>";
+         $(target).append(appendRegion);
+         var depLogRegion = new Backbone.Marionette.Region({
+         el : "#"+depLogModel.cid+""
+         });
+         depLogRegion.show(depLogView);
+         }*/
+
+    };
+
+    /*$scope.depositHistory =  function(response, target) {
+     var $xml = $(response);
+     var $DepositHistoryResults = $xml.find("VSHOGetDepositHistoryResult");
+
+     var singleElem, depositColl=[];
+     $($DepositHistoryResults).find("ReceivedDeposit").each(function () {
+     singleElem = {
+     'DateOfDeposit'    : Moment($(this).find("CreatedOn").text(), "MM/DD/YYYY HH:mm:ss").format("hh.mm a"),
+     'AccountNumber'    : Utils.maskAccount($(this).find("AcctNum").text()),
+     'DepositId'    : $(this).find("DepositId").text(),
+     'TotalCount'    : $(this).find("FinalCount").text(),
+     'TotalAmount'    : parseFloat($(this).find("FinalAmount").text()).toFixed(2),
+     'ConfirmationId'    : $(this).find("ConfirmationId").text(),
+     'SessionId'  : $(this).find("SessionId").text(),
+     'LocationName'  : $(this).find("LocationName").text(),
+     'TransactionStatus'  : $(this).find("TransactionStatus").text(),
+     'TransactionStatusDescription'  : $(this).find("TransactionStatusDescription").text(),
+     'AccountDescription'  : $(this).find("AccountDescription").text()
+     };
+     console.log(singleElem);
+     depositColl.push(singleElem);
+     });
+     */
 
 })
 
@@ -57,8 +144,8 @@ controllers
 		.controller(
 				'CaptureCtrl',
 				function($scope, appFactory, gConfig, ServerConfig,
-						$cordovaCamera, $soap) {// 31191
-					// console.log(ServerConfig.url)
+						$cordovaCamera, $soap, $location) {// 31191
+					console.log(ServerConfig.url, $location.$$path)
 					var options = null || {}
 					$scope.amt = ""
 					$scope.depositLimitCount = 5

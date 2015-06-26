@@ -1,16 +1,17 @@
+<h1>HistoryCtrl View</h1>
 <div id="DepositHistoryView" class="container">
 
     <div id="DepositHistoryRegion">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation" class="active">
-                <a href="#todayTabContent" data-toggle="tab">
+                <a href="#todayTabContent" data-toggle="tab" ng-click="getTodayDepositHistory()">
                     Today
                     <br>
                     <span id="todayTabDate"></span>
                 </a>
             </li>
             <li role="presentation">
-                <a href="#yesterdayTabContent" data-toggle="tab">
+                <a href="#yesterdayTabContent" data-toggle="tab" ng-click="getYesterdayDepositHistory()">
                     Yesterday
                     <br>
                     <span id="yestTabDate"></span>
@@ -38,4 +39,38 @@
 
     <div id="CheckPreviewRegion"></div>
 
+</div>
+<div id="DepositLogView">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <div class="row depHistLog" data-toggle="collapse" data-target="{{SessionId}}">  <!-- data-parent="#depHistoryPanelGrp" -->
+                <div class="col-xs-6">
+                    <h3 class="depHistoryAmtH">
+                        <span>{{TotalAmount}}</span>
+                    </h3>
+                    <span class="lead">{{TotalCount}} Checks <small>@ {{DateOfDeposit}}</small></span>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span>{{AccountDescription}} : {{AccountNumber}}</span>
+                            <br>
+                            <span>{{LocationName}}</span>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row statusRow<%= TransactionStatus %>">
+                        <div class="col-xs-12">
+                            <span>{{TransactionStatusDescription}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="<%= SessionId %>" class="panel-collapse collapse" role="tabpanel">
+            <div class="list-group">
+
+            </div>
+        </div>
+    </div>
 </div>
