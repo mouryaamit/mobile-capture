@@ -10,11 +10,11 @@ controllers.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 	// });
 
 	// Create the login modal that we will use later
-	$ionicModal.fromTemplateUrl('templates/login.html', {
+	/*$ionicModal.fromTemplateUrl('templates/login.html', {
 		scope : $scope
 	}).then(function(modal) {
 		$scope.modal = modal;
-	});
+	});*/
 
 })
 
@@ -41,7 +41,7 @@ controllers.controller('PlaylistCtrl', function($scope, Camera) {
 	 * Camera.EncodingType.JPEG, targetWidth: 100, targetHeight: 100,
 	 * popoverOptions: CameraPopoverOptions, saveToPhotoAlbum: false };
 	 * $scope.image = null;
-	 * 
+	 *
 	 * $scope.getPic = function() {
 	 * $cordovaCamera.getPicture(options).then(function (imageData) { //var
 	 * image = document.getElementById('myImage'); $scope.image =
@@ -148,7 +148,9 @@ controllers
 					console.log(ServerConfig.url, $location.$$path)
 					var options = null || {}
 					$scope.amt = ""
-					$scope.depositLimitCount = 5
+					$scope.depositLimitCount = 0;
+                    $scope.dailyLimitAmt = 0.00;
+                    $scope.depositLimitAmt = 0.00;
 					$scope.getNumber = function(num) {
 						return new Array(num);
 					}
@@ -233,7 +235,7 @@ controllers
 								this.validCheckColl[pos].RearImage);
 					}
 					$scope.showCarouselCheck = function() {
-						
+
 						var pos = ((parseInt($(event.currentTarget).index())+1)/2)-1;
 						var status = $(event.currentTarget).attr("data-status");
 						switch (status) {
@@ -517,7 +519,10 @@ controllers
 						 */
 
 						$scope.processCheck();
-						$scope.Cheque = null || {};
+						$scope.Cheque = null || {
+                            frontImage : "data:image/jpeg;base64,",
+                            backImage : "data:image/jpeg;base64,"
+                        };
 						$scope.amt = null;
 						$("#backImageDiv").show();
 						$("#backValidImageDiv").hide()
@@ -681,8 +686,10 @@ controllers
 					}
 
 					$scope.locationsSelected = function() {
-
-					}
+                        console.log()
+                        $scope.accountResult = null || [];
+                        $scope.accountResult = (_.find($scope.locationsResult, { 'Id': $scope.locations})).Accounts
+                    }
 
 					$scope.init = function() {
 						$scope.checkCounter = 0;
@@ -693,17 +700,39 @@ controllers
 						 * $soap.post('http://test15.deposit2day.com/ConsumerService/ConsumerService.asmx','GetMerchantLocationsAndAccounts').then(function(response){
 						 * //Do Stuff console.log(response) });
 						 */
-						appFactory.getLocations($scope.locations,
+						/*appFactory.getLocations($scope.locations,
 								gConfig.MerchantID, 'edesk50',
 								gConfig.ApplicationType).then(
 								function(getLocationsResult) {
+                                    $scope.locationsResult = getLocationsResult;
 									console.log(getLocationsResult)
 								}, function(err) {
 									console.log(err)
 								})
+*/
+
+
+                        // HARD-CODED VALUES : START
+
+                        $scope.locationsResult = [{
+                            Id : 1,
+                                        Name : 'India',
+                                        Accounts: [{Number:123,Type:'abc',Desc:'abc'},{Number:234,Type:'abc',Desc:'abc'}]
+                        },{
+                            Id : 2,
+                                        Name : 'USA',
+                            Accounts: [{Number:798,Type:'abc',Desc:'abc'},{Number:890,Type:'abc',Desc:'abc'}]
+                        }]
+                        $scope.locations = $scope.locationsResult[0].Id
+                        $scope.locationsSelected()
+                        $scope.depositLimitCount = 5;
+                        $scope.dailyLimitAmt = 10000.00;
+                        $scope.depositLimitAmt = 100000.00;
+                        $scope.drawCrousal();
+
+                        // HARD-CODED VALUES : END
+
 						/*
-						 * $scope.locationsResult = getLocationsResult;
-						 * 
 						 * if ($scope.locationsResult.length == 1) {
 						 * $($(".icon-select-drop-down")[0]).hide();
 						 * $('#multipleLocDiv').addClass("disabled"); } else {
@@ -714,17 +743,17 @@ controllers
 						 * function(getLocationsError) { })
 						 * appFactory.getAccounts({}).$promise.then(function(getAccountsResult) {
 						 * $scope.accountResult = getAccountsResult;
-						 * 
+						 *
 						 * if ($scope.accountResult.length == 1) {
 						 * $($(".icon-select-drop-down")[1]).hide();
 						 * $('#multipleAccDiv').addClass("disabled"); } else {
 						 * $($(".icon-select-drop-down")[1]).show();
 						 * $('#multipleAccDiv').removeClass("disabled"); }
-						 * 
+						 *
 						 * $('.selectpicker').selectpicker('render');
 						 * $('.selectpicker').selectpicker('refresh'); },
 						 * function(getLocationsError) { })
-						 * 
+						 *
 						 * appFactory.getDailyLimit({ 'BusDate' :
 						 * gConfig.BusDate, 'InstitutionId' :
 						 * ServerConfig.institutionId, 'MerchantId' :
@@ -736,7 +765,7 @@ controllers
 						 * }).$promise.then(function(getDepositLimitResult) { //
 						 * TODO }, function(getDepositLimitError) { }) },
 						 * function(getDailyLimitError) { })
-						 * 
+						 *
 						 * $('.selectpicker').selectpicker()
 						 */
 

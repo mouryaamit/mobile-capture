@@ -1,3 +1,5 @@
+<ion-view view-title="Cheque Capture">
+<ion-content>
 <div id="HomeView" class="container">
 
 	<div id="HomeViewRegion">
@@ -12,7 +14,7 @@
 								ng-model="locations" ng-change="locationsSelected()"
 								class="selectpicker show-tick locAccSelect">
 								<option ng-repeat="loc in locationsResult"
-									value="{{loc.locationId}}">{{loc.locationName}}</option>
+									value="{{loc.Id}}">{{loc.Name}}</option>
 							</select>
 						</div>
 					</div>
@@ -25,8 +27,8 @@
 								class="icon-account"></span></span> <select id="accounts"
 								class="selectpicker show-tick locAccSelect">
 								<option ng-repeat="acc in accountResult"
-									value="{{acc.accountNumber}}" ng-class="acc.accountType">{{acc.accountDesc}}
-									- {{acc.accountNumber}}</option>
+									value="{{acc.Number}}" ng-class="acc.Type">{{acc.Desc}}
+									- {{acc.Number}}</option>
 							</select>
 						</div>
 					</div>
@@ -155,8 +157,6 @@
                                     <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">8</span><br><span class="carouselAmt"></span></span></li>
                                     <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">9</span><br><span class="carouselAmt"></span></span></li>
                                     <li ng-click="showCarouselCheck()" class="checkLi" data-status="2"><span><span class="carouselLi">10</span><br><span class="carouselAmt"></span></span></li>
-                                
-									<li ng-click="showCarouselCheck()" class='checkLi' data-status='2'><span><span class='carouselLi'>"1</span><br><span class='carouselAmt'></span></span></li>	
 								</ul>
 							</nav>
 						</div>
@@ -334,3 +334,5 @@
     </div>
 
 </div>
+</ion-content>
+</ion-view>
