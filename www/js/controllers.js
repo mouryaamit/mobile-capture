@@ -183,6 +183,7 @@ controllers
 					$scope.depositLimitCount = 0;
                     $scope.dailyLimitAmt = 0.00;
                     $scope.depositLimitAmt = 0.00;
+                    $scope.master = {}
 					$scope.getNumber = function(num) {
 						return new Array(num);
 					}
@@ -371,7 +372,7 @@ controllers
 						 * false; } else{
 						 */
 
-						if (parseFloat($scope.amt) > 0) {
+						if (parseFloat($scope.master.amt) > 0) {
 							amtMsg = "";
 							amtValid = true;
 						} else {
@@ -403,7 +404,7 @@ controllers
 						/* } */
 					}
 					$scope.checkLimit = function() {
-						if (parseFloat($scope.amt) > parseFloat($scope.dailyLimitAmt)) {// TODO
+						if (parseFloat($scope.master.amt) > parseFloat($scope.dailyLimitAmt)) {// TODO
 							// NotyMsg.errorMsg("Please add a cheque of lesser
 							// or
 							// equal amount of daily limit.");
@@ -413,7 +414,7 @@ controllers
 							// deposit is
 							// exceeding the limit.");
 							return false;
-						} else if (parseFloat($scope.amt) > parseFloat($scope.depositLimitAmt)) {// TODO
+						} else if (parseFloat($scope.master.amt) > parseFloat($scope.depositLimitAmt)) {// TODO
 							// NotyMsg.errorMsg("Check amount is exceeding your
 							// deposit limits.");
 							return false;
@@ -519,7 +520,7 @@ controllers
 					$scope.processCheck = function() {
 						$scope.validCheckColl.push({
 							'SessionId' : gConfig.IVSSessionId,
-							'Amount' : parseFloat($scope.amt).toFixed(2),
+							'Amount' : parseFloat($scope.master.amt).toFixed(2),
 							'FrontImage' : $scope.Cheque.frontImage,
 							'RearImage' : $scope.Cheque.backImage,
 							'ReturnImage' : true,
@@ -537,6 +538,7 @@ controllers
 					}
 
 					$scope.submitCheck = function() {
+                        console.log($scope.master.amt)
 						if (!$scope.isCheckCaptured()) {
 							alert('isCheckCaptured')
 							return false;
@@ -555,7 +557,7 @@ controllers
                             frontImage : "data:image/jpeg;base64,",
                             backImage : "data:image/jpeg;base64,"
                         };
-						$scope.amt = null;
+						$scope.master.amt = null;
 						$("#backImageDiv").show();
 						$("#backValidImageDiv").hide()
 						$("#frontImageDiv").show();
@@ -578,7 +580,7 @@ controllers
 						// this.depositSuccess(54321);
 					}
 					$scope.isCheckCaptureStarted = function() {
-						var amtValid = (parseFloat($scope.amt) > 0);
+						var amtValid = (parseFloat($scope.master.amt) > 0);
 						var frontValid = ($("#frontImage").prop("src").length > 30);
 						var backValid = ($("#backImage").prop("src").length > 30);
 
@@ -697,7 +699,7 @@ controllers
 						$("#backImage").hide().prop("src",
 								"data:image/jpeg;base64,");
 						$(".backCameraIcon").show();
-						$scope.amt = "";
+						$scope.master.amt = "";
 					}
 					$scope.disableAccLoc = function() {
 						$(".locAccSelectInpGrp").addClass("disabled");
@@ -715,7 +717,9 @@ controllers
 					}
 					$scope.updateAmt = function() {
 
+                        console.log($scope.master.amt)
 					}
+
 
 					$scope.locationsSelected = function() {
                         console.log()
