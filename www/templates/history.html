@@ -41,31 +41,34 @@
     <div id="CheckPreviewRegion"></div>
 
 </div>
+        <div ng-repeat="check in depositChecks">
 <div id="DepositLogView">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab">
             <div class="row depHistLog" data-toggle="collapse" data-target="{{SessionId}}">  <!-- data-parent="#depHistoryPanelGrp" -->
+
                 <div class="col-xs-6">
                     <h3 class="depHistoryAmtH">
-                        <span>{{TotalAmount}}</span>
+                        <span>{{check.TotalAmount}}</span>
                     </h3>
-                    <span class="lead">{{TotalCount}} Checks <small>@ {{DateOfDeposit}}</small></span>
+                    <span class="lead">{{check.TotalCount}} Checks <small>@ {{check.DateOfDeposit}}</small></span>
                 </div>
                 <div class="col-xs-6 text-right">
                     <div class="row">
                         <div class="col-xs-12">
-                            <span>{{AccountDescription}} : {{AccountNumber}}</span>
+                            <span>{{check.AccountDescription}} : {{check.AccountNumber}}</span>
                             <br>
-                            <span>{{LocationName}}</span>
+                            <span>{{check.LocationName}}</span>
                             <br>
                         </div>
                     </div>
-                    <div class="row statusRow<%= TransactionStatus %>">
+                    <div class="row statusRow{{TransactionStatus}}">
                         <div class="col-xs-12">
-                            <span>{{TransactionStatusDescription}}</span>
+                            <span>{{check.TransactionStatusDescription}}</span>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <div id="<%= SessionId %>" class="panel-collapse collapse" role="tabpanel">
@@ -75,5 +78,6 @@
         </div>
     </div>
 </div>
+        </div>
 </ion-content>
 </ion-view>

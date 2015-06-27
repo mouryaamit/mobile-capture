@@ -60,6 +60,38 @@ controllers.controller('HistoryCtrl', function($scope, ServerConfig, gConfig, ap
     }, function(err) {
         console.log('error', err);
     });
+    $scope.depositChecks = [
+        {
+            TotalAmount: 1233,
+            TotalCount: 2,
+            DateOfDeposit: 02032014,
+            AccountDescription: 'jhgweuryg',
+            AccountNumber: 34345345,
+            LocationName: 'HYD',
+            TransactionStatusDescription: 'Submitted',
+            TransactionStatu: 60
+        },
+        {
+            TotalAmount: 1233,
+            TotalCount: 2,
+            DateOfDeposit: 02032014,
+            AccountDescription: 'jhgweuryg',
+            AccountNumber: 34345345,
+            LocationName: 'HYD',
+            TransactionStatu: 1,
+            TransactionStatusDescription: 'Submitted'
+        },
+        {
+            TotalAmount: 1233,
+            TotalCount: 2,
+            DateOfDeposit: 02032014,
+            AccountDescription: 'jhgweuryg',
+            AccountNumber: 34345345,
+            LocationName: 'HYD',
+            TransactionStatu: 2,
+            TransactionStatusDescription: 'Submitted'
+        }
+    ]
     $scope.showDates = function(){
         $('#todayTabDate').html(moment().format("MM/DD/YYYY"));
         $('#yestTabDate').html(moment().subtract(1, 'days').format("MM/DD/YYYY"));
