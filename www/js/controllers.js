@@ -611,8 +611,7 @@ controllers
             }
         }
         $scope.deleteCheckConfirmed = function() {
-            var deletePos = $("span.active").parent().parent()
-                .index();
+            var deletePos = $("span.active").parent().index();
             /*
              * var deleteModel = Models.getDeleteCheckModel();
              * deleteModel.set({ 'SessionId' : gConfig.IVSSessionId,
@@ -623,7 +622,11 @@ controllers
              */
             $scope.validCheckColl.splice(deletePos, 1);
             $scope.checkCounter = $scope.validCheckColl.length;
+            $scope.clearCheck();
+            $scope.updateDepositCounter();
             $scope.drawCrousal();
+            $scope.showUpdatedCarouselCheck();
+            $scope.clearCheck();
         }
         $scope.discardChecks = function() {
             if ($scope.validCheckColl.length < 1) {
@@ -700,7 +703,6 @@ controllers
             $('.checkImgDiv').show();
         }
         $scope.clearCheck = function() {
-
             $("#frontImage").hide().prop("src",
                 "data:image/jpeg;base64,");
             $(".frontCameraIcon").show();
