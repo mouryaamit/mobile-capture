@@ -5,14 +5,14 @@
     <div id="DepositHistoryRegion">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation" class="active">
-                <a href="#todayTabContent" data-toggle="tab" ng-click="getTodayDepositHistory()">
+                <a data-toggle="tab" ng-click="getTodayDepositHistory()">
                     Today
                     <br>
                     <span id="todayTabDate"></span>
                 </a>
             </li>
             <li role="presentation">
-                <a href="#yesterdayTabContent" data-toggle="tab" ng-click="getYesterdayDepositHistory()">
+                <a data-toggle="tab" ng-click="getYesterdayDepositHistory()">
                     Yesterday
                     <br>
                     <span id="yestTabDate"></span>
@@ -62,7 +62,7 @@
                             <br>
                         </div>
                     </div>
-                    <div class="row statusRow{{TransactionStatus}}">
+                    <div class="row statusRow" {{check.TransactionStatus}}>
                         <div class="col-xs-12">
                             <span>{{check.TransactionStatusDescription}}</span>
                         </div>
