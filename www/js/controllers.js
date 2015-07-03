@@ -732,7 +732,7 @@ controllers
 
 
         $scope.locationsSelected = function() {
-            console.log()
+            console.log((_.find($scope.locationsResult, { 'Id': $scope.locations})).Accounts)
             $scope.accountResult = null || [];
             $scope.accountResult = (_.find($scope.locationsResult, { 'Id': $scope.locations})).Accounts
         }
@@ -746,21 +746,21 @@ controllers
              * $soap.post('http://test15.deposit2day.com/ConsumerService/ConsumerService.asmx','GetMerchantLocationsAndAccounts').then(function(response){
              * //Do Stuff console.log(response) });
              */
-            /*appFactory.getLocations($scope.locations,
-             gConfig.MerchantID, 'edesk50',
-             gConfig.ApplicationType).then(
-             function(getLocationsResult) {
-             $scope.locationsResult = getLocationsResult;
-             console.log(getLocationsResult)
-             }, function(err) {
-             console.log(err)
+            appFactory.getLocations('2', '1', 'dennis', '7').then(function(getLocationsResult) {
+                $scope.locationsResult = getLocationsResult;
+                console.log('from angular success')
+                console.log(getLocationsResult)
+                $scope.locations = $scope.locationsResult[0].Id
+                $scope.locationsSelected()
+            }, function(err) {
+                console.log('from angular error')
+                console.log(err)
              })
-             */
 
 
             // HARD-CODED VALUES : START
 
-            $scope.locationsResult = [{
+            /*$scope.locationsResult = [{
                 Id : 1,
                 Name : 'India',
                 Accounts: [{Number:123,Type:'abc',Desc:'abc'},{Number:234,Type:'abc',Desc:'abc'}]
@@ -768,9 +768,7 @@ controllers
                 Id : 2,
                 Name : 'USA',
                 Accounts: [{Number:798,Type:'abc',Desc:'abc'},{Number:890,Type:'abc',Desc:'abc'}]
-            }]
-            $scope.locations = $scope.locationsResult[0].Id
-            $scope.locationsSelected()
+            }]*/
             $scope.depositLimitCount = 5;
             $scope.dailyLimitAmt = 10000.00;
             $scope.depositLimitAmt = 100000.00;
