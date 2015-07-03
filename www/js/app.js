@@ -79,6 +79,9 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
                                         //TODO
                                         appFactory.GetDepositThresholdLimits(gConfig.ApplicationType,ServerConfig.institutionId,gConfig.MerchantId,gConfig.BusDate).then(function(GetDepositThresholdLimitsResult) {
                                             //TODO
+                                            $timeout(function(){
+                                             navigator.splashscreen.hide();
+                                             },100);
                                         })
                                     })
                                 })
@@ -95,9 +98,7 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
                         }
                     })
                 })
-                /*$timeout(function(){
-                    navigator.splashscreen.hide();
-                },100);*/
+
             })
         });
     })
