@@ -35,10 +35,10 @@ services.service('gConfig', function() {
             'DepositCount'  : '0',
             'SessionID'     : '',
             'ConsumerID'    : '',
-            'MerchantID'    : '1',// Hardcoded
+            'MerchantID'    : '',// Hardcoded
             'ConsumerName'  : '',
             'LocationID'    : '',
-            'BusDate'       : '12/12/2015',// Hardcoded
+            'BusDate'       : '',
             'IVSProfileID'  : '',
             'IVSSessionId'  : Date.now(),//Hardcoded
 
