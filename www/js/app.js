@@ -75,15 +75,10 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
                                 var VSHOStartSessionResult = VSHOStartSessionResult;
                                 appFactory.GetMerchantLocationsAndAccounts(ServerConfig.institutionId, gConfig.MerchantID, gConfig.UserID, ServerConfig.ApplicationType).then(function(GetMerchantLocationsAndAccountsResult) {
                                     gConfig.Locations = GetMerchantLocationsAndAccountsResult;
-                                    appFactory.GetCurrentDayAvailableThresholdLimits(gConfig.ApplicationType, gConfig.BusDate,ServerConfig.institutionId,gConfig.MerchantId).then(function(GetCurrentDayAvailableThresholdLimitsResult) {
-                                        //TODO
-                                        appFactory.GetDepositThresholdLimits(gConfig.ApplicationType,ServerConfig.institutionId,gConfig.MerchantId,gConfig.BusDate).then(function(GetDepositThresholdLimitsResult) {
-                                            //TODO
-                                            $timeout(function(){
-                                             navigator.splashscreen.hide();
-                                             },100);
-                                        })
-                                    })
+                                    $timeout(function () {
+                                        navigator.splashscreen.hide();
+                                    }, 100);
+
                                 })
                             });
 

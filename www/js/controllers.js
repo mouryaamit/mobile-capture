@@ -736,36 +736,24 @@ controllers
             $scope.accountResult = null || [];
             $scope.accountResult = (_.find($scope.locationsResult, { 'Id': $scope.locations})).Accounts
         }
-
+        $scope.updateThresholdLimits = function(callback) {
+            appFactory.GetCurrentDayAvailableThresholdLimits(gConfig.ApplicationType, gConfig.BusDate, ServerConfig.institutionId, gConfig.MerchantId).then(function (GetCurrentDayAvailableThresholdLimitsResult) {
+                $scope.dailyLimitAmt = GetCurrentDayAvailableThresholdLimitsResult.AvailableAmount;
+                appFactory.GetDepositThresholdLimits(gConfig.ApplicationType, ServerConfig.institutionId, gConfig.MerchantId, gConfig.BusDate).then(function (GetDepositThresholdLimitsResult) {
+                    $scope.depositLimitCount = GetDepositThresholdLimitsResult.ItemCount;
+                    $scope.depositLimitAmt = GetDepositThresholdLimitsResult.ItemAmount;
+                    callback;
+                })
+            })
+        }
         $scope.init = function() {
             $scope.checkCounter = 0;
             if($scope.depositLimitCount > 0){
                 $scope.drawCrousal();
             }
-            /*
-             * $soap.post('http://test15.deposit2day.com/ConsumerService/ConsumerService.asmx','GetMerchantLocationsAndAccounts').then(function(response){
-             * //Do Stuff console.log(response) });
-             */
+            $scope.locationsResult = gConfig.Locations;
+            $scope.updateThresholdLimits($scope.drawCrousal())
 
-
-
-            // HARD-CODED VALUES : START
-
-            /*$scope.locationsResult = [{
-                Id : 1,
-                Name : 'India',
-                Accounts: [{Number:123,Type:'abc',Desc:'abc'},{Number:234,Type:'abc',Desc:'abc'}]
-            },{
-                Id : 2,
-                Name : 'USA',
-                Accounts: [{Number:798,Type:'abc',Desc:'abc'},{Number:890,Type:'abc',Desc:'abc'}]
-            }]*/
-            $scope.depositLimitCount = 5;
-            $scope.dailyLimitAmt = 10000.00;
-            $scope.depositLimitAmt = 100000.00;
-            $scope.drawCrousal();
-
-            // HARD-CODED VALUES : END
 
             /*
              * if ($scope.locationsResult.length == 1) {
