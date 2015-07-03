@@ -11,6 +11,11 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
         $ionicPlatform.ready(function () {
             gConfig.UserID = 'dennis' // Hardcoded
             var password = 'Xyz@123@'
+            if(device.platform == "Android"){
+                gConfig.isAndroid = true;
+            }else{
+                gConfig.isIos = true;
+            }
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins.Keyboard) {

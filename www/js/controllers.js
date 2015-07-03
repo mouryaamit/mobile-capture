@@ -321,15 +321,48 @@ controllers
             };
             $('#HomeViewRegion').hide()
         }
-
+        $scope.reviewFrontCheck = function(imageData){
+            if(gConfig.isIos){
+                window.ChangeOrientation.change("landscape",
+                    function success(){},
+                    function error(){}
+                );
+            }else{
+                screen.lockOrientation('landscape');
+            }
+            /*this.ui.HomeViewRegion.hide();
+            var data = {
+                "frontImgSrc" : imageData
+            };
+            var AppViewInitializer = require('../../js/app/app_view_initializer');
+            this.frontCheckReView = AppViewInitializer.frontCheckReview(data);
+            this.CheckPreviewRegion.show(this.frontCheckReView);*/
+        },
         $scope.captureFront = function(retake) {
-            /*
-             * if (retake != "retake") { if
-             * (screen.orientation.indexOf("portrait") != -1) {
-             * gConfig.origOrientation = "portrait"; } else {
-             * gConfig.origOrientation = "landscape"; } }
-             */
-            $cordovaCamera
+            if (retake != "retake") {
+                if(screen.orientation.indexOf("portrait") != -1) {
+                    gConfig.origOrientation = "portrait";
+                } else {
+                    gConfig.origOrientation = "landscape";
+                }
+            }
+
+            if(gConfig.isIos){
+                window.ChangeOrientation.change("portrait",
+                    function success(){},
+                    function error(){}
+                );
+            }
+
+            navigator.camera.getPicture($scope.reviewFrontCheck(), this.captureFail, {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI,
+                targetWidth: 800,
+                targetHeight: 600,
+                side: "takePicture"
+            });
+
+            /*$cordovaCamera
                 .getPicture(options)
                 .then(
                 function(imageData) {
@@ -339,7 +372,7 @@ controllers
                     $("#frontValidImageDiv").show()
                 }, function(err) {
                     // error
-                });
+                });*/
 
         }
 
@@ -742,7 +775,7 @@ controllers
                 appFactory.GetDepositThresholdLimits(gConfig.ApplicationType, ServerConfig.institutionId, gConfig.MerchantId, gConfig.BusDate).then(function (GetDepositThresholdLimitsResult) {
                     $scope.depositLimitCount = GetDepositThresholdLimitsResult.ItemCount;
                     $scope.depositLimitAmt = GetDepositThresholdLimitsResult.ItemAmount;
-                    callback;
+                    $scope.drawCrousal()
                 })
             })
         }
@@ -752,7 +785,7 @@ controllers
                 $scope.drawCrousal();
             }
             $scope.locationsResult = gConfig.Locations;
-            $scope.updateThresholdLimits($scope.drawCrousal())
+            $scope.updateThresholdLimits()
 
 
             /*

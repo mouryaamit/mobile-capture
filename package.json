@@ -18,7 +18,8 @@
         "com.ionic.keyboard",
         "org.apache.cordova.network-information",
         "org.apache.cordova.camera",
-        "org.apache.cordova.splashscreen"
+        "org.apache.cordova.splashscreen",
+        "org.apache.cordova.device.Device"
     ],
     "cordovaPlatforms": [
         {
