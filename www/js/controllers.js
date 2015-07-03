@@ -746,7 +746,7 @@ controllers
              * $soap.post('http://test15.deposit2day.com/ConsumerService/ConsumerService.asmx','GetMerchantLocationsAndAccounts').then(function(response){
              * //Do Stuff console.log(response) });
              */
-            appFactory.getLocations('2', '1', 'dennis', '7').then(function(getLocationsResult) {
+            appFactory.GetMerchantLocationsAndAccounts('2', '1', 'dennis', '7').then(function(getLocationsResult) {
                 $scope.locationsResult = getLocationsResult;
                 console.log('from angular success')
                 console.log(getLocationsResult)

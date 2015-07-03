@@ -6,34 +6,10 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'starter.services', 'starter.factories', 'ngCordova'])
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform,appFactory,gConfig) {
 
         $ionicPlatform.ready(function () {
-        	/*$.ajax({
-                url : 'http://test15.deposit2day.com//ValidationService/VSoftRemoteSvc.asmx',
-                type : 'POST',
-                data : '<GetMerchantLocationsAndAccounts xmlns="http://consumer.vsoftcorp.com/">'+
-                '<institutionId>2</institutionId>'+
-                '<merchantId>1</merchantId>'+
-                '<userId>edesk50</userId>'+
-                '<applicationType>7</applicationType>'+
-                '</GetMerchantLocationsAndAccounts>',
-                contentType: 'text/xml',
-                success:function (response) {
-                	alert('s')
-    console.log(response)
-                    // call model response function
-//                    model.processResponse(response);
 
-
-                },// show error message
-                error: function(jqXHR, textStatus, errorThrown ){
-                	alert('e')
-                    console.log(jqXHR.statusCode());
-//                    NotyMsg.errorMsg("Unable to Connect to the Internet. Please try again later.");
-
-                }
-            });*/
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -43,6 +19,10 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+            appFactory.VSHOCreateSession().then(function(VSHOCreateSessionResult){
+                gConfig.SessionId = VSHOCreateSessionResult;
+                console.log(VSHOCreateSessionResult)
+            })
         });
     })
 
