@@ -8,7 +8,7 @@ angular.module('starter', ['ionic', 'angularSoap', 'starter.controllers', 'start
 
     .run(function ($ionicPlatform,appFactory,gConfig,$timeout,dConfig,ServerConfig,$rootScope) {
         gConfig.UserID = 'dennis' // Hardcoded
-        $rootScope.password = 'Xyz@123@'
+        $rootScope.password = 'Dennis@123'
         $ionicPlatform.ready(function () {
 
             if(device.platform == "Android"){
