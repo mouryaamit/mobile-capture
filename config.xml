@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.vsoft.mobilecapture.angular" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>mobile-capture-angular</name>
+<widget id="com.ionicframework.mobilecapture617924" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>mobile-capture</name>
   <description>
-        
+        An Ionic Framework and Cordova project.
     </description>
-  <author email="amourya@vsoftcorp.co.in" href="http://vsoftcorp.co.in/">
-      Vsoft Indta
+  <author email="hi@ionicframework" href="http://ionicframework.com/">
+      Ionic Framework Team
     </author>
   <content src="index.html"/>
   <access origin="*"/>
