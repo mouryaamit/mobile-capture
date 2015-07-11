@@ -175,7 +175,7 @@ controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, a
 controllers
     .controller(
     'CaptureCtrl',
-    function ($scope, appFactory, gConfig, ServerConfig, dConfig, $cordovaCamera, $soap, $location, $compile, $rootScope, $timeout,NotyMsg) {// 31191
+    function ($scope, appFactory, gConfig, ServerConfig, dConfig, $cordovaCamera, $soap, $location, $compile, $rootScope, $timeout) {// 31191
         console.log(ServerConfig.url, $location.$$path)
         var options = null || {}
         $scope.master = null || {};
@@ -185,6 +185,10 @@ controllers
         $scope.getNumber = function (num) {
             return new Array(num);
         }
+        /*
+         * var NotyMsg = require('../lib/noty_msg');
+         * NotyMsg.errorMsg("ad");
+         */
 
         ionic.Platform
             .ready(function () {
@@ -462,21 +466,28 @@ controllers
             if (amtValid && frontValid && backValid) {
                 return true;
             } else {
-                NotyMsg.errorMsg("Please enter missing fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"");
+                alert("Please enter missing fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"")
+                // //NotyMsg.errorMsg("Please enter missing
+                // fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"");//TODO
                 return false;
             }
 
             /* } */
         }
         $scope.checkLimit = function () {
-            if (parseFloat($scope.master.amt) > parseFloat($scope.dailyLimitAmt)) {
-                NotyMsg.errorMsg("Please add a cheque of lesser or equal amount of daily limit.");
+            if (parseFloat($scope.master.amt) > parseFloat($scope.dailyLimitAmt)) {// TODO
+                // NotyMsg.errorMsg("Please add a cheque of lesser
+                // or
+                // equal amount of daily limit.");
                 return false;
-            } else if (parseInt($scope.depositLimitCount) < 1) {
-                NotyMsg.errorMsg("Number of checks you can deposit is exceeding the limit.");
+            } else if (parseInt($scope.depositLimitCount) < 1) {// TODO
+                // NotyMsg.errorMsg("Number of checks you can
+                // deposit is
+                // exceeding the limit.");
                 return false;
             } else if (parseFloat($scope.master.amt) > parseFloat($scope.depositLimitAmt)) {// TODO
-                NotyMsg.errorMsg("Check amount is exceeding your deposit limits.");
+                // NotyMsg.errorMsg("Check amount is exceeding your
+                // deposit limits.");
                 return false;
             } else {
                 return true;
@@ -660,11 +671,9 @@ controllers
                     $scope.updateCheckProgress();
                     //============================
                     $scope.onSuccessfulValidation();
-                    NotyMsg.successMsg("Your Check has been added successfully");
+                    //NotyMsg.successMsg("Your Check has been added successfully");
                 } else {
-                    NotyMsg.errorMsg(validationResult.ErrorDesc);
-                    $scope.clearCheck();
-
+                    //NotyMsg.validationErrMsg(validationResult.ErrorDesc);
                 }
             })
         }
@@ -800,7 +809,9 @@ controllers
         $scope.depositChecks = function () {
 
             if ($scope.validCheckColl.length < 1) {
-                NotyMsg.errorMsg("Please add at least one check to the deposit list before depositing.");
+                // NotyMsg.errorMsg("Please add at least one check
+                // to the deposit list before depositing.");
+                alert("Please add at least one check  to the deposit list before depositing.");
                 return false;
             }
             appFactory.Acknowledgment(gConfig.IVSSessionId, true).then(function (AcknowledgmentResult) {
@@ -812,7 +823,7 @@ controllers
                 if (ErrorCode == '0') {
                     $scope.depositSuccess(ConfirmationNo);
                 } else {
-                    NotyMsg.errorMsg(ErrorDesc);
+                    //NotyMsg.errorMsg(ErrorDesc);
                 }
             })
         }
@@ -828,7 +839,7 @@ controllers
              this.ui.depCount.html(this.validCheckColl.length);
              $("#depositSuccessModal").modal("show");*/
             //this.onSuccessfulDeposit();
-        }
+        },
             $scope.isCheckCaptureStarted = function () {
                 var amtValid = (parseFloat($scope.master.amt) > 0);
                 var frontValid = ($("#frontImage").prop("src").length > 30);
@@ -841,10 +852,15 @@ controllers
             var status = $("span.active").parent().parent().attr(
                 "data-status");
             if (status == "1" && $scope.isCheckCaptureStarted()) {
-                NotyMsg.confirmMsg("Are you sure you want to remove this check?",$scope.clearCheck);//TODO
+                $scope.clearCheck()
+                // NotyMsg.confirmMsg("Are you sure you want to
+                // remove this check?",$scope.clearCheck());
             }
             if (status == "2") {
-                NotyMsg.confirmMsg("Are you sure you want to  remove this check from the deposit list?",$scope.deleteCheckConfirmed);//TODO
+                $scope.deleteCheckConfirmed()
+                // NotyMsg.confirmMsg("Are you sure you want to
+                // remove this check from the deposit
+                // list?",$scope.deleteCheckConfirmed());
             }
         }
         $scope.deleteCheckConfirmed = function () {
@@ -861,7 +877,9 @@ controllers
                         console.log("delete check success");
                         $scope.deleteCheckSuccess();
                     } else {
-                        NotyMsg.errorMsg('Delete Check Error : '+ ErrorDesc);
+                        console.log(ErrorCode);
+                        console.log(ErrorDesc);
+                        //NotyMsg.errorMsg('Delete Check Error : '+ ErrorDesc);
                     }
                 });
         }
@@ -880,7 +898,11 @@ controllers
             if ($scope.validCheckColl.length < 1) {
                 $scope.deleteCheck();
             } else {
-                NotyMsg.confirmMsg("This will delete all the checks in deposit list and cancel this transaction.<br>Are you sure you want to discard this deposit?", $scope.discardConfirmed);// TODO
+                $scope.discardConfirmed() // TODO
+                // NotyMsg.confirmMsg("This will delete all the
+                // checks in deposit list and cancel this
+                // transaction.<br>Are you sure you want to discard
+                // this deposit?", $scope.discardConfirmed);
             }
         }
         $scope.discardConfirmed = function () {
@@ -1066,12 +1088,13 @@ controllers
                             });
 
                         } else if (isAccLocked(IsLocked)) {
-                            NotyMsg.errorMsg("Your account is locked. Please contact bank administrator for further queries.");
+//                            NotyMsg.errorMsg("Your account is locked. Please contact bank administrator for further queries.");
                         } else {
 //                Show error
                             gConfig.ErrorCode = 1;
 //                            Utils.enableActionItems();
-                            NotyMsg.errorMsg(Error_Message);
+//                            NotyMsg.errorMsg(Error_Message);
+//                            console.log(Error_Message);
                         }
                     })
                 })

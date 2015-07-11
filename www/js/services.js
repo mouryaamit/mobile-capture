@@ -23,7 +23,7 @@ services.service('ServerConfig', function() {
         'sessionTimeout'       : 300000       // Milli Seconds
 
     };
-
+    
     return ServerConfig;
 })
 
@@ -107,96 +107,4 @@ services.service('dConfig', function() {
     defaultConfig.AppInState = false;
 
     return defaultConfig;
-})
-
-services.service('NotyMsg',function(){
-    this.errorMsg = function (msg) {
-        var errText,
-            response = msg.responseJSON;
-        if (response) {
-            if (response.responseData) {
-                errText = response.responseData.message;
-            }
-            /*else if(response.error.status == 403){
-             Utils.sessionExp = true;
-             AppActivity.trigger("login");
-             }*/
-        } else if (msg.status) {
-            errText = "Error Code: " + msg.status + ", Error Message : " + msg.statusText + "";
-        } else {
-            errText = msg;
-        }
-        var options = {
-            text: errText,
-            type: "error",
-            killer: true,
-            layout: "center",
-            timeout: false
-        };
-        var n = noty(options);
-
-    }
-
-    /*validationErrMsg = function (msg) {
-        var options = {
-            text: msg,
-            type: "error",
-            layout: "center",
-            killer: true,
-            timeout: false,
-            callback: {
-                onClose: function() {
-                    var AppViewCollection = require('../app/app_view_collection');
-                    AppViewCollection.home_view.validationError();
-                }
-            }
-
-        };
-        var n = noty(options);
-    },*/
-        this.successMsg = function (msg) {
-        var options = {
-            text: msg,
-            type: "success",
-            layout: "top",
-            killer: true,
-            timeout: "5000"
-        };
-        var n = noty(options);
-    }
-        this.confirmMsg = function (msg, callback) {
-        var options = {
-            text: msg,
-            type: "error",
-            layout: "center",
-            killer: true,
-            timeout: false,
-            buttons: [
-                {addClass: 'btn btn-default', text: 'No', onClick: function($noty) {
-                    $noty.close();
-                }
-                },
-                {addClass: 'btn btn-info', text: 'Yes', onClick: function($noty) {
-                    // this = button element
-                    // $noty = $noty element
-                    $noty.close();
-                    callback();
-                }
-                }
-            ]
-        };
-        var n = noty(options);
-    }
-
-    this.warningMsg = function (msg) {
-        var options = {
-            text: msg,
-            type: "warning",
-            layout: "center",
-            killer: true,
-            timeout: false
-        };
-        var n = noty(options);
-    }
-
 })
