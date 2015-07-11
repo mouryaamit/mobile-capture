@@ -1,6 +1,6 @@
 var controllers = angular.module('starter.controllers', [])
 
-controllers.controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+controllers.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -18,21 +18,21 @@ controllers.controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
 
 })
 
-controllers.controller('PlaylistCtrl', function ($scope, Camera) {
+controllers.controller('PlaylistCtrl', function($scope, Camera) {
     $scope.image = null;
 
-    $scope.getPic = function () {
+    $scope.getPic = function() {
         Camera.getPicture({
-            quality: 75,
-            targetWidth: 320,
-            targetHeight: 320,
-            saveToPhotoAlbum: false
-        }).then(function (imageURI) {
-            console.log(imageURI);
-            $scope.image = imageURI;
-        }, function (err) {
-            console.err(err);
-        });
+            quality : 75,
+            targetWidth : 320,
+            targetHeight : 320,
+            saveToPhotoAlbum : false
+        }).then(function(imageURI) {
+                console.log(imageURI);
+                $scope.image = imageURI;
+            }, function(err) {
+                console.err(err);
+            });
     }
     /*
      * var options = { quality: 50, destinationType:
@@ -49,86 +49,86 @@ controllers.controller('PlaylistCtrl', function ($scope, Camera) {
      */
 })
 
-controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, appFactory, $location) {
+controllers.controller('HistoryCtrl', function($scope, ServerConfig, gConfig, appFactory, $location) {
     $scope.todayDate = null;
 
-
     console.log('HistoryCtrl', ServerConfig.institutionId, $location.$$path)
-
-
+    console.log('historyCtrl')
     var instId = ServerConfig.institutionId;
-    appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, gConfig.BusDate, gConfig.ApplicationType).then(function (res) {
+    appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, '01022014', gConfig.ApplicationType).then(function(res) {
         console.log('success', res);
-        $scope.depositChecks = res;
-    }, function (err) {
+    }, function(err) {
         console.log('error', err);
     });
-    /*$scope.depositChecks = [
-     {
-     TotalAmount: 1233,
-     TotalCount: 2,
-     DateOfDeposit: 02032014,
-     AccountDescription: 'jhgweuryg',
-     AccountNumber: 34345345,
-     LocationName: 'HYD',
-     TransactionStatusDescription: 'Submitted',
-     TransactionStatu: 60
-     },
-     {
-     TotalAmount: 1233,
-     TotalCount: 2,
-     DateOfDeposit: 02032014,
-     AccountDescription: 'jhgweuryg',
-     AccountNumber: 34345345,
-     LocationName: 'HYD',
-     TransactionStatu: 1,
-     TransactionStatusDescription: 'Submitted'
-     },
-     {
-     TotalAmount: 1233,
-     TotalCount: 2,
-     DateOfDeposit: 02032014,
-     AccountDescription: 'jhgweuryg',
-     AccountNumber: 34345345,
-     LocationName: 'HYD',
-     TransactionStatu: 2,
-     TransactionStatusDescription: 'Submitted'
-     }
-     ]*/
-    $scope.showDates = function () {
+    $scope.depositChecks = [
+        {
+            TotalAmount: 1233,
+            TotalCount: 2,
+            DateOfDeposit: 02032014,
+            AccountDescription: 'jhgweuryg',
+            AccountNumber: 34345345,
+            LocationName: 'HYD',
+            TransactionStatusDescription: 'Submitted',
+            TransactionStatu: 60
+        },
+        {
+            TotalAmount: 1233,
+            TotalCount: 2,
+            DateOfDeposit: 02032014,
+            AccountDescription: 'jhgweuryg',
+            AccountNumber: 34345345,
+            LocationName: 'HYD',
+            TransactionStatu: 1,
+            TransactionStatusDescription: 'Submitted'
+        },
+        {
+            TotalAmount: 1233,
+            TotalCount: 2,
+            DateOfDeposit: 02032014,
+            AccountDescription: 'jhgweuryg',
+            AccountNumber: 34345345,
+            LocationName: 'HYD',
+            TransactionStatu: 2,
+            TransactionStatusDescription: 'Submitted'
+        }
+    ]
+    $scope.showDates = function(){
         $('#todayTabDate').html(moment().format("MM/DD/YYYY"));
         $('#yestTabDate').html(moment().subtract(1, 'days').format("MM/DD/YYYY"));
     };
 
     $scope.showDates();
-
-    $scope.getTodayDepositHistory = function () {
+    $scope.getTodayDepositHistory = function(){
         console.log('today')
         $(event.currentTarget).children().children("span.carouselLi").addClass("active");
-        var today = moment().format("MM/DD/YYYY");
+        /*var depHisModel = Models.getDepositHistoryModel(),
+         today = Moment().format("MM/DD/YYYY");
 
-        appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, today, gConfig.ApplicationType).then(function (res) {
-            console.log('success', res);
-            /*$scope.depositChecks = res;*/
-        }, function (err) {
-            console.log('error', err);
-        });
+         depHisModel.set({
+         'instId'        : ServerConfig.institutionId,
+         'userId'        : gConfig.UserID,
+         'depositDateMMDDYYYY' : today,
 
+         'renderTarget'  : '#todayHistoryDiv'
+         });
+         depHisModel.processRequest();*/
     };
-    $scope.getTodayDepositHistory();
-    $scope.getYesterdayDepositHistory = function () {
+    $scope.getYesterdayDepositHistory = function(){
         console.log('getYesterdayDepos')
-        var yesterday = moment().subtract(1, 'days').format("MM/DD/YYYY");
+        /*var depHisModel = Models.getDepositHistoryModel(),
+         yesterday = Moment().subtract(1, 'days').format("MM/DD/YYYY");
 
-        appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, yesterday, gConfig.ApplicationType).then(function (res) {
-            console.log('success', res);
-            /*$scope.depositChecks = res;*/
-        }, function (err) {
-            console.log('error', err);
-        });
+         depHisModel.set({
+         'instId'        : ServerConfig.institutionId,
+         'userId'        : gConfig.UserID,
+         'depositDateMMDDYYYY' : yesterday,
+
+         'renderTarget'  : '#yesterdayHistoryDiv'
+         });
+         depHisModel.processRequest();*/
     };
 
-    $scope.renderDepositHistory = function (coll, target) {
+    $scope.renderDepositHistory = function(coll, target){
         /*var AppViewInitializer = require('../../js/app/app_view_initializer');
          console.log(coll);
          console.log(target);
@@ -175,14 +175,15 @@ controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, a
 controllers
     .controller(
     'CaptureCtrl',
-    function ($scope, appFactory, gConfig, ServerConfig, dConfig, $cordovaCamera, $soap, $location, $compile, $rootScope, $timeout) {// 31191
+    function($scope, appFactory, gConfig, ServerConfig,
+             $cordovaCamera, $soap, $location,$compile) {// 31191
         console.log(ServerConfig.url, $location.$$path)
         var options = null || {}
         $scope.master = null || {};
         $scope.depositLimitCount = 0;
         $scope.dailyLimitAmt = 0.00;
         $scope.depositLimitAmt = 0.00;
-        $scope.getNumber = function (num) {
+        $scope.getNumber = function(num) {
             return new Array(num);
         }
         /*
@@ -191,19 +192,19 @@ controllers
          */
 
         ionic.Platform
-            .ready(function () {
+            .ready(function() {
                 if (ionic.Platform.isAndroid()
                     || ionic.Platform.isIOS()) {
                     options = {
-                        quality: 50,
-                        destinationType: Camera.DestinationType.DATA_URL,
-                        sourceType: Camera.PictureSourceType.CAMERA,
-                        allowEdit: true,
-                        encodingType: Camera.EncodingType.JPEG,
-                        targetWidth: 800,
-                        targetHeight: 600,
-                        popoverOptions: CameraPopoverOptions,
-                        saveToPhotoAlbum: false
+                        quality : 50,
+                        destinationType : Camera.DestinationType.DATA_URL,
+                        sourceType : Camera.PictureSourceType.CAMERA,
+                        allowEdit : true,
+                        encodingType : Camera.EncodingType.JPEG,
+                        targetWidth : 800,
+                        targetHeight : 600,
+                        popoverOptions : CameraPopoverOptions,
+                        saveToPhotoAlbum : false
                     };
                 }
             });
@@ -240,15 +241,15 @@ controllers
          'status' : 2
          })*/
 
-        $scope.scrollRight = function () {
+        $scope.scrollRight = function() {
 
         }
 
-        $scope.scrollLeft = function () {
+        $scope.scrollLeft = function() {
 
         }
 
-        $scope.showCapturedCheck = function (pos) {
+        $scope.showCapturedCheck = function(pos) {
             $('.amtInputDiv').hide();
             $('.amtPreviewDiv').show();
 
@@ -265,9 +266,9 @@ controllers
             $('#backImagePreview').prop("src",
                 this.validCheckColl[pos].RearImage);
         }
-        $scope.showCarouselCheck = function () {
+        $scope.showCarouselCheck = function() {
 
-            var pos = ((parseInt($(event.currentTarget).index()) + 1) / 2) - 1;
+            var pos = ((parseInt($(event.currentTarget).index())+1)/2)-1;
             var status = $(event.currentTarget).attr("data-status");
             switch (status) {
                 case "0":
@@ -289,7 +290,7 @@ controllers
             }
         }
 
-        $scope.previewFrontImg = function () {
+        $scope.previewFrontImg = function() {
             if (!$("#frontImage").is(":hidden")) {
                 frontImgSrc = $("#frontImage").prop("src");
                 backImgSrc = $("#backImage").prop("src");
@@ -298,14 +299,14 @@ controllers
                 backImgSrc = $("#backImagePreview").prop("src");
             }
             var data = {
-                "frontImgSrc": frontImgSrc,
-                "backImgSrc": backImgSrc
+                "frontImgSrc" : frontImgSrc,
+                "backImgSrc" : backImgSrc
             };
             $('#HomeViewRegion').hide()
             // $('#FrontPreviewView').show()
         }
 
-        $scope.previewBackImg = function () {
+        $scope.previewBackImg = function() {
             var frontImgSrc = "", backImgSrc = "";
             if (!$("#frontImage").is(":hidden")) {
                 frontImgSrc = $("#frontImage").prop("src");
@@ -315,120 +316,81 @@ controllers
                 backImgSrc = $("#backImagePreview").prop("src");
             }
             var data = {
-                "frontImgSrc": frontImgSrc,
-                "backImgSrc": backImgSrc
+                "frontImgSrc" : frontImgSrc,
+                "backImgSrc" : backImgSrc
             };
             $('#HomeViewRegion').hide()
         }
-        $scope.reviewFrontCheck = function (imageData) {
-            if (gConfig.isIos) {
+        $scope.reviewFrontCheck = function(imageData){
+            if(gConfig.isIos){
                 window.ChangeOrientation.change("landscape",
-                    function success() {
-                    },
-                    function error() {
-                    }
+                    function success(){},
+                    function error(){}
                 );
-            } else {
+            }else{
                 screen.lockOrientation('landscape');
             }
             /*this.ui.HomeViewRegion.hide();
-             var data = {
-             "frontImgSrc" : imageData
-             };
-             var AppViewInitializer = require('../../js/app/app_view_initializer');
-             this.frontCheckReView = AppViewInitializer.frontCheckReview(data);
-             this.CheckPreviewRegion.show(this.frontCheckReView);*/
+            var data = {
+                "frontImgSrc" : imageData
+            };
+            var AppViewInitializer = require('../../js/app/app_view_initializer');
+            this.frontCheckReView = AppViewInitializer.frontCheckReview(data);
+            this.CheckPreviewRegion.show(this.frontCheckReView);*/
         },
-            $scope.captureFront = function (retake) {
-                if (retake != "retake") {
-                    if (screen.orientation.type.split('-')[0] == "portrait") {
-                        gConfig.origOrientation = "portrait";
-                    } else {
-                        gConfig.origOrientation = "landscape";
-                    }
-                }
-
-                if (gConfig.isIos) {
-                    window.ChangeOrientation.change("portrait",
-                        function success() {
-                        },
-                        function error() {
-                        }
-                    );
-                }
-
-                /*  navigator.camera.getPicture($scope.reviewFrontCheck(), $scope.captureFail, {
-                 quality: 50,
-                 destinationType: Camera.DestinationType.FILE_URI,
-                 targetWidth: 800,
-                 targetHeight: 600,
-                 side: "takePicture"
-                 });
-                 */
-                $cordovaCamera
-                    .getPicture(options)
-                    .then(
-                    function (imageData) {
-                        $scope.Cheque.frontImage = "data:image/jpeg;base64,"
-                            + imageData;
-                        $("#frontImageDiv").hide();
-                        $("#frontValidImageDiv").show()
-                    }, function (err) {
-                        // error
-                    });
-
-            }
-        /*$scope.captureFail = function(){
-
-         }
-         $scope.reviewFrontCheck = function(imageData){
-         if(gConfig.isIos){
-         window.ChangeOrientation.change("landscape",
-         function success(){},
-         function error(){}
-         );
-         }else{
-         screen.lockOrientation('landscape');
-         }
-         $('#HomeViewRegion').hide();
-         var data = {
-         "frontImgSrc" : imageData
-         };
-         //            var AppViewInitializer = require('../../js/app/app_view_initializer');
-         //            this.frontCheckReView = AppViewInitializer.frontCheckReview(data);
-         $('#FrontPreviewView').show();
-         },*/
-        $scope.captureBack = function (retake) {
+        $scope.captureFront = function(retake) {
             if (retake != "retake") {
-                if (screen.orientation.type.split('-')[0] == "portrait") {
+                if(screen.orientation.indexOf("portrait") != -1) {
                     gConfig.origOrientation = "portrait";
                 } else {
                     gConfig.origOrientation = "landscape";
                 }
             }
 
-            if (gConfig.isIos) {
+            if(gConfig.isIos){
                 window.ChangeOrientation.change("portrait",
-                    function success() {
-                    },
-                    function error() {
-                    }
+                    function success(){},
+                    function error(){}
                 );
             }
+
+            navigator.camera.getPicture($scope.reviewFrontCheck(), this.captureFail, {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI,
+                targetWidth: 800,
+                targetHeight: 600,
+                side: "takePicture"
+            });
+
+            /*$cordovaCamera
+                .getPicture(options)
+                .then(
+                function(imageData) {
+                    $scope.Cheque.frontImage = "data:image/jpeg;base64,"
+                        + imageData;
+                    $("#frontImageDiv").hide();
+                    $("#frontValidImageDiv").show()
+                }, function(err) {
+                    // error
+                });*/
+
+        }
+
+        $scope.captureBack = function() {
             $cordovaCamera
                 .getPicture(options)
                 .then(
-                function (imageData) {
+                function(imageData) {
                     $scope.Cheque.backImage = "data:image/jpeg;base64,"
                         + imageData;
                     $("#backImageDiv").hide();
                     $("#backValidImageDiv").show()
-                }, function (err) {
+                }, function(err) {
                     // error
                 });
         }
 
-        $scope.isCheckCaptured = function () {
+        $scope.isCheckCaptured = function() {
 
             var amtMsg = "", frontImgMsg = "", backImgMsg = "";
             var amtValid = false, frontValid = false, backValid = false;
@@ -466,7 +428,7 @@ controllers
             if (amtValid && frontValid && backValid) {
                 return true;
             } else {
-                alert("Please enter missing fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"")
+                //alert("Please enter missing fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"")
                 // //NotyMsg.errorMsg("Please enter missing
                 // fields:"+amtMsg+""+frontImgMsg+""+backImgMsg+"");//TODO
                 return false;
@@ -474,7 +436,7 @@ controllers
 
             /* } */
         }
-        $scope.checkLimit = function () {
+        $scope.checkLimit = function() {
             if (parseFloat($scope.master.amt) > parseFloat($scope.dailyLimitAmt)) {// TODO
                 // NotyMsg.errorMsg("Please add a cheque of lesser
                 // or
@@ -493,7 +455,7 @@ controllers
                 return true;
             }
         }
-        $scope.showUpdatedCarouselCheck = function () {
+        $scope.showUpdatedCarouselCheck = function() {
             $checkLi = $(".carouselLi.active").parent().parent();
             console.log($checkLi.index());
             var pos = $checkLi.index();
@@ -532,7 +494,7 @@ controllers
             }
         }
 
-        $scope.scrollActiveElem = function () {
+        $scope.scrollActiveElem = function() {
             if ($scope.checkCounter < 2) {
                 $(".horizontalScroll").css("overflow-x", "hidden");
             } else {
@@ -541,15 +503,15 @@ controllers
                     .parent();
                 if ($scope.depositLimitCount < $scope.validCheckColl.length) {
                     $(".horizontalScroll").scrollLeft(
-                            checkLi.position().left
+                        checkLi.position().left
                             - $(".horizontalScroll")
                             .width()
                             / $("#checkListCarousel")
-                                .children().length);
+                            .children().length);
                 }
             }
         }
-        $scope.drawCrousal = function () {
+        $scope.drawCrousal = function() {
             var checkCount = $scope.validCheckColl.length;
             var carouselAddedStr = "";
             for (var i = 0; i < checkCount; i++) {
@@ -574,7 +536,7 @@ controllers
                     + "</span><br><span class='carouselAmt'></span></span></li>";
             }
             var totalStr = carouselAddedStr + remainingStr;
-            var temp = $compile(totalStr)($scope, function (clonedElement, scope) {
+            var temp = $compile(totalStr)($scope, function(clonedElement, scope) {
                 $('#checkListCarousel').html(clonedElement);
             })
             var activePos;
@@ -591,186 +553,33 @@ controllers
             }
         }
 
-        $scope.processCheck = function () {
-            appFactory.Process(gConfig.IVSSessionId, parseFloat($scope.master.amt).toFixed(2), $scope.Cheque.frontImage, $scope.Cheque.backImage, true).then(function (ProcessResult) {
-                var $IQResult = ProcessResult.IQResult;
-                if ($IQResult == undefined || $IQResult == null) {
-                    $IQResult = {}
-                }
-                var $IUResult = ProcessResult.IUResult;
-                if ($IUResult == undefined || $IUResult == null) {
-                    $IUResult = {}
-                }
-                var $Amount = ProcessResult.Amount
-                if ($Amount == undefined || $Amount == null) {
-                    $Amount = {}
-                }
-                var $Duplicate = ProcessResult.Duplicate;
-                if ($Duplicate == undefined || $Duplicate == null) {
-                    $Duplicate = {}
-                }
-                var $Threshold = ProcessResult.Threshold;
-                if ($Threshold == undefined || $Threshold == null) {
-                    $Threshold = {}
-                }
-                var $MICR = ProcessResult.MICR
-                if ($MICR == undefined || $MICR == null) {
-                    $MICR = {}
-                }
-
-                var validationResult = {
-
-                    ReturnValue: ProcessResult.ReturnValue,
-                    ErrorCode: ProcessResult.ErrorCode,
-                    ErrorDesc: ProcessResult.ErrorDesc,
-                    RequestDuration: ProcessResult.RequestDuration,
-                    ReturnedImage: ProcessResult.Image,
-
-                    FrontImage: ProcessResult.FrontImage,
-                    BackImage: ProcessResult.BackImage,
-
-                    IQResultValue: $IQResult.Value,
-                    IQResultReason: $IQResult.Reason,
-
-                    IUResultValue: $IUResult.Value,
-                    IUResultReason: $IUResult.Reason,
-
-                    AmountValue: $Amount.Value,
-                    AmountResult: $Amount.Result,
-                    AmountConfidence: $Amount.AmountConfidence,
-
-                    DuplicateValue: $Duplicate.Value,
-                    DuplicateReason: $Duplicate.Reason,
-
-                    ThresholdValue: $Threshold.Value,
-                    ThresholdReason: $Threshold.Reason,
-
-                    MICRValue: $MICR.Value,
-                    MICRReason: $MICR.Reason,
-                    MICREligible: $MICR.Eligible,
-                    MICRFlipped: $MICR.Flipped,
-                    MICRRotated: $MICR.Rotated,
-                    MICRField1: $MICR.Field1,
-                    MICRField2: $MICR.Field2,
-                    MICRField3: $MICR.Field3,
-                    MICRField4: $MICR.Field4,
-                    MICRField5: $MICR.Field5,
-                    MICRField6: $MICR.Field6,
-                    RawMICR: $MICR.RawMICR,
-                    MICRConfidence: $MICR.MICRConfidence
-                };
-                if (validationResult.ErrorCode == '0') {
-                    var checkItem = {
-                        'Amount': validationResult.MICRField1,
-                        'FrontImage': $scope.Cheque.frontImage,
-                        'RearImage': $scope.Cheque.backImage,
-                        'RawMICR': validationResult.RawMICR
-                    };
-                    $scope.validCheckColl.push(checkItem);
-                    $scope.checkCounter = this.validCheckColl.length;
-                    $scope.updateCheckProgress();
-                    //============================
-                    $scope.onSuccessfulValidation();
-                    //NotyMsg.successMsg("Your Check has been added successfully");
-                } else {
-                    //NotyMsg.validationErrMsg(validationResult.ErrorDesc);
-                }
+        $scope.processCheck = function() {
+            $scope.validCheckColl.push({
+                'SessionId' : gConfig.IVSSessionId,
+                'Amount' : parseFloat($scope.master.amt).toFixed(2),
+                'FrontImage' : $scope.Cheque.frontImage,
+                'RearImage' : $scope.Cheque.backImage,
+                'ReturnImage' : true,
+                'status' : 2
             })
-        }
-        $scope.onSuccessfulValidation = function () {
-            $scope.disableAccLoc();
-            $scope.updateCheckCarousel();
+            /*$scope.validCheckColl.push({
+             'SessionId' : gConfig.IVSSessionId,
+             'Amount' : parseFloat(Math.random()*1000).toFixed(2),
+             'FrontImage' : "data:image/jpeg;base64,",
+             'RearImage' : "data:image/jpeg;base64,",
+             'ReturnImage' : true,
+             'status' : 2
+             })*/
+            $scope.checkCounter = $scope.validCheckColl.length
+            $scope.drawCrousal();
+            $scope.showUpdatedCarouselCheck();
+            $scope.scrollActiveElem();
             $scope.updateDepositCounter();
-            $scope.clearCheck();
-            $scope.updateThresholdLimits();
+
         }
-        $scope.updateCheckCarousel = function () {
 
-            var checkCount = $scope.validCheckColl.length;
-            var carouselAddedStr = "";
-            for (var i = 0; i < checkCount; i++) {
-                carouselAddedStr = carouselAddedStr + "<li></li><li class='checkLi' data-status='2'><span><span class='carouselLi'>" + (i + 1) + "</span><br><span class='carouselAmt'>" + this.validCheckColl[i].Amount + "</span></span></li>";
-            }
-            var remainingStr = "";
-            var limitCount = parseInt($scope.depositLimitCount);
-            var remainingLength = limitCount + parseInt(checkCount) - 1;
-            for (var j = checkCount; j < remainingLength; j++) {
-                remainingStr = remainingStr + "<li></li><li class='checkLi' data-status='0'><span><span class='carouselLi'>" + (j + 1) + "</span><br><span class='carouselAmt'></span></span></li>";
-            }
-            var totalStr = carouselAddedStr + remainingStr;
-            var temp = $compile(totalStr)($scope, function (clonedElement, scope) {
-                $('#checkListCarousel').html(clonedElement);
-            })
-            var activePos;
-            if (limitCount == 1) {
-                activePos = checkCount - 1;
-                $(".carouselLi:eq(" + activePos + ")").addClass("active");
-            } else {
-                activePos = checkCount;
-                $(".carouselLi:eq(" + activePos + ")").addClass("active");
-                $(".checkLi:eq(" + activePos + ")").attr("data-status", "1");
-            }
-            $scope.showUpdatedCarouselCheck();
-            $scope.scrollActiveElem();
-        }
-        $scope.updateAfterDeleteCheckCarousel = function () {
-            var checkCount = this.validCheckColl.length;
-            var carouselAddedStr = "";
-            for (var i = 0; i < checkCount; i++) {
-                carouselAddedStr = carouselAddedStr + "<li></li><li class='checkLi' data-status='2'><span><span class='carouselLi'>" + (i + 1) + "</span><br><span class='carouselAmt'>" + this.validCheckColl[i].Amount + "</span></span></li>";
-            }
-            var remainingStr = "";
-            var limitCount = parseInt($scope.depositLimitCount);
-            var remainingLength = limitCount + parseInt(checkCount);
-            for (var j = checkCount; j < remainingLength; j++) {
-                remainingStr = remainingStr + "<li></li><li class='checkLi' data-status='0'><span><span class='carouselLi'>" + (j + 1) + "</span><br><span class='carouselAmt'></span></span></li>";
-            }
-            var totalStr = carouselAddedStr + remainingStr;
-            var temp = $compile(totalStr)($scope, function (clonedElement, scope) {
-                $('#checkListCarousel').html(clonedElement);
-            })
-            var activePos = checkCount;
-            $(".carouselLi:eq(" + activePos + ")").addClass("active");
-            $(".checkLi:eq(" + activePos + ")").attr("data-status", "1");
-
-            $scope.showUpdatedCarouselCheck();
-            $scope.scrollActiveElem();
-        }
-        $scope.scrollActiveElem = function () {
-            if ($scope.checkCounter < 2) {
-                $(".horizontalScroll").css("overflow-x", "hidden");
-            } else {
-                $(".horizontalScroll").css("overflow-x", "scroll");
-                var checkLi = $(".carouselLi.active").parent().parent();
-                $(".horizontalScroll").scrollLeft(checkLi.position().left - $(".horizontalScroll").width() / $("#checkListCarousel").children().length);
-            }
-        }
-        $scope.updateDepositCounter = function () {
-            var totalChecks = $scope.validCheckColl.length;
-            var totalAmt = 0.00;
-            for (var i = 0; i < totalChecks; i++) {
-                totalAmt = parseFloat(totalAmt) + parseFloat($scope.validCheckColl[i].Amount);
-            }
-            totalAmt = parseFloat(totalAmt).toFixed(2);
-            $('#totalChecksDepCounter').html(totalChecks);
-            $('#totalValidAmtDepCounter').html(totalAmt);
-            $scope.updateCheckProgress();
-        },
-            $scope.clearCheck = function () {
-
-                $("#frontImage").hide().prop("src", "data:image/jpeg;base64,");
-                $(".frontCameraIcon").show();
-                $("#backImage").hide().prop("src", "data:image/jpeg;base64,");
-                $(".backCameraIcon").show();
-                $scope.Cheque.frontImage = "";
-                $scope.Cheque.backImage = "";
-                $scope.master.amt = "";
-
-            }
-
-
-        $scope.submitCheck = function () {
-            console.log($scope.master.amt)
+        $scope.submitCheck = function() {
+                        console.log($scope.master.amt)
             if (!$scope.isCheckCaptured()) {
                 alert('isCheckCaptured')
                 return false;
@@ -779,76 +588,47 @@ controllers
                 alert('checkLimit')
                 return false;
             }
-            if ($scope.checkCounter < 1) {
-                this.StartTran();
-                gConfig.checkInProgress = true;
-                return;
-            }
-
+            /*
+             * if($scope.checkCounter < 1){ this.startTrans();
+             * gConfig.checkInProgress = true; return; }
+             */
 
             $scope.processCheck();
-
+            $scope.Cheque = null || {
+                frontImage : "data:image/jpeg;base64,",
+                backImage : "data:image/jpeg;base64,"
+            };
+            $scope.master.amt = "";
+            $("#backImageDiv").show();
+            $("#backValidImageDiv").hide()
+            $("#frontImageDiv").show();
+            $("#frontValidImageDiv").hide()
         }
 
-        $scope.StartTran = function () {
-            appFactory.StartTran(ServerConfig.institutionId, '7', gConfig.UserID, '', $("#accounts").val(), $("#accounts option:selected").attr("class"), gConfig.IVSProfileID, '1', '0', true, device.model, device.model, device.platform, device.version, gConfig.MerchantID, $scope.locations).then(function (StartTranResult) {
-                var SessionId = StartTranResult.SessionId;
-                var ReturnValue = StartTranResult.ReturnValue;
-                var ErrorCode = StartTranResult.ErrorCode;
-                var ErrorDesc = StartTranResult.ErrorDesc;
-                gConfig.IVSSessionId = SessionId;
-                //--------------------------------------------------------
-                if (ErrorCode == '0') {
-                    $scope.processCheck();
-                } else {
-                    NotyMsg.errorMsg('Start Transaction Error : ' + ErrorDesc);
-                }
-            })
-        }
-
-        $scope.depositChecks = function () {
+        $scope.depositChecks = function() {
 
             if ($scope.validCheckColl.length < 1) {
                 // NotyMsg.errorMsg("Please add at least one check
                 // to the deposit list before depositing.");
-                alert("Please add at least one check  to the deposit list before depositing.");
                 return false;
             }
-            appFactory.Acknowledgment(gConfig.IVSSessionId, true).then(function (AcknowledgmentResult) {
-                var SessionId = AcknowledgmentResult.SessionId;
-                var ReturnValue = AcknowledgmentResult.ReturnValue;
-                var ConfirmationNo = AcknowledgmentResult.ConfirmationId;
-                var ErrorCode = AcknowledgmentResult.ErrorCode;
-                var ErrorDesc = AcknowledgmentResult.ErrorDesc;
-                if (ErrorCode == '0') {
-                    $scope.depositSuccess(ConfirmationNo);
-                } else {
-                    //NotyMsg.errorMsg(ErrorDesc);
-                }
-            })
+            /*
+             * proccess { 'SessionId' : gConfig.IVSSessionId,
+             * 'ReturnValue' : true, //***$GeoLocation$***: adding
+             * one parameter "strSessionId" : gConfig.SessionID }
+             */
+
+            // this.depositSuccess(54321);
         }
-        $scope.depositSuccess = function (no) {
-            var totalAmt = 0.00;
-            for (var i = 0; i < $scope.validCheckColl.length; i++) {
-                totalAmt = parseFloat(totalAmt) + parseFloat($scope.validCheckColl[i].Amount);
-            }
-            totalAmt = parseFloat(totalAmt).toFixed(2);
-            //TODO
-            /*this.ui.confirmationNo.html(no);
-             this.ui.depAmt.html(totalAmt);
-             this.ui.depCount.html(this.validCheckColl.length);
-             $("#depositSuccessModal").modal("show");*/
-            //this.onSuccessfulDeposit();
-        },
-            $scope.isCheckCaptureStarted = function () {
-                var amtValid = (parseFloat($scope.master.amt) > 0);
-                var frontValid = ($("#frontImage").prop("src").length > 30);
-                var backValid = ($("#backImage").prop("src").length > 30);
+        $scope.isCheckCaptureStarted = function() {
+            var amtValid = (parseFloat($scope.master.amt) > 0);
+            var frontValid = ($("#frontImage").prop("src").length > 30);
+            var backValid = ($("#backImage").prop("src").length > 30);
 
-                return (amtValid || frontValid || backValid)
-            }
+            return (amtValid || frontValid || backValid)
+        }
 
-        $scope.deleteCheck = function () {
+        $scope.deleteCheck = function() {
             var status = $("span.active").parent().parent().attr(
                 "data-status");
             if (status == "1" && $scope.isCheckCaptureStarted()) {
@@ -863,38 +643,25 @@ controllers
                 // list?",$scope.deleteCheckConfirmed());
             }
         }
-        $scope.deleteCheckConfirmed = function () {
-            $scope.deletePos = $("span.active").parent().parent().index();
-            appFactory.PurgeTransaction(gConfig.IVSSessionId,
-                $scope.validCheckColl[$scope.deletePos].Amount,
-                $scope.validCheckColl[$scope.deletePos].RawMICR
-            ).then(function (PurgeTransactionResult) {
-                    var ReturnValue = PurgeTransactionResult.ReturnValue
-                    var ErrorCode = PurgeTransactionResult.ErrorCode
-                    var ErrorDesc = PurgeTransactionResult.ErrorDesc
-
-                    if (ErrorCode == "0" || ErrorCode == 0) {
-                        console.log("delete check success");
-                        $scope.deleteCheckSuccess();
-                    } else {
-                        console.log(ErrorCode);
-                        console.log(ErrorDesc);
-                        //NotyMsg.errorMsg('Delete Check Error : '+ ErrorDesc);
-                    }
-                });
-        }
-        $scope.deleteCheckSuccess = function () {
-            $scope.validCheckColl.splice($scope.deletePos, 1);
+        $scope.deleteCheckConfirmed = function() {
+            var deletePos = $("span.active").parent().index();
+            /*
+             * var deleteModel = Models.getDeleteCheckModel();
+             * deleteModel.set({ 'SessionId' : gConfig.IVSSessionId,
+             * 'Amount' :
+             * this.validCheckColl[this.deletePos].Amount, 'RawMICR' :
+             * this.validCheckColl[this.deletePos].RawMICR });
+             * deleteModel.processRequest();
+             */
+            $scope.validCheckColl.splice(deletePos, 1);
             $scope.checkCounter = $scope.validCheckColl.length;
-            $scope.depositLimitCount = parseInt($scope.depositLimitCount) + 1;
-            $scope.updateAfterDeleteCheckCarousel();
-            $scope.onDeleteCheckSuccess();
-        }
-        $scope.onDeleteCheckSuccess = function () {
+            $scope.clearCheck();
             $scope.updateDepositCounter();
-            $scope.updateThresholdLimits()
+            $scope.drawCrousal();
+            $scope.showUpdatedCarouselCheck();
+            $scope.clearCheck();
         }
-        $scope.discardChecks = function () {
+        $scope.discardChecks = function() {
             if ($scope.validCheckColl.length < 1) {
                 $scope.deleteCheck();
             } else {
@@ -905,11 +672,11 @@ controllers
                 // this deposit?", $scope.discardConfirmed);
             }
         }
-        $scope.discardConfirmed = function () {
+        $scope.discardConfirmed = function() {
             $scope.enableAccLoc();
             $scope.discardAll();
         }
-        $scope.discardAll = function () {
+        $scope.discardAll = function() {
             if ($scope.validCheckColl.length > 0) {
                 $scope.validCheckColl.splice(0,
                     $scope.validCheckColl.length)
@@ -926,7 +693,7 @@ controllers
                 $scope.clearCheck();
             }
         }
-        $scope.clearDepositChecks = function () {
+        $scope.clearDepositChecks = function() {
             $scope.clearCheck();
             $scope.showCurrentCheck();
             $scope.initCollection();
@@ -934,11 +701,11 @@ controllers
             $scope.resetLimits();
 
         }
-        $scope.resetLimits = function () {
+        $scope.resetLimits = function() {
             $scope.getDailyLimit();
             $scope.getDepositLimit();
         }
-        $scope.updateDepositCounter = function () {
+        $scope.updateDepositCounter = function() {
             var totalChecks = $scope.validCheckColl.length;
             var totalAmt = 0.00;
             for (var i = 0; i < totalChecks; i++) {
@@ -952,14 +719,14 @@ controllers
             // this.updateCheckProgress();
 
         }
-        $scope.initCollection = function () {
+        $scope.initCollection = function() {
             $scope.checkCounter = 0;
             /*
              * this.validCheckColl = Models.getCheckColl();
              * this.updateCheckProgress();
              */
         }
-        $scope.showCurrentCheck = function () {
+        $scope.showCurrentCheck = function() {
             $('.amtPreviewDiv').hide();
             $('.amtInputDiv').show();
 
@@ -968,7 +735,7 @@ controllers
             $('.validCheckImgDiv').hide();
             $('.checkImgDiv').show();
         }
-        $scope.clearCheck = function () {
+        $scope.clearCheck = function() {
             $("#frontImage").hide().prop("src",
                 "data:image/jpeg;base64,");
             $(".frontCameraIcon").show();
@@ -977,129 +744,48 @@ controllers
             $(".backCameraIcon").show();
             $scope.master.amt = "";
         }
-        $scope.disableAccLoc = function () {
+        $scope.disableAccLoc = function() {
             $(".locAccSelectInpGrp").addClass("disabled");
         }
-        $scope.enableAccLoc = function () {
+        $scope.enableAccLoc = function() {
             $(".locAccSelectInpGrp").removeClass("disabled");
         }
         // Update Check Capture Status
-        $scope.updateCheckProgress = function () {
+        $scope.updateCheckProgress = function() {
             gConfig.checkInProgress = ($scope.validCheckColl.length > 0);
         }
 
-        $scope.onBeforeDestroy = function () {
+        $scope.onBeforeDestroy = function() {
             gConfig.checkInProgress = false;
         }
-        $scope.updateAmt = function (event) {
-            $('#amt').val(parseFloat(event.currentTarget.value).toFixed(2));
+        $scope.updateAmt = function() {
+
+                        console.log($scope.master.amt)
         }
 
 
-        $scope.locationsSelected = function () {
+        $scope.locationsSelected = function() {
             console.log((_.find($scope.locationsResult, { 'Id': $scope.locations})).Accounts)
             $scope.accountResult = null || [];
             $scope.accountResult = (_.find($scope.locationsResult, { 'Id': $scope.locations})).Accounts
         }
-        $scope.updateThresholdLimits = function () {
-            appFactory.GetCurrentDayAvailableThresholdLimits(gConfig.ApplicationType, gConfig.BusDate, ServerConfig.institutionId, gConfig.MerchantID).then(function (GetCurrentDayAvailableThresholdLimitsResult) {
+        $scope.updateThresholdLimits = function(callback) {
+            appFactory.GetCurrentDayAvailableThresholdLimits(gConfig.ApplicationType, gConfig.BusDate, ServerConfig.institutionId, gConfig.MerchantId).then(function (GetCurrentDayAvailableThresholdLimitsResult) {
                 $scope.dailyLimitAmt = GetCurrentDayAvailableThresholdLimitsResult.AvailableAmount;
-                appFactory.GetDepositThresholdLimits(gConfig.ApplicationType, ServerConfig.institutionId, gConfig.MerchantID, gConfig.BusDate).then(function (GetDepositThresholdLimitsResult) {
+                appFactory.GetDepositThresholdLimits(gConfig.ApplicationType, ServerConfig.institutionId, gConfig.MerchantId, gConfig.BusDate).then(function (GetDepositThresholdLimitsResult) {
                     $scope.depositLimitCount = GetDepositThresholdLimitsResult.ItemCount;
                     $scope.depositLimitAmt = GetDepositThresholdLimitsResult.ItemAmount;
                     $scope.drawCrousal()
                 })
             })
         }
-        $scope.init = function () {
-            appFactory.VSHOCreateSession().then(function (VSHOCreateSessionResult) {
-
-                gConfig.SessionId = VSHOCreateSessionResult;
-                appFactory.VSHOGetClientIPAddress().then(function (VSHOGetClientIPAddressResult) {
-                    gConfig.IpAddress = VSHOGetClientIPAddressResult;
-                    appFactory.GetConsumerDescriptionEx(gConfig.SessionId, ServerConfig.institutionId, gConfig.UserID, $rootScope.password, false, gConfig.IpAddress, gConfig.ApplicationType).then(function (GetConsumerDescriptionExResult) {
-                        var ConsumerID = GetConsumerDescriptionExResult.ConsumerID;
-                        var ConsumerName = GetConsumerDescriptionExResult.ConsumerName;
-                        var LocationID = GetConsumerDescriptionExResult.LocationID;
-                        var IsLocked = GetConsumerDescriptionExResult.IsLocked;
-                        var Change_Pwd = GetConsumerDescriptionExResult.Change_Pwd;
-                        var Role_ID = GetConsumerDescriptionExResult.Role_ID;
-                        var All_Grp_Ind = GetConsumerDescriptionExResult.All_Grp_Ind;
-                        var Inst_Grp_Ind = GetConsumerDescriptionExResult.Inst_Grp_Ind;
-                        var Error_Code = GetConsumerDescriptionExResult.Error_Code;
-                        var Error_Message = GetConsumerDescriptionExResult.Error_Message;
-                        var IVSProfileID = GetConsumerDescriptionExResult.IVSProfileID;
-                        var MobileAgreementStatus = GetConsumerDescriptionExResult.MobileAgreementStatus;
-                        var MobileAgreementId = GetConsumerDescriptionExResult.MobileAgreementId;
-                        var AgreementFileName = GetConsumerDescriptionExResult.AgreementFileName;
-                        var FirstTimeLogin = GetConsumerDescriptionExResult.FirstTimeLogin;
-                        var BusDate = GetConsumerDescriptionExResult.BusDate;
-
-                        function isAccLocked(status) {
-                            return (status == "true" || status == true)
-                        }
-
-                        function isChangePass(status) {
-                            return (status == "true" || status == true)
-                        }
-
-                        function isShowAgreement(status) {
-                            return (status == "false" || status == false)
-                        }
-
-                        function isFirstTimeLogin(status) {
-                            return (status == "true" || status == true)
-                        }
-
-                        //If Error = 0 : user authentication success
-                        if (Error_Code == 0) {
-                            dConfig.AppInState = true;
-//                            Utils.sessionCheck.startSession();
-
-                            gConfig.ConsumerID = ConsumerID;
-                            gConfig.MerchantID = ConsumerID;
-                            gConfig.ConsumerName = ConsumerName;
-                            gConfig.LocationID = LocationID;
-                            gConfig.IVSProfileID = IVSProfileID;
-                            gConfig.BusDate = BusDate;
-                            gConfig.ErrorCode = Error_Code;
-                            gConfig.isChangePass = isChangePass(Change_Pwd);
-                            gConfig.isShowAgreement = isShowAgreement(MobileAgreementStatus);
-                            gConfig.isFirstTimeLogin = isFirstTimeLogin(FirstTimeLogin);
-
-                            appFactory.VSHOStartSession(gConfig.SessionId, ServerConfig.institutionId, gConfig.MerchantID, gConfig.LocationID, gConfig.UserID, gConfig.Flag).then(function (VSHOStartSessionResult) {
-                                var VSHOStartSessionResult = VSHOStartSessionResult;
-                                appFactory.GetMerchantLocationsAndAccounts(ServerConfig.institutionId, gConfig.MerchantID, gConfig.UserID, ServerConfig.ApplicationType).then(function (GetMerchantLocationsAndAccountsResult) {
-                                    gConfig.Locations = GetMerchantLocationsAndAccountsResult;
-                                    $timeout(function () {
-                                        navigator.splashscreen.hide();
-                                        $scope.checkCounter = 0;
-                                        if ($scope.depositLimitCount > 0) {
-                                            $scope.drawCrousal();
-                                        }
-                                        $scope.locationsResult = gConfig.Locations;
-                                        $scope.locations = $scope.locationsResult[0].Id;
-                                        $scope.locationsSelected();
-                                        $scope.updateThresholdLimits()
-
-                                    }, 100);
-
-                                })
-                            });
-
-                        } else if (isAccLocked(IsLocked)) {
-//                            NotyMsg.errorMsg("Your account is locked. Please contact bank administrator for further queries.");
-                        } else {
-//                Show error
-                            gConfig.ErrorCode = 1;
-//                            Utils.enableActionItems();
-//                            NotyMsg.errorMsg(Error_Message);
-//                            console.log(Error_Message);
-                        }
-                    })
-                })
-
-            })
+        $scope.init = function() {
+            $scope.checkCounter = 0;
+            if($scope.depositLimitCount > 0){
+                $scope.drawCrousal();
+            }
+            $scope.locationsResult = gConfig.Locations;
+            $scope.updateThresholdLimits()
 
 
             /*
