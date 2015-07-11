@@ -16,10 +16,12 @@
     },
     "cordovaPlugins": [
         "com.ionic.keyboard",
+        "cordova-plugin-console",
         "org.apache.cordova.network-information",
         "org.apache.cordova.camera",
         "org.apache.cordova.splashscreen",
-        "org.apache.cordova.device.Device"
+        "org.apache.cordova.device",
+        "net.yoik.cordova.plugins.screenorientation"
     ],
     "cordovaPlatforms": [
         {
