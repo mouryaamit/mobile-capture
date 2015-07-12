@@ -782,19 +782,23 @@ controllers
         }
 
         $scope.StartTran = function () {
-            appFactory.StartTran(ServerConfig.institutionId, '7', gConfig.UserID, '', $("#accounts").val(), $("#accounts option:selected").attr("class"), gConfig.IVSProfileID, '1', '0', true, device.model, device.model, device.platform, device.version, gConfig.MerchantID, $scope.locations).then(function (StartTranResult) {
-                var SessionId = StartTranResult.SessionId;
-                var ReturnValue = StartTranResult.ReturnValue;
-                var ErrorCode = StartTranResult.ErrorCode;
-                var ErrorDesc = StartTranResult.ErrorDesc;
-                gConfig.IVSSessionId = SessionId;
-                //--------------------------------------------------------
-                if (ErrorCode == '0') {
-                    $scope.processCheck();
-                } else {
-                    NotyMsg.errorMsg('Start Transaction Error : ' + ErrorDesc);
-                }
-            })
+            if(gConfig.IVSSessionId == null || gConfig.IVSSessionId == undefined || gConfig.IVSSessionId == ''){
+                appFactory.StartTran(ServerConfig.institutionId, '7', gConfig.UserID, '', $("#accounts").val(), $("#accounts option:selected").attr("class"), gConfig.IVSProfileID, '1', '0', true, device.model, device.model, device.platform, device.version, gConfig.MerchantID, $scope.locations).then(function (StartTranResult) {
+                    var SessionId = StartTranResult.SessionId;
+                    var ReturnValue = StartTranResult.ReturnValue;
+                    var ErrorCode = StartTranResult.ErrorCode;
+                    var ErrorDesc = StartTranResult.ErrorDesc;
+                    //--------------------------------------------------------
+                    if (ErrorCode == '0') {
+                        gConfig.IVSSessionId = SessionId;
+                        $scope.processCheck();
+                    } else {
+                        NotyMsg.errorMsg('Start Transaction Error : ' + ErrorDesc);
+                    }
+                })
+            } else {
+                $scope.processCheck();
+            }
         }
 
         $scope.depositChecks = function () {
