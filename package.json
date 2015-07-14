@@ -21,10 +21,19 @@
     "org.apache.cordova.camera",
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.device",
-    "net.yoik.cordova.plugins.screenorientation"
+    "net.yoik.cordova.plugins.screenorientation",
+    "cordova-plugin-whitelist"
   ],
   "cordovaPlatforms": [
-    "android",
-    "ios"
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
+    },
+    {
+      "platform": "ios",
+      "version": "",
+      "locator": "ios"
+    }
   ]
 }

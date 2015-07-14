@@ -17,7 +17,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"YoikScreenOrientation\"><param name=\"ios-package\" value=\"YoikScreenOrientation\" /></feature>",
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
                             "count": 1
                         },
                         {
@@ -29,15 +29,15 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"YoikScreenOrientation\"><param name=\"ios-package\" value=\"YoikScreenOrientation\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -45,6 +45,12 @@
             },
             "framework": {
                 "parents": {
+                    "SystemConfiguration.framework": [
+                        {
+                            "xml": true,
+                            "count": 1
+                        }
+                    ],
                     "ImageIO.framework": [
                         {
                             "xml": true,
@@ -74,12 +80,6 @@
                             "xml": false,
                             "count": 1
                         }
-                    ],
-                    "SystemConfiguration.framework": [
-                        {
-                            "xml": true,
-                            "count": 1
-                        }
                     ]
                 }
             },
@@ -102,19 +102,22 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
         },
-        "net.yoik.cordova.plugins.screenorientation": {
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
         },
         "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
         },
+        "org.apache.cordova.splashscreen": {
+            "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
+        },
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
         },
-        "org.apache.cordova.network-information": {
+        "net.yoik.cordova.plugins.screenorientation": {
             "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
         },
-        "org.apache.cordova.splashscreen": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
         }
     },
