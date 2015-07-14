@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3321F55A-5D16-49B9-A8A5-0004048A4755</string>
+	<key>IDESourceControlProjectName</key>
+	<string>mobile-capture-angular</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>626E1083FAA39654EAAEE8346B1509997229B06E</key>
+		<string>https://github.com/mouryaamit/mobile-capture</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>platforms/ios/mobile-capture-angular.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>626E1083FAA39654EAAEE8346B1509997229B06E</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/mouryaamit/mobile-capture</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>626E1083FAA39654EAAEE8346B1509997229B06E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>626E1083FAA39654EAAEE8346B1509997229B06E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>mobile-capture</string>
+		</dict>
+	</array>
+</dict>
+</plist>
