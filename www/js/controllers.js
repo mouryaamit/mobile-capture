@@ -581,6 +581,8 @@ controllers
         }
 
         $scope.processCheck = function () {
+            alert($scope.Cheque.frontImage)
+            alert($scope.Cheque.backImage)
             appFactory.Process(gConfig.IVSSessionId, parseFloat($scope.master.amt).toFixed(2), $scope.Cheque.frontImage, $scope.Cheque.backImage, true).then(function (ProcessResult) {
                 var $IQResult = ProcessResult.IQResult;
                 if ($IQResult == undefined || $IQResult == null) {
