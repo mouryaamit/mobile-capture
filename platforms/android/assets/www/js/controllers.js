@@ -337,7 +337,7 @@ controllers
         },
             $scope.captureFront = function (retake) {
                 if (retake != "retake") {
-                    if (screen.orientation.type.split('-')[0] == "portrait") {
+                    if (screen.orientation == "portrait" || screen.orientation == "portrait-primary" || screen.orientation == "portrait-secondary") {
                         gConfig.origOrientation = "portrait";
                     } else {
                         gConfig.origOrientation = "landscape";
@@ -396,7 +396,7 @@ controllers
          },*/
         $scope.captureBack = function (retake) {
             if (retake != "retake") {
-                if (screen.orientation.type.split('-')[0] == "portrait") {
+                if (screen.orientation == "portrait" || screen.orientation == "portrait-primary" || screen.orientation == "portrait-secondary") {
                     gConfig.origOrientation = "portrait";
                 } else {
                     gConfig.origOrientation = "landscape";

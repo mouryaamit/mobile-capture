@@ -1,4 +1,4 @@
-cordova.define("net.yoik.cordova.plugins.screenorientation.screenorientation", function(require, exports, module) { /*
+cordova.define("cordova-plugin-screen-orientation.screenorientation", function(require, exports, module) { /*
 The MIT License (MIT)
 
 Copyright (c) 2014

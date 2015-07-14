@@ -79,23 +79,23 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/net.yoik.cordova.plugins.screenorientation/www/screenorientation.js",
-        "id": "net.yoik.cordova.plugins.screenorientation.screenorientation",
+        "file": "plugins/cordova-plugin-whitelist/whitelist.js",
+        "id": "cordova-plugin-whitelist.whitelist",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+        "id": "cordova-plugin-screen-orientation.screenorientation",
         "clobbers": [
             "cordova.plugins.screenorientation"
         ]
     },
     {
-        "file": "plugins/net.yoik.cordova.plugins.screenorientation/www/screenorientation.android.js",
-        "id": "net.yoik.cordova.plugins.screenorientation.screenorientation.android",
+        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.android.js",
+        "id": "cordova-plugin-screen-orientation.screenorientation.android",
         "merges": [
             "cordova.plugins.screenorientation"
         ]
-    },
-    {
-        "file": "plugins/cordova-plugin-whitelist/whitelist.js",
-        "id": "cordova-plugin-whitelist.whitelist",
-        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -107,8 +107,8 @@ module.exports.metadata =
     "org.apache.cordova.camera": "0.3.6",
     "org.apache.cordova.splashscreen": "1.0.0",
     "org.apache.cordova.device": "0.3.0",
-    "net.yoik.cordova.plugins.screenorientation": "1.3.4",
-    "cordova-plugin-whitelist": "1.0.0"
+    "cordova-plugin-whitelist": "1.0.0",
+    "cordova-plugin-screen-orientation": "1.3.6"
 }
 // BOTTOM OF METADATA
 });

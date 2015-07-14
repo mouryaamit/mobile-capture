@@ -337,7 +337,7 @@ controllers
         },
             $scope.captureFront = function (retake) {
                 if (retake != "retake") {
-                    if (screen.orientation.type.split('-')[0] == "portrait") {
+                    if (screen.orientation == "portrait" || screen.orientation == "portrait-primary" || screen.orientation == "portrait-secondary") {
                         gConfig.origOrientation = "portrait";
                     } else {
                         gConfig.origOrientation = "landscape";
@@ -396,7 +396,7 @@ controllers
          },*/
         $scope.captureBack = function (retake) {
             if (retake != "retake") {
-                if (screen.orientation.type.split('-')[0] == "portrait") {
+                if (screen.orientation == "portrait" || screen.orientation == "portrait-primary" || screen.orientation == "portrait-secondary") {
                     gConfig.origOrientation = "portrait";
                 } else {
                     gConfig.origOrientation = "landscape";
@@ -782,7 +782,7 @@ controllers
         }
 
         $scope.StartTran = function () {
-            if(gConfig.IVSSessionId == null || gConfig.IVSSessionId == undefined || gConfig.IVSSessionId == ''){
+            //if(gConfig.IVSSessionId == null || gConfig.IVSSessionId == undefined || gConfig.IVSSessionId == ''){
                 appFactory.StartTran(ServerConfig.institutionId, '7', gConfig.UserID, '', $("#accounts").val(), $("#accounts option:selected").attr("class"), gConfig.IVSProfileID, '1', '0', true, device.model, device.model, device.platform, device.version, gConfig.MerchantID, $scope.locations).then(function (StartTranResult) {
                     var SessionId = StartTranResult.SessionId;
                     var ReturnValue = StartTranResult.ReturnValue;
@@ -796,9 +796,9 @@ controllers
                         NotyMsg.errorMsg('Start Transaction Error : ' + ErrorDesc);
                     }
                 })
-            } else {
+            /*} else {
                 $scope.processCheck();
-            }
+            }*/
         }
 
         $scope.depositChecks = function () {

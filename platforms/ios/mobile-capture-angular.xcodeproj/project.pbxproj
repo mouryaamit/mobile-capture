@@ -52,7 +52,7 @@
 		26709A12FEE44D3197A03A24 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D722A76F8C741EEB0AE134C /* CoreLocation.framework */; };
 		475088FD2A564959810B7DD1 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF1200C1444095A2A63822 /* CDVSplashScreen.m */; };
 		D40D87BB65A74ED387F3E862 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1261AA9A54BA8BFCC24E5 /* CDVDevice.m */; };
-		6AFDC263A95447A8B8F1C69C /* YoikScreenOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C2C46C5F5F4A8289C2FE07 /* YoikScreenOrientation.m */; };
+		A421D630E3964873BFC1F5B6 /* YoikScreenOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC4ABD6467F49BD91AF390B /* YoikScreenOrientation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,8 +142,8 @@
 		938A8E3D5AF44F6C96404065 /* CDVSplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVSplashScreen.h"; path = "org.apache.cordova.splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		1FA1261AA9A54BA8BFCC24E5 /* CDVDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVDevice.m"; path = "org.apache.cordova.device/CDVDevice.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		A95EE7A5CC0D495F858C1E0B /* CDVDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVDevice.h"; path = "org.apache.cordova.device/CDVDevice.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		D7C2C46C5F5F4A8289C2FE07 /* YoikScreenOrientation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "YoikScreenOrientation.m"; path = "net.yoik.cordova.plugins.screenorientation/YoikScreenOrientation.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		3AB75EDEA82C4000823F1B4F /* YoikScreenOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "YoikScreenOrientation.h"; path = "net.yoik.cordova.plugins.screenorientation/YoikScreenOrientation.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		CAC4ABD6467F49BD91AF390B /* YoikScreenOrientation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "YoikScreenOrientation.m"; path = "cordova-plugin-screen-orientation/YoikScreenOrientation.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		100F56FD532746649E5B9FC7 /* YoikScreenOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "YoikScreenOrientation.h"; path = "cordova-plugin-screen-orientation/YoikScreenOrientation.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,8 +269,8 @@
 				938A8E3D5AF44F6C96404065 /* CDVSplashScreen.h */,
 				1FA1261AA9A54BA8BFCC24E5 /* CDVDevice.m */,
 				A95EE7A5CC0D495F858C1E0B /* CDVDevice.h */,
-				D7C2C46C5F5F4A8289C2FE07 /* YoikScreenOrientation.m */,
-				3AB75EDEA82C4000823F1B4F /* YoikScreenOrientation.h */,
+				CAC4ABD6467F49BD91AF390B /* YoikScreenOrientation.m */,
+				100F56FD532746649E5B9FC7 /* YoikScreenOrientation.h */,
 			);
 			name = Plugins;
 			path = "mobile-capture-angular/Plugins";
@@ -465,7 +465,7 @@
 				C6E71CAD067F49599182D884 /* CDVJpegHeaderWriter.m in Sources */,
 				475088FD2A564959810B7DD1 /* CDVSplashScreen.m in Sources */,
 				D40D87BB65A74ED387F3E862 /* CDVDevice.m in Sources */,
-				6AFDC263A95447A8B8F1C69C /* YoikScreenOrientation.m in Sources */,
+				A421D630E3964873BFC1F5B6 /* YoikScreenOrientation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

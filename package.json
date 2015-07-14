@@ -21,8 +21,8 @@
     "org.apache.cordova.camera",
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.device",
-    "net.yoik.cordova.plugins.screenorientation",
-    "cordova-plugin-whitelist"
+    "cordova-plugin-whitelist",
+    "cordova-plugin-screen-orientation"
   ],
   "cordovaPlatforms": [
     {

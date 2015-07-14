@@ -114,10 +114,10 @@
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
         },
-        "net.yoik.cordova.plugins.screenorientation": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
         },
-        "cordova-plugin-whitelist": {
+        "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "com.vsoft.mobilecapture.angular"
         }
     },
