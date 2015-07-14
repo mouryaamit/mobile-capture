@@ -3,6 +3,8 @@ angular.module('angularSoap', [])
 .factory("$soap",['$q',function($q){
 	return {
 		post: function(url, action, params){
+			$('#loadingImg').show()
+			$('#loaderBackDrop').show()
 			var deferred = $q.defer();
 			
 			//Create SOAPClientParameters
@@ -14,8 +16,12 @@ angular.module('angularSoap', [])
 			//Create Callback
 			var soapCallback = function(e){
 				if(e.constructor.toString().indexOf("function Error()") != -1){
+					$('#loadingImg').hide()
+					$('#loaderBackDrop').hide()
 					deferred.reject("An error has occurred.");
 				} else {
+					$('#loadingImg').hide()
+					$('#loaderBackDrop').hide()
 					deferred.resolve(e);
 				}
 			}

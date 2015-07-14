@@ -8056,22 +8056,23 @@ button.selectpicker > span.filter-option {
   border-top-left-radius: 25px;
   color: white;
 }
-.statusRow.1 {
-  background-color: #acb1b4;
+.statusRow1,
+.statusRow30 {
+  background-color: #8db7eb;
   border-top-left-radius: 25px;
   color: white;
 }
-.statusRow.60 {
+.statusRow60 {
   background-color: #fd8a5d;
   border-top-left-radius: 25px;
   color: white;
 }
-.statusRow.35,
-.statusRow.50,
-.statusRow.70,
-.statusRow.80,
-.statusRow.90,
-.statusRow.95 {
+.statusRow35,
+.statusRow50,
+.statusRow70,
+.statusRow80,
+.statusRow90,
+.statusRow95 {
   background-color: #23c878;
   border-top-left-radius: 25px;
   color: white;
