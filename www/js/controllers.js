@@ -872,8 +872,8 @@ controllers
         }
         $scope.isCheckCaptureStarted = function () {
             var amtValid = (parseFloat($scope.master.amt) > 0);
-            var frontValid = ($("#frontImage").prop("src").length > 30);
-            var backValid = ($("#backImage").prop("src").length > 30);
+            var frontValid = ($("#frontImagePreview").prop("src").length > 30);
+            var backValid = ($("#backImagePreview").prop("src").length > 30);
 
             return (amtValid || frontValid || backValid)
         }
@@ -988,12 +988,11 @@ controllers
             $('.checkImgDiv').show();
         }
         $scope.clearCheck = function () {
-            $("#frontImage").hide().prop("src",
-                "data:image/jpeg;base64,");
-            $(".frontCameraIcon").show();
-            $("#backImage").hide().prop("src",
-                "data:image/jpeg;base64,");
-            $(".backCameraIcon").show();
+            $("#frontImageDiv").show();
+            $("#frontValidImageDiv").hide()
+            $("#backImageDiv").show();
+            $("#backValidImageDiv").hide()
+            $scope.Cheque = null || {}
             $scope.master.amt = "";
         }
         $scope.disableAccLoc = function () {
