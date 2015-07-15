@@ -206,34 +206,6 @@ controllers
         $scope.locationsResult = null || []
         $scope.accountResult = null || []
         $scope.Cheque = null || {}
-        /*
-         * getDailyLimit(); getDepositLimit();
-         */
-
-        /*$scope.validCheckColl.push({
-         'SessionId' : gConfig.IVSSessionId,
-         'Amount' : parseFloat("2").toFixed(2),
-         'FrontImage' : "data:image/jpeg;base64,",
-         'RearImage' : "data:image/jpeg;base64,",
-         'ReturnImage' : true,
-         'status' : 2
-         })
-         $scope.validCheckColl.push({
-         'SessionId' : gConfig.IVSSessionId,
-         'Amount' : parseFloat("3").toFixed(2),
-         'FrontImage' : "data:image/jpeg;base64,",
-         'RearImage' : "data:image/jpeg;base64,",
-         'ReturnImage' : true,
-         'status' : 2
-         })
-         $scope.validCheckColl.push({
-         'SessionId' : gConfig.IVSSessionId,
-         'Amount' : parseFloat("4").toFixed(2),
-         'FrontImage' : "data:image/jpeg;base64,",
-         'RearImage' : "data:image/jpeg;base64,",
-         'ReturnImage' : true,
-         'status' : 2
-         })*/
 
         $scope.scrollRight = function () {
 
@@ -284,37 +256,30 @@ controllers
             }
         }
 
-        /*$scope.previewFrontImg = function () {
-         if (!$("#frontImagePreview").is(":hidden")) {
-         frontImgSrc = $("#frontImagePreview").prop("src");
-         backImgSrc = $("#backImagePreview").prop("src");
-         } else {
-         frontImgSrc = $("#frontImagePreview").prop("src");
-         backImgSrc = $("#backImagePreview").prop("src");
-         }
-         var data = {
-         "frontImgSrc": frontImgSrc,
-         "backImgSrc": backImgSrc
-         };
+        $scope.previewFrontImg = function () {
          $('#HomeViewRegion').hide()
-         // $('#FrontPreviewView').show()
+         $('#FrontPreviewView').show()
          }
+$scope.previewBackImg = function(){
+    $('#HomeViewRegion').hide()
+    $('#BackPreviewView').show()
 
-         $scope.previewBackImg = function () {
-         var frontImgSrc = "", backImgSrc = "";
-         if (!$("#frontImagePreview").is(":hidden")) {
-         frontImgSrc = $("#frontImagePreview").prop("src");
-         backImgSrc = $("#backImagePreview").prop("src");
-         } else {
-         frontImgSrc = $("#frontImagePreview").prop("src");
-         backImgSrc = $("#backImagePreview").prop("src");
-         }
-         var data = {
-         "frontImgSrc": frontImgSrc,
-         "backImgSrc": backImgSrc
-         };
-         $('#HomeViewRegion').hide()
-         }*/
+}
+        $scope.backToDep = function(){
+            if(gConfig.isIos){
+                window.ChangeOrientation.change(gConfig.origOrientation,
+                    function success(){},
+                    function error(){}
+                );
+            }else{
+                screen.unlockOrientation();
+            }
+            $("#HomeViewRegion").show();
+            $('#FrontPreviewView').hide();
+            $('#BackPreviewView').hide()
+
+            gConfig.isCheckViewed = false;
+        }
         $scope.reviewFrontCheck = function (imageData) {
             if (gConfig.isIos) {
                 window.ChangeOrientation.change("landscape",
