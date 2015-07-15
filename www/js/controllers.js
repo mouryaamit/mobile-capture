@@ -176,7 +176,6 @@ controllers
     .controller(
     'CaptureCtrl',
     function ($scope, appFactory, gConfig, ServerConfig, dConfig, $cordovaCamera, $soap, $location, $compile, $rootScope, $timeout, NotyMsg) {// 31191
-        console.log(ServerConfig.url, $location.$$path)
         var options = null || {}
         $scope.master = null || {};
         $scope.depositLimitCount = 0;
@@ -286,9 +285,9 @@ controllers
         }
 
         /*$scope.previewFrontImg = function () {
-         if (!$("#frontImage").is(":hidden")) {
-         frontImgSrc = $("#frontImage").prop("src");
-         backImgSrc = $("#backImage").prop("src");
+         if (!$("#frontImagePreview").is(":hidden")) {
+         frontImgSrc = $("#frontImagePreview").prop("src");
+         backImgSrc = $("#backImagePreview").prop("src");
          } else {
          frontImgSrc = $("#frontImagePreview").prop("src");
          backImgSrc = $("#backImagePreview").prop("src");
@@ -303,9 +302,9 @@ controllers
 
          $scope.previewBackImg = function () {
          var frontImgSrc = "", backImgSrc = "";
-         if (!$("#frontImage").is(":hidden")) {
-         frontImgSrc = $("#frontImage").prop("src");
-         backImgSrc = $("#backImage").prop("src");
+         if (!$("#frontImagePreview").is(":hidden")) {
+         frontImgSrc = $("#frontImagePreview").prop("src");
+         backImgSrc = $("#backImagePreview").prop("src");
          } else {
          frontImgSrc = $("#frontImagePreview").prop("src");
          backImgSrc = $("#backImagePreview").prop("src");
@@ -447,14 +446,14 @@ controllers
                 amtMsg = "<br> -> Check Amount";
                 amtValid = false;
             }
-            if ($("#frontImage").prop("src").length > 30) {
+            if ($("#frontImagePreview").prop("src").length > 30) {
                 frontImgMsg = "";
                 frontValid = true;
             } else {
                 frontImgMsg = "<br> -> Front Check";
                 frontValid = false;
             }
-            if ($("#backImage").prop("src").length > 30) {
+            if ($("#backImagePreview").prop("src").length > 30) {
                 backImgMsg = "";
                 backValid = true;
             } else {
@@ -486,7 +485,6 @@ controllers
         }
         $scope.showUpdatedCarouselCheck = function () {
             $checkLi = $(".carouselLi.active").parent().parent();
-            console.log($checkLi.index());
             var pos = $checkLi.index();
             var status = $checkLi.attr("data-status");
             switch (status) {
@@ -584,7 +582,6 @@ controllers
 
         $scope.processCheck = function () {
             appFactory.Process(gConfig.IVSSessionId, parseFloat($scope.master.amt).toFixed(2), $scope.Cheque.frontImageData, $scope.Cheque.backImageData, true).then(function (ProcessResult) {
-                //alert('1')
                 var $IQResult = ProcessResult.IQResult;
                 if ($IQResult == undefined || $IQResult == null) {
                     $IQResult = {}
@@ -598,7 +595,6 @@ controllers
                     $Amount = {}
                 }
                 var $Duplicate = ProcessResult.Duplicate;
-                //alert('12')
                 if ($Duplicate == undefined || $Duplicate == null) {
                     $Duplicate = {}
                 }
@@ -610,7 +606,6 @@ controllers
                 if ($MICR == undefined || $MICR == null) {
                     $MICR = {}
                 }
-                //alert('13')
 
                 var validationResult = {
 
@@ -653,10 +648,8 @@ controllers
                     RawMICR: $MICR.RawMICR,
                     MICRConfidence: $MICR.MICRConfidence
                 };
-                //alert('14')
 
                 if (validationResult.ErrorCode == '0') {
-                    //alert('15')
                     var checkItem = {
                         'Amount': validationResult.MICRField1,
                         'FrontImage': $scope.Cheque.frontImage,
@@ -664,14 +657,9 @@ controllers
                         'RawMICR': validationResult.RawMICR
                     };
                     $scope.validCheckColl.push(checkItem);
-                    //alert('16')
                     $scope.checkCounter = $scope.validCheckColl.length;
-                    //alert('17')
                     $scope.updateCheckProgress();
-                    //============================
-                    //alert('18')
                     $scope.onSuccessfulValidation();
-                    //alert('19')
 
                     NotyMsg.successMsg("Your Check has been added successfully");
                 } else {
@@ -762,31 +750,21 @@ controllers
         }
         $scope.clearCheck = function () {
             $("#frontImageDiv").show();
-            $("#frontValidImageDiv").hide();
+            $("#frontValidImageDiv").hide()
             $("#backImageDiv").show();
-            $("#backValidImageDiv").hide();
-            /*$("#frontImage").hide().prop("src", "data:image/jpeg;base64,");
-             $(".frontCameraIcon").show();
-             $("#backImage").hide().prop("src", "data:image/jpeg;base64,");
-             $(".backCameraIcon").show();*/
-            $scope.Cheque = null || {};
-            $scope.Cheque.frontImage = "";
-            $scope.Cheque.frontImageData = "";
-            $scope.Cheque.backImage = "";
-            $scope.Cheque.backImageData = "";
+            $("#backValidImageDiv").hide()
+            $scope.Cheque = null || {}
             $scope.master.amt = "";
-
+            $('#amt').val('')
         }
 
 
+
         $scope.submitCheck = function () {
-            console.log($scope.master.amt)
             if (!$scope.isCheckCaptured()) {
-                //alert('isCheckCaptured')
                 return false;
             }
             if (!$scope.checkLimit()) {
-                //alert('checkLimit')
                 return false;
             }
             if ($scope.checkCounter < 1) {
@@ -801,7 +779,6 @@ controllers
         }
 
         $scope.StartTran = function () {
-            //if(gConfig.IVSSessionId == null || gConfig.IVSSessionId == undefined || gConfig.IVSSessionId == ''){
             appFactory.StartTran(ServerConfig.institutionId, '7', gConfig.UserID, '', $("#accounts").val(), $("#accounts option:selected").attr("class"), gConfig.IVSProfileID, '1', '0', true, device.model, device.model, device.platform, device.version, gConfig.MerchantID, $scope.locations).then(function (StartTranResult) {
                 var SessionId = StartTranResult.SessionId;
                 var ReturnValue = StartTranResult.ReturnValue;
@@ -815,9 +792,6 @@ controllers
                     NotyMsg.errorMsg('Start Transaction Error : ' + ErrorDesc);
                 }
             })
-            /*} else {
-             $scope.processCheck();
-             }*/
         }
 
         $scope.depositChecks = function () {
@@ -840,34 +814,22 @@ controllers
             })
         }
         $scope.depositSuccess = function (no) {
-            alert('no' + no);
             var totalAmt = 0.00;
             for (var i = 0; i < $scope.validCheckColl.length; i++) {
                 totalAmt = parseFloat(totalAmt) + parseFloat($scope.validCheckColl[i].Amount);
             }
             totalAmt = parseFloat(totalAmt).toFixed(2);
-            //TODO
-            alert('1')
             $scope.depositSuccessModal = null || {};
             $scope.depositSuccessModal.no = no;
             $scope.depositSuccessModal.totalAmt = totalAmt;
             $scope.depositSuccessModal.depCount = $scope.validCheckColl.length
-            /*this.ui.confirmationNo.html(no);
-             this.ui.depAmt.html(totalAmt);
-             this.ui.depCount.html(this.validCheckColl.length);*/
-            alert('12')
             $("#depositSuccessModal").modal("show");
-            alert('13')
             $scope.onSuccessfulDeposit();
         }
         $scope.onSuccessfulDeposit = function(){
-            alert('14')
             $scope.enableAccLoc();
-            alert('15')
             $scope.updateThresholdLimits();
-            alert('16')
             $scope.clearDepositChecks()
-            alert('17')
 
         }
         $scope.isCheckCaptureStarted = function () {
@@ -899,7 +861,6 @@ controllers
                     var ErrorDesc = PurgeTransactionResult.ErrorDesc
 
                     if (ErrorCode == "0" || ErrorCode == 0) {
-                        console.log("delete check success");
                         $scope.deleteCheckSuccess();
                     } else {
                         NotyMsg.errorMsg('Delete Check Error : ' + ErrorDesc);
@@ -987,14 +948,6 @@ controllers
             $('.validCheckImgDiv').hide();
             $('.checkImgDiv').show();
         }
-        $scope.clearCheck = function () {
-            $("#frontImageDiv").show();
-            $("#frontValidImageDiv").hide()
-            $("#backImageDiv").show();
-            $("#backValidImageDiv").hide()
-            $scope.Cheque = null || {}
-            $scope.master.amt = "";
-        }
         $scope.disableAccLoc = function () {
             $(".locAccSelectInpGrp").addClass("disabled");
         }
@@ -1015,7 +968,6 @@ controllers
 
 
         $scope.locationsSelected = function () {
-            console.log((_.find($scope.locationsResult, {'Id': $scope.locations})).Accounts)
             $scope.accountResult = null || [];
             $scope.accountResult = (_.find($scope.locationsResult, {'Id': $scope.locations})).Accounts
         }
