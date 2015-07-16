@@ -1,83 +1,84 @@
 <ion-view view-title="History">
     <ion-content>
-<div id="DepositHistoryView" class="container">
+        <div id="DepositHistoryView" class="container">
 
-    <div id="DepositHistoryRegion">
-        <ul class="nav nav-tabs nav-justified">
-            <li role="presentation" class="active">
-                <a data-toggle="tab" ng-click="getTodayDepositHistory()">
-                    Today
-                    <br>
-                    <span id="todayTabDate"></span>
-                </a>
-            </li>
-            <li role="presentation">
-                <a data-toggle="tab" ng-click="getYesterdayDepositHistory()">
-                    Yesterday
-                    <br>
-                    <span id="yestTabDate"></span>
-                </a>
-            </li>
-        </ul>
+            <div id="DepositHistoryRegion">
+                <ul class="nav nav-tabs nav-justified">
+                    <li role="presentation" class="active">
+                        <a data-toggle="tab" ng-click="getTodayDepositHistory()">
+                            Today
+                            <br>
+                            <span id="todayTabDate"></span>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" ng-click="getYesterdayDepositHistory()">
+                            Yesterday
+                            <br>
+                            <span id="yestTabDate"></span>
+                        </a>
+                    </li>
+                </ul>
 
-        <div class="tab-content">
-            <div class="tab-pane fade in active" id="todayTabContent">
-                <div class="panel-group" role="tablist" aria-multiselectable="true">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="todayTabContent">
+                        <div class="panel-group" role="tablist" aria-multiselectable="true">
 
-                    <div id="todayHistoryDiv"></div>
+                            <div id="todayHistoryDiv"></div>
 
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="yesterdayTabContent">
+                        <div class="panel-group" role="tablist" aria-multiselectable="true">
+
+                            <div id="yesterdayHistoryDiv"></div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="tab-pane fade in" id="yesterdayTabContent">
-                <div class="panel-group" role="tablist" aria-multiselectable="true">
 
-                    <div id="yesterdayHistoryDiv"></div>
+            <div id="CheckPreviewRegion"></div>
 
-                </div>
-            </div>
         </div>
-    </div>
-
-    <div id="CheckPreviewRegion"></div>
-
-</div>
         <div ng-repeat="check in depositChecks">
-<div id="DepositLogView">
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab">
-            <div class="row depHistLog" data-toggle="collapse" data-target="{{SessionId}}">  <!-- data-parent="#depHistoryPanelGrp" -->
+            <div id="DepositLogView">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <div class="row depHistLog" data-toggle="collapse" data-target="{{SessionId}}">
+                            <!-- data-parent="#depHistoryPanelGrp" -->
 
-                <div class="col-xs-6">
-                    <h3 class="depHistoryAmtH">
-                        <span>{{check.TotalAmount}}</span>
-                    </h3>
-                    <span class="lead">{{check.TotalCount}} Checks <small>@ {{check.DateOfDeposit}}</small></span>
-                </div>
-                <div class="col-xs-6 text-right">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <span>{{check.AccountDescription}} : {{check.AccountNumber}}</span>
-                            <br>
-                            <span>{{check.LocationName}}</span>
-                            <br>
+                            <div class="col-xs-6">
+                                <h3 class="depHistoryAmtH">
+                                    <span>{{check.FinalAmount}}</span>
+                                </h3>
+                                <span class="lead">{{check.FinalCount}} Checks <small>@ {{check.DateOfDeposit}}</small></span>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <span>{{check.AccountDescription}} : {{check.AcctNum}}</span>
+                                        <br>
+                                        <span>{{check.LocationName}}</span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="statusRow row approvedHistoryLabel statusRow{{check.TransactionStatus}}">
+                                    <div class="col-xs-12">
+                                        <span>{{check.TransactionStatusDescription}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="row statusRow" {{check.TransactionStatus}}>
-                        <div class="col-xs-12">
-                            <span>{{check.TransactionStatusDescription}}</span>
+                    <div id="{{SessionId}}" class="panel-collapse collapse" role="tabpanel">
+                        <div class="list-group">
+
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-        <div id="<%= SessionId %>" class="panel-collapse collapse" role="tabpanel">
-            <div class="list-group">
-
-            </div>
-        </div>
-    </div>
-</div>
-        </div>
-</ion-content>
+    </ion-content>
 </ion-view>

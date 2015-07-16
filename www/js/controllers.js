@@ -20,11 +20,7 @@ controllers.controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
 
 controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, appFactory, $location) {
     $scope.todayDate = null;
-
-
-    console.log('HistoryCtrl', ServerConfig.institutionId, $location.$$path)
-
-
+    $scope.SessionId = gConfig.SessionId;
     var instId = ServerConfig.institutionId;
     $scope.showDates = function () {
         $('#todayTabDate').html(moment().format("MM/DD/YYYY"));
@@ -34,31 +30,28 @@ controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, a
     $scope.showDates();
 
     $scope.getTodayDepositHistory = function () {
-        console.log('today')
         $(event.currentTarget).children().children("span.carouselLi").addClass("active");
         var today = moment().format("MM/DD/YYYY");
-
         appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, today, gConfig.ApplicationType).then(function (res) {
-            console.log('success', res);
             $scope.depositChecks = res;
+            for(var i = 0 ; i< $scope.depositChecks.length; i++){
+                $scope.depositChecks[i].DateOfDeposit = moment($scope.depositChecks[i].CreatedOn, "MM/DD/YYYY HH:mm:ss").format("hh.mm a")
+            }
         }, function (err) {
-            console.log('error', err);
         });
-
     };
     $scope.getTodayDepositHistory();
-    $scope.getYesterdayDepositHistory = function () {
-        console.log('getYesterdayDepos')
-        var yesterday = moment().subtract(1, 'days').format("MM/DD/YYYY");
 
+    $scope.getYesterdayDepositHistory = function () {
+        var yesterday = moment().subtract(1, 'days').format("MM/DD/YYYY");
         appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, yesterday, gConfig.ApplicationType).then(function (res) {
-            console.log('success', res);
             $scope.depositChecks = res;
+            for(var i = 0 ; i< $scope.depositChecks.length; i++){
+                $scope.depositChecks[i].DateOfDeposit = moment($scope.depositChecks[i].CreatedOn, "MM/DD/YYYY HH:mm:ss").format("hh.mm a")
+            }
         }, function (err) {
-            console.log('error', err);
         });
     };
-
     $scope.renderDepositHistory = function (coll, target) {
         /*var AppViewInitializer = require('../../js/app/app_view_initializer');
          console.log(coll);
@@ -77,29 +70,7 @@ controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, a
 
     };
 
-    /*$scope.depositHistory =  function(response, target) {
-     var $xml = $(response);
-     var $DepositHistoryResults = $xml.find("VSHOGetDepositHistoryResult");
 
-     var singleElem, depositColl=[];
-     $($DepositHistoryResults).find("ReceivedDeposit").each(function () {
-     singleElem = {
-     'DateOfDeposit'    : Moment($(this).find("CreatedOn").text(), "MM/DD/YYYY HH:mm:ss").format("hh.mm a"),
-     'AccountNumber'    : Utils.maskAccount($(this).find("AcctNum").text()),
-     'DepositId'    : $(this).find("DepositId").text(),
-     'TotalCount'    : $(this).find("FinalCount").text(),
-     'TotalAmount'    : parseFloat($(this).find("FinalAmount").text()).toFixed(2),
-     'ConfirmationId'    : $(this).find("ConfirmationId").text(),
-     'SessionId'  : $(this).find("SessionId").text(),
-     'LocationName'  : $(this).find("LocationName").text(),
-     'TransactionStatus'  : $(this).find("TransactionStatus").text(),
-     'TransactionStatusDescription'  : $(this).find("TransactionStatusDescription").text(),
-     'AccountDescription'  : $(this).find("AccountDescription").text()
-     };
-     console.log(singleElem);
-     depositColl.push(singleElem);
-     });
-     */
 
 })
 
