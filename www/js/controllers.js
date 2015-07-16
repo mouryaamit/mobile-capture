@@ -18,37 +18,6 @@ controllers.controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
 
 })
 
-controllers.controller('PlaylistCtrl', function ($scope, Camera) {
-    $scope.image = null;
-
-    $scope.getPic = function () {
-        Camera.getPicture({
-            quality: 75,
-            targetWidth: 320,
-            targetHeight: 320,
-            saveToPhotoAlbum: false
-        }).then(function (imageURI) {
-            console.log(imageURI);
-            $scope.image = imageURI;
-        }, function (err) {
-            console.err(err);
-        });
-    }
-    /*
-     * var options = { quality: 50, destinationType:
-     * Camera.DestinationType.DATA_URL, sourceType:
-     * Camera.PictureSourceType.CAMERA, allowEdit: true, encodingType:
-     * Camera.EncodingType.JPEG, targetWidth: 100, targetHeight: 100,
-     * popoverOptions: CameraPopoverOptions, saveToPhotoAlbum: false };
-     * $scope.image = null;
-     *
-     * $scope.getPic = function() {
-     * $cordovaCamera.getPicture(options).then(function (imageData) { //var
-     * image = document.getElementById('myImage'); $scope.image =
-     * "data:image/jpeg;base64," + imageData; }, function (err) { // error }); }
-     */
-})
-
 controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, appFactory, $location) {
     $scope.todayDate = null;
 
@@ -175,7 +144,7 @@ controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, a
 controllers
     .controller(
     'CaptureCtrl',
-    function ($scope, appFactory, gConfig, ServerConfig, dConfig, $cordovaCamera, $soap, $location, $compile, $rootScope, $timeout, NotyMsg) {// 31191
+    function (sessionCheck,$scope, appFactory, gConfig, ServerConfig, dConfig, $cordovaCamera, $soap, $location, $compile, $rootScope, $timeout, NotyMsg) {// 31191
         var options = null || {}
         $scope.master = null || {};
         $scope.depositLimitCount = 0;
@@ -208,11 +177,11 @@ controllers
         $scope.Cheque = null || {}
 
         $scope.scrollRight = function () {
-
+            //TODO : No Functionality
         }
 
         $scope.scrollLeft = function () {
-
+            //TODO : No Functionality
         }
 
         $scope.showCapturedCheck = function (pos) {
@@ -257,21 +226,23 @@ controllers
         }
 
         $scope.previewFrontImg = function () {
-         $('#HomeViewRegion').hide()
-         $('#FrontPreviewView').show()
-         }
-$scope.previewBackImg = function(){
-    $('#HomeViewRegion').hide()
-    $('#BackPreviewView').show()
+            $('#HomeViewRegion').hide()
+            $('#FrontPreviewView').show()
+        }
+        $scope.previewBackImg = function () {
+            $('#HomeViewRegion').hide()
+            $('#BackPreviewView').show()
 
-}
-        $scope.backToDep = function(){
-            if(gConfig.isIos){
+        }
+        $scope.backToDep = function () {
+            if (gConfig.isIos) {
                 window.ChangeOrientation.change(gConfig.origOrientation,
-                    function success(){},
-                    function error(){}
+                    function success() {
+                    },
+                    function error() {
+                    }
                 );
-            }else{
+            } else {
                 screen.unlockOrientation();
             }
             $("#HomeViewRegion").show();
@@ -462,8 +433,6 @@ $scope.previewBackImg = function(){
             }
             var remainingStr = "";
             var limitCount = $scope.depositLimitCount;
-            // var remainingLength = limitCount +
-            // parseInt(checkCount) ;
 
             for (var j = checkCount; j < limitCount; j++) {
                 remainingStr = remainingStr
@@ -669,7 +638,6 @@ $scope.previewBackImg = function(){
         }
 
 
-
         $scope.submitCheck = function () {
             if (!$scope.isCheckCaptured()) {
                 return false;
@@ -682,8 +650,6 @@ $scope.previewBackImg = function(){
                 gConfig.checkInProgress = true;
                 return;
             }
-
-
             $scope.processCheck();
 
         }
@@ -694,7 +660,7 @@ $scope.previewBackImg = function(){
                 var ReturnValue = StartTranResult.ReturnValue;
                 var ErrorCode = StartTranResult.ErrorCode;
                 var ErrorDesc = StartTranResult.ErrorDesc;
-                //--------------------------------------------------------
+
                 if (ErrorCode == '0') {
                     gConfig.IVSSessionId = SessionId;
                     $scope.processCheck();
@@ -736,7 +702,7 @@ $scope.previewBackImg = function(){
             $("#depositSuccessModal").modal("show");
             $scope.onSuccessfulDeposit();
         }
-        $scope.onSuccessfulDeposit = function(){
+        $scope.onSuccessfulDeposit = function () {
             $scope.enableAccLoc();
             $scope.updateThresholdLimits();
             $scope.clearDepositChecks()
@@ -801,19 +767,27 @@ $scope.previewBackImg = function(){
         }
         $scope.discardAll = function () {
             if ($scope.validCheckColl.length > 0) {
-                $scope.validCheckColl.splice(0,
-                    $scope.validCheckColl.length)
-                $scope.drawCrousal()
-                /*
-                 * var discardModel = Models.getDiscardModel();
-                 * discardModel.set({ 'UserId' : gConfig.UserID,
-                 * 'InstId' : ServerConfig.institutionId,
-                 * 'ApplicationId' : gConfig.ApplicationType,
-                 * 'TransactionId' : gConfig.IVSSessionId });
-                 * discardModel.processRequest();
-                 */
+                appFactory.DiscardAllOpenItems(gConfig.UserID, ServerConfig.institutionId, gConfig.ApplicationId, gConfig.IVSSessionId).then(function (DiscardAllOpenItemsResult) {
+
+                    var TransactionId = DiscardAllOpenItemsResult.TransactionId;
+                    var ReturnValue = DiscardAllOpenItemsResult.ReturnValue;
+                    var ConfirmationId = DiscardAllOpenItemsResult.ConfirmationId;
+                    var ErrorCode = DiscardAllOpenItemsResult.ErrorCode;
+                    var ErrorDesc = DiscardAllOpenItemsResult.ErrorDesc;
+
+                    if (ErrorCode == "0" || ErrorCode == 0) {
+                        if (!gConfig.isLogout) {
+                            $scope.clearDepositChecks();
+                        } else {
+                            Utils.logout();
+                        }
+                    } else {
+                        NotyMsg.errorMsg(ErrorDesc);
+                    }
+
+                })
             } else {
-                $scope.clearCheck();
+                $scope.clearDepositChecks();
             }
         }
         $scope.clearDepositChecks = function () {
@@ -839,15 +813,13 @@ $scope.previewBackImg = function(){
 
             $('#totalChecksDepCounter').html(totalChecks);
             $('#totalValidAmtDepCounter').html(totalAmt);
-            // this.updateCheckProgress();
+            $scope.updateCheckProgress();
 
         }
         $scope.initCollection = function () {
             $scope.checkCounter = 0;
-            /*
-             * this.validCheckColl = Models.getCheckColl();
-             * this.updateCheckProgress();
-             */
+            $scope.validCheckColl.splice(0, $scope.validCheckColl.length);
+            $scope.updateCheckProgress();
         }
         $scope.showCurrentCheck = function () {
             $('.amtPreviewDiv').hide();
@@ -864,7 +836,6 @@ $scope.previewBackImg = function(){
         $scope.enableAccLoc = function () {
             $(".locAccSelectInpGrp").removeClass("disabled");
         }
-        // Update Check Capture Status
         $scope.updateCheckProgress = function () {
             gConfig.checkInProgress = ($scope.validCheckColl.length > 0);
         }
@@ -934,7 +905,7 @@ $scope.previewBackImg = function(){
                         //If Error = 0 : user authentication success
                         if (Error_Code == 0) {
                             dConfig.AppInState = true;
-//                            Utils.sessionCheck.startSession();
+                            sessionCheck.startSession();
 
                             gConfig.ConsumerID = ConsumerID;
                             gConfig.MerchantID = ConsumerID;
@@ -970,9 +941,7 @@ $scope.previewBackImg = function(){
                         } else if (isAccLocked(IsLocked)) {
                             NotyMsg.errorMsg("Your account is locked. Please contact bank administrator for further queries.");
                         } else {
-//                Show error
-                            gConfig.ErrorCode = 1;
-//                            Utils.enableActionItems();
+//                            gConfig.ErrorCode = 1;
                             NotyMsg.errorMsg(Error_Message);
                         }
                     })
@@ -980,44 +949,7 @@ $scope.previewBackImg = function(){
 
             })
 
-
-            /*
-             * if ($scope.locationsResult.length == 1) {
-             * $($(".icon-select-drop-down")[0]).hide();
-             * $('#multipleLocDiv').addClass("disabled"); } else {
-             * $($(".icon-select-drop-down")[0]).show();
-             * $('#multipleLocDiv').removeClass("disabled"); }
-             * $('.selectpicker').selectpicker('render');
-             * $('.selectpicker').selectpicker('refresh'); },
-             * function(getLocationsError) { })
-             * appFactory.getAccounts({}).$promise.then(function(getAccountsResult) {
-             * $scope.accountResult = getAccountsResult;
-             *
-             * if ($scope.accountResult.length == 1) {
-             * $($(".icon-select-drop-down")[1]).hide();
-             * $('#multipleAccDiv').addClass("disabled"); } else {
-             * $($(".icon-select-drop-down")[1]).show();
-             * $('#multipleAccDiv').removeClass("disabled"); }
-             *
-             * $('.selectpicker').selectpicker('render');
-             * $('.selectpicker').selectpicker('refresh'); },
-             * function(getLocationsError) { })
-             *
-             * appFactory.getDailyLimit({ 'BusDate' :
-             * gConfig.BusDate, 'InstitutionId' :
-             * ServerConfig.institutionId, 'MerchantId' :
-             * gConfig.MerchantID
-             * }).$promise.then(function(getDailyLimitResult) { //
-             * TODO appFactory.getDepositLimit({ 'InstitutionId' :
-             * ServerConfig.institutionId, 'MerchantId' :
-             * gConfig.MerchantID, 'BusDate' : gConfig.BusDate
-             * }).$promise.then(function(getDepositLimitResult) { //
-             * TODO }, function(getDepositLimitError) { }) },
-             * function(getDailyLimitError) { })
-             *
-             * $('.selectpicker').selectpicker()
-             */
-
         }
+        sessionCheck.initSession();
         $scope.init();
     })

@@ -1,8 +1,38 @@
 var services = angular.module('starter.services', [])
 
-services.service('ServerConfig', function() {
+services.service('sessionCheck', function () {
+    var sessionExp;
+    this.initSession = function () {
+        var userWasIdle = false;
+        sessionExp = false;
+        $(document).on("idle.idleTimer", function () {
+            userWasIdle = true;
+        });
 
-	var urlStr = 'http://test15.deposit2day.com/ConsumerService/ConsumerService.asmx';
+        $(document).on("active.idleTimer", function () {
+
+            if (userWasIdle) {
+                sessionExp = true;
+                userWasIdle = false;
+                NotyMsg.errorMsg("Your Session has expired. You have been logged out due to inactivity.");
+                $(document).idleTimer("destroy");
+                navigator.app.exitApp();
+            }
+
+        });
+
+    }
+    this.startSession = function () {
+        $(document).idleTimer(300000);
+    }
+    this.stopSession = function () {
+        $(document).idleTimer("destroy");
+    }
+})
+
+services.service('ServerConfig', function () {
+
+    var urlStr = 'http://test15.deposit2day.com/ConsumerService/ConsumerService.asmx';
     var urlIVSStr = "http://test15.deposit2day.com//ValidationService/VSoftRemoteSvc.asmx";
 
     // *****  Dev India
@@ -15,90 +45,86 @@ services.service('ServerConfig', function() {
 
     var ServerConfig = {
 
-        'url'               : urlStr,
-        'urlIVS'            : urlIVSStr,
-        'institutionId'     : '2',
-        'contentType'       : 'text/xml',
+        'url': urlStr,
+        'urlIVS': urlIVSStr,
+        'institutionId': '2',
+        'contentType': 'text/xml',
 
-        'sessionTimeout'       : 300000       // Milli Seconds
+        'sessionTimeout': 300000       // Milli Seconds
 
     };
 
     return ServerConfig;
 })
 
-services.service('gConfig', function() {
-	var globalAttributes = {
+services.service('gConfig', function () {
+    var globalAttributes = {
 
-            'ApplicationType' : '7',
-            'Flag'          : '1',
-            'DepositCount'  : '0',
-            'SessionID'     : '',
-            'ConsumerID'    : '',
-            'MerchantID'    : '',
-            'ConsumerName'  : '',
-            'LocationID'    : '',
-            'BusDate'       : '',
-            'IVSProfileID'  : '',
-            'IVSSessionId'  : '',
+        'ApplicationType': '7',
+        'Flag': '1',
+        'DepositCount': '0',
+        'SessionID': '',
+        'ConsumerID': '',
+        'MerchantID': '',
+        'ConsumerName': '',
+        'LocationID': '',
+        'BusDate': '',
+        'IVSProfileID': '',
+        'IVSSessionId': '',
 
-            'UserID'        : '',
-            'EmailID'       : '',
-            'Locations'      : [],
+        'UserID': '',
+        'EmailID': '',
+        'Locations': [],
 
 //          -----------------------
-            'UserName'      : '',
+        'UserName': '',
 //          -----------------------
-            'IpAddress'      : '',
+        'IpAddress': '',
 //          -----------------------
-            'MaxAttempt'    : 3,
-            'IsAccLocked'   : false,
+        'MaxAttempt': 3,
+        'IsAccLocked': false,
 //          -----------------------
-            'isAndroid' : false,
-            'isIos'  : false,
+        'isAndroid': false,
+        'isIos': false,
 //          ----- Extras ------------------
-            'isChangePass' : false,
-            'isShowAgreement' : false,
-            'isFirstTimeLogin' : false,
-            'isCheckViewed' : false,
-            'checkInProgress' : false,
-            'checkImgBase64PreStr' : "data:image/jpeg;base64,",
-            'AgreementText' : "",
-            'origOrientation' : "portrait",
-            'isLogout' : false,
-            //***$GeoLocation$***:Global attributes for geoLocation
-            'ErrorCode' : '',
-            'strSessionId':"",
-            'country' :"",
-            'state' :"",
-            'city' :"",
-            'locality':""
+        'isChangePass': false,
+        'isShowAgreement': false,
+        'isFirstTimeLogin': false,
+        'isCheckViewed': false,
+        'checkInProgress': false,
+        'checkImgBase64PreStr': "data:image/jpeg;base64,",
+        'AgreementText': "",
+        'origOrientation': "portrait",
+        'isLogout': false,
+        //***$GeoLocation$***:Global attributes for geoLocation
+        'ErrorCode': '',
+        'strSessionId': "",
+        'country': "",
+        'state': "",
+        'city': "",
+        'locality': ""
 
 
+    };
 
+    globalAttributes.userInfo = {
 
+        'IsChangePassword': false,
+        'LastLogonDate': '',
+        'BusDate': '',
+        'UserDate': '',
+        'UserTime': ''
 
+    };
 
-        };
-
-        globalAttributes.userInfo = {
-
-            'IsChangePassword'          : false,
-            'LastLogonDate'             : '',
-            'BusDate'                   : '',
-            'UserDate'                  : '',
-            'UserTime'                  : ''
-
-        };
-
-        return globalAttributes;
+    return globalAttributes;
 })
 
-services.service('dConfig', function() {
-	var defaultConfig = {};
+services.service('dConfig', function () {
+    var defaultConfig = {};
 
-    defaultConfig.routeConfig = { trigger : true, replace : false };
-    defaultConfig.nonRouteConfig = { trigger:true, replace:true };
+    defaultConfig.routeConfig = {trigger: true, replace: false};
+    defaultConfig.nonRouteConfig = {trigger: true, replace: true};
 
     defaultConfig.userInfo = {};
 
@@ -109,7 +135,7 @@ services.service('dConfig', function() {
     return defaultConfig;
 })
 
-services.service('NotyMsg',function(){
+services.service('NotyMsg', function () {
     this.errorMsg = function (msg) {
         var errText,
             response = msg.responseJSON;
@@ -138,23 +164,23 @@ services.service('NotyMsg',function(){
     }
 
     /*validationErrMsg = function (msg) {
-        var options = {
-            text: msg,
-            type: "error",
-            layout: "center",
-            killer: true,
-            timeout: false,
-            callback: {
-                onClose: function() {
-                    var AppViewCollection = require('../app/app_view_collection');
-                    AppViewCollection.home_view.validationError();
-                }
-            }
+     var options = {
+     text: msg,
+     type: "error",
+     layout: "center",
+     killer: true,
+     timeout: false,
+     callback: {
+     onClose: function() {
+     var AppViewCollection = require('../app/app_view_collection');
+     AppViewCollection.home_view.validationError();
+     }
+     }
 
-        };
-        var n = noty(options);
-    },*/
-        this.successMsg = function (msg) {
+     };
+     var n = noty(options);
+     },*/
+    this.successMsg = function (msg) {
         var options = {
             text: msg,
             type: "success",
@@ -164,7 +190,7 @@ services.service('NotyMsg',function(){
         };
         var n = noty(options);
     }
-        this.confirmMsg = function (msg, callback) {
+    this.confirmMsg = function (msg, callback) {
         var options = {
             text: msg,
             type: "error",
@@ -172,11 +198,13 @@ services.service('NotyMsg',function(){
             killer: true,
             timeout: false,
             buttons: [
-                {addClass: 'btn btn-default', text: 'No', onClick: function($noty) {
+                {
+                    addClass: 'btn btn-default', text: 'No', onClick: function ($noty) {
                     $noty.close();
                 }
                 },
-                {addClass: 'btn btn-info', text: 'Yes', onClick: function($noty) {
+                {
+                    addClass: 'btn btn-info', text: 'Yes', onClick: function ($noty) {
                     // this = button element
                     // $noty = $noty element
                     $noty.close();
