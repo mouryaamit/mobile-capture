@@ -1,6 +1,6 @@
 var services = angular.module('starter.services', [])
 
-services.service('sessionCheck', function () {
+services.service('sessionCheck', function (NotyMsg) {
     var sessionExp;
     this.initSession = function () {
         var userWasIdle = false;

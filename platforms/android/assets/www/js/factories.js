@@ -78,6 +78,9 @@ factories.factory('appFactory', [ '$soap', 'ServerConfig', function ($soap, Serv
         Acknowledgment: function (SessionId, ReturnValue) {
             return $soap.post(ServerConfig.urlIVS, "Acknowledgment", {"request": {SessionId: SessionId, ReturnValue: ReturnValue}});
         },
+        DiscardAllOpenItems : function(UserId,InstId,ApplicationId,TransactionId){
+            return $soap.post(ServerConfig.urlIVS, "DiscardAllOpenItems", {"request": {UserId: UserId, InstId: InstId,ApplicationId:ApplicationId,TransactionId:TransactionId}});
+        },
         getDepositHistory: function (institutionId, UserID, depositDateMMDDYYYY, applicationType) {
             return $soap.post(ServerConfig.url, "VSHOGetDepositHistory", {
                 instId: institutionId,

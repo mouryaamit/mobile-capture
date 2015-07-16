@@ -75,9 +75,7 @@
 					<div class="col-xs-6 text-center borderRight">
 						<div class="checkImgDiv" id="frontImageDiv">
 							<div class="imgDiv">
-								<img id="frontImage" src="{{Cheque.frontImage}}"
-									class="frontCheckImg checkImgs hiddenElem" style="display: none"
-									ng-click="previewFrontImg()"> <span
+								<span
 									class="frontCameraIcon captureFrontBut icon-capture"
 									ng-click="captureFront()"></span>
 							</div>
@@ -97,9 +95,7 @@
 					<div class="col-xs-6 text-center">
 						<div class="checkImgDiv" id="backImageDiv">
 							<div class="imgDiv">
-								<img id="backImage" src="{{Cheque.backImage}}"
-									class="backCheckImg checkImgs hiddenElem" style="display: none"
-									ng-click="previewBackImg()"> <span
+								<span
 									class="backCameraIcon captureBackBut icon-capture"
 									ng-click="captureBack()"></span>
 
@@ -204,7 +200,7 @@
 						<div class="row">
 							<div class="col-xs-10">
 								<p class="lead leadMargin5">
-									Total Deposit Amount : {{depositSuccessModal.depAmt}}
+									Total Deposit Amount : {{depositSuccessModal.totalAmt}}
 								</p>
 							</div>
 							<div class="col-xs-2 text-center">
@@ -264,10 +260,10 @@
                     <div class="col-xs-12">
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="frontImgPre">
-                                <img class="previewImgs img-responsive" id="frontPreviewCheck" src="<%= frontImgSrc %>">
+                                <img class="previewImgs img-responsive" id="frontPreviewCheck" src="{{Cheque.frontImage}}">
                             </div>
                             <div class="tab-pane fade in" id="backImgPre">
-                                <img class="previewImgs img-responsive" id="backPreviewCheck" src="<%= backImgSrc %>">
+                                <img class="previewImgs img-responsive" id="backPreviewCheck" src="{{Cheque.backImage}}">
                             </div>
                         </div>
                     </div>
@@ -276,7 +272,7 @@
                 <div id="checkImgPreviewControls" class="sticky-footer">
                     <div class="row checkImgPreviewControlsDiv">
                         <div class="col-xs-12 text-left">
-                            <button id="backToDep" class="btn btn-primary btn-rounded">
+                            <button id="backToDep" ng-click="backToDep()" class="btn btn-primary btn-rounded">
                                 <span class="icon-Back glyphicon-white"></span>
                                 Back to Deposit
                             </button>
@@ -312,10 +308,10 @@
                     <div class="col-xs-12">
                         <div class="tab-content">
                             <div class="tab-pane fade in" id="frontImgPre">
-                                <img class="previewImgs img-responsive" id="frontPreviewCheck" src="<%= frontImgSrc %>">
+                                <img class="previewImgs img-responsive" id="frontPreviewCheck" src="{{Cheque.frontImage}}">
                             </div>
                             <div class="tab-pane fade in active" id="backImgPre">
-                                <img class="previewImgs img-responsive" id="backPreviewCheck" src="<%= backImgSrc %>">
+                                <img class="previewImgs img-responsive" id="backPreviewCheck" src="{{Cheque.backImage}}">
                             </div>
                         </div>
                     </div>
@@ -324,7 +320,7 @@
                 <div id="checkImgPreviewControls" class="sticky-footer">
                     <div class="row checkImgPreviewControlsDiv">
                         <div class="col-xs-12 text-left">
-                            <button id="backToDep" class="btn btn-primary btn-rounded">
+                            <button id="backToDep" ng-click="backToDep()" class="btn btn-primary btn-rounded">
                                 <span class="icon-Back glyphicon-white"></span>
                                 Back to Deposit
                             </button>

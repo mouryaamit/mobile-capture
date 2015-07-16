@@ -26,44 +26,6 @@ controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, a
 
 
     var instId = ServerConfig.institutionId;
-    appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, gConfig.BusDate, gConfig.ApplicationType).then(function (res) {
-        console.log('success', res);
-        $scope.depositChecks = res;
-    }, function (err) {
-        console.log('error', err);
-    });
-    /*$scope.depositChecks = [
-     {
-     TotalAmount: 1233,
-     TotalCount: 2,
-     DateOfDeposit: 02032014,
-     AccountDescription: 'jhgweuryg',
-     AccountNumber: 34345345,
-     LocationName: 'HYD',
-     TransactionStatusDescription: 'Submitted',
-     TransactionStatu: 60
-     },
-     {
-     TotalAmount: 1233,
-     TotalCount: 2,
-     DateOfDeposit: 02032014,
-     AccountDescription: 'jhgweuryg',
-     AccountNumber: 34345345,
-     LocationName: 'HYD',
-     TransactionStatu: 1,
-     TransactionStatusDescription: 'Submitted'
-     },
-     {
-     TotalAmount: 1233,
-     TotalCount: 2,
-     DateOfDeposit: 02032014,
-     AccountDescription: 'jhgweuryg',
-     AccountNumber: 34345345,
-     LocationName: 'HYD',
-     TransactionStatu: 2,
-     TransactionStatusDescription: 'Submitted'
-     }
-     ]*/
     $scope.showDates = function () {
         $('#todayTabDate').html(moment().format("MM/DD/YYYY"));
         $('#yestTabDate').html(moment().subtract(1, 'days').format("MM/DD/YYYY"));
@@ -78,7 +40,7 @@ controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, a
 
         appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, today, gConfig.ApplicationType).then(function (res) {
             console.log('success', res);
-            /*$scope.depositChecks = res;*/
+            $scope.depositChecks = res;
         }, function (err) {
             console.log('error', err);
         });
@@ -91,7 +53,7 @@ controllers.controller('HistoryCtrl', function ($scope, ServerConfig, gConfig, a
 
         appFactory.getDepositHistory(ServerConfig.institutionId, gConfig.UserID, yesterday, gConfig.ApplicationType).then(function (res) {
             console.log('success', res);
-            /*$scope.depositChecks = res;*/
+            $scope.depositChecks = res;
         }, function (err) {
             console.log('error', err);
         });
@@ -226,10 +188,12 @@ controllers
         }
 
         $scope.previewFrontImg = function () {
+            screen.lockOrientation('landscape');
             $('#HomeViewRegion').hide()
             $('#FrontPreviewView').show()
         }
         $scope.previewBackImg = function () {
+            screen.lockOrientation('landscape');
             $('#HomeViewRegion').hide()
             $('#BackPreviewView').show()
 
@@ -245,6 +209,7 @@ controllers
             } else {
                 screen.unlockOrientation();
             }
+            //screen.unlockOrientation(); TODO CHECK
             $("#HomeViewRegion").show();
             $('#FrontPreviewView').hide();
             $('#BackPreviewView').hide()
@@ -799,8 +764,7 @@ controllers
 
         }
         $scope.resetLimits = function () {
-            $scope.getDailyLimit();
-            $scope.getDepositLimit();
+            $scope.updateThresholdLimits();
         }
         $scope.updateDepositCounter = function () {
             var totalChecks = $scope.validCheckColl.length;
